@@ -45,7 +45,7 @@ CREATE TABLE Lifecare_Volunteer (
     ID INT,
     domain_of_responsibility CHAR(50) NOT NULL,
     PRIMARY KEY(ID),
-    FOREIGN KEY (ID) REFERENCES Volunteer(ID) ON DELETE CASCADE
+    FOREIGN KEY (ID) REFERENCES Volunteer_Recruit(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE Donator (
@@ -92,7 +92,7 @@ CREATE TABLE TakeCare (
     ID INT NOT NULL,
     PRIMARY KEY (animalID, ID),
     FOREIGN KEY (animalID) REFERENCES Animal_Has(animalID) ON DELETE CASCADE,
-    FOREIGN KEY (ID) REFERENCES Volunteer(ID) ON DELETE CASCADE
+    FOREIGN KEY (ID) REFERENCES Volunteer_Recruit(ID) ON DELETE CASCADE
 );
 
 INSERT INTO Adopter (email, name, phone_number)
