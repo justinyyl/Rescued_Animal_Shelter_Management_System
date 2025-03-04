@@ -5,6 +5,12 @@ CREATE TABLE Adopter (
     PRIMARY KEY(email)
 );
 
+CREATE TABLE Station (
+    address CHAR(255)  PRIMARY KEY,
+    max_capacity INT NOT NULL,
+    environment CHAR(255) NOT NULL
+);
+
 CREATE TABLE Animals_Adopt_Shelter (
     aid INT PRIMARY KEY,
     species CHAR(40) NOT NULL,
@@ -18,17 +24,10 @@ CREATE TABLE Animals_Adopt_Shelter (
 );
 
 CREATE TABLE MedicalRecord_Has (
-    recordDate DATE PRIMARY KEY,
+    recordDate DATE,
     aid INT PRIMARY KEY,
     vaccination CHAR(1),
     FOREIGN KEY (aid) REFERENCES Animals_Adopt_Shelter(aid) ON DELETE CASCADE
-);
-
-CREATE TABLE Station (
-    address CHAR(255),
-    max_capacity INT NOT NULL,
-    environment CHAR(255) NOT NULL,
-    PRIMARY KEY(address)
 );
 
 CREATE TABLE Staff_Hire (
@@ -67,7 +66,7 @@ CREATE TABLE Donator (
 CREATE TABLE Donation_Account_Hold (
     accountID INT PRIMARY KEY, 
     balance INT NOT NULL,
-    date DATE NOT NULL,
+    donation_date DATE NOT NULL,
     address CHAR(255),
     FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
 );
@@ -83,19 +82,11 @@ CREATE TABLE Donation (
     FOREIGN KEY (accountID) REFERENCES Donation_Account_Hold(accountID) ON DELETE CASCADE
 );
 
-CREATE TABLE Shelter (
-    animalID INT NOT NULL,
-    address CHAR(255) NOT NULL,
-    PRIMARY KEY (animalID, address),
-    FOREIGN KEY (animalID) REFERENCES Animals_Adopt_Shelter(animalID) ON DELETE CASCADE,
-    FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
-);
-
 CREATE TABLE TakeCare (
-    animalID INT NOT NULL,
+    aid INT NOT NULL,
     ID INT NOT NULL,
-    PRIMARY KEY (animalID, ID),
-    FOREIGN KEY (animalID) REFERENCES Animals_Adopt_Shelter(animalID) ON DELETE CASCADE,
+    PRIMARY KEY (aid, ID),
+    FOREIGN KEY (aid) REFERENCES Animals_Adopt_Shelter(aid) ON DELETE CASCADE,
     FOREIGN KEY (ID) REFERENCES Volunteer_Recruit(ID) ON DELETE CASCADE
 );
 
@@ -113,31 +104,6 @@ VALUES ('def@163.com', 'p4', '456-789-4756');
 
 INSERT INTO Adopter (email, name, phone_number)
 VALUES ('efg@gmail.com', 'p5', '125-732-5629');
-
-INSERT INTO Animal_Has
-(animalID, species, found_location, found_date, vaccination_date, vaccination)
-VALUES (100, 'Dog', 'City Park', DATE '2023-01-10', DATE '2023-01-15', 'Y');
-
-INSERT INTO Animal_Has
-(animalID, species, found_location, found_date, vaccination_date, vaccination)
-VALUES (101, 'Cat', 'Downtown', DATE '2023-01-20', DATE '2023-02-01', 'Y');
-
-INSERT INTO Animal_Has
-(animalID, species, found_location, found_date, vaccination_date, vaccination)
-VALUES (102, 'Rabbit', 'Suburbs', DATE '2022-12-01', NULL, 'N');
-
-INSERT INTO Animal_Has
-(animalID, species, found_location, found_date, vaccination_date, vaccination)
-VALUES (103, 'Parrot', 'TropicalGarden', DATE '2022-11-15', DATE '2022-11-20', 'Y');
-
-INSERT INTO Animal_Has
-(animalID, species, found_location, found_date, vaccination_date, vaccination)
-VALUES (104, 'Dog', 'School Yard', DATE '2023-02-10', NULL, 'N');
-
-INSERT INTO Animal_Has
-(animalID, species, found_location, found_date, vaccination_date, vaccination)
-VALUES (105, 'Dog', 'Highway Road', DATE '2023-03-01', DATE '2023-03-05', 'Y');
-
 
 INSERT INTO Station (address, max_capacity, environment)
 VALUES ('Station A', 50, 'Urban');
@@ -256,35 +222,35 @@ VALUES (1003, 'Station D');
 INSERT INTO Hold (accountID, address)
 VALUES (1004, 'Station E');
 
-INSERT INTO Shelter (animalID, address)
+INSERT INTO Shelter (aid, address)
 VALUES (100, 'Station A');
 
-INSERT INTO Shelter (animalID, address)
+INSERT INTO Shelter (aid, address)
 VALUES (101, 'Station A');
 
-INSERT INTO Shelter (animalID, address)
+INSERT INTO Shelter (aid, address)
 VALUES (102, 'Station B');
 
-INSERT INTO Shelter (animalID, address)
+INSERT INTO Shelter (aid, address)
 VALUES (103, 'Station C');
 
-INSERT INTO Shelter (animalID, address)
+INSERT INTO Shelter (aid, address)
 VALUES (104, 'Station D');
 
-INSERT INTO Shelter (animalID, address)
+INSERT INTO Shelter (aid, address)
 VALUES (105, 'Station E');
 
-INSERT INTO TakeCare (animalID, ID)
+INSERT INTO TakeCare (aid, ID)
 VALUES (100, 1);
 
-INSERT INTO TakeCare (animalID, ID)
+INSERT INTO TakeCare (aid, ID)
 VALUES (101, 2);
 
-INSERT INTO TakeCare (animalID, ID)
+INSERT INTO TakeCare (aid, ID)
 VALUES (102, 3);
 
-INSERT INTO TakeCare (animalID, ID)
+INSERT INTO TakeCare (aid, ID)
 VALUES (103, 1);
 
-INSERT INTO TakeCare (animalID, ID)
+INSERT INTO TakeCare (aid, ID)
 VALUES (105, 4);
