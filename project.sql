@@ -166,12 +166,16 @@ VALUES (104, 'ABC Foundation');
 INSERT INTO Donator (DID, name)
 VALUES (105, 'XYZ Philanthropy');
 
-INSERT INTO Donation_Account_Hold (accountID, balance, date, address) VALUES
-(1001, 5000, '2024-01-10', '123 Main St'),
-(1002, 3000, '2024-02-05', '456 Elm St'),
-(1003, 7000, '2024-02-20', '789 Oak Ave'),
-(1004, 2000, '2024-03-01', '101 Pine Rd'),
-(1005, 4500, '2024-03-15', '202 Birch Ln');
+INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
+VALUES (1001, 5000, DATE'2024-01-10', '123 Main St');
+INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
+VALUES (1002, 3000, DATE'2024-02-05', '456 Elm St');
+INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
+VALUES (1003, 7000, DATE'2024-02-20', '789 Oak Ave');
+INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
+VALUES (1004, 2000, DATE'2024-03-01', '101 Pine Rd');
+INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
+VALUES (1005, 4500, DATE'2024-03-15', '202 Birch Ln');
 
 INSERT INTO TakeCare (aid, ID)
 VALUES (100, 1);
@@ -188,9 +192,13 @@ VALUES (103, 1);
 INSERT INTO TakeCare (aid, ID)
 VALUES (105, 4);
 
-INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination) VALUES
-('2024-02-01', 101, 'Y'),
-('2024-02-15', 102, 'N'),
-('2024-03-05', 103, 'Y'),
-('2024-03-10', 104, 'Y'),
-('2024-03-20', 105, 'N');
+INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
+VALUES(DATE'2024-02-01', 101, 'Y'),
+INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
+VALUES(DATE'2024-02-15', 102, 'N'),
+INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
+VALUES(DATE'2024-03-05', 103, 'Y'),
+INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
+VALUES(DATE'2024-03-10', 104, 'Y'),
+INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
+VALUES(DATE'2024-03-20', 105, 'N');
