@@ -282,5 +282,3 @@ VALUES (103, 1);
 
 INSERT INTO TakeCare (animalID, ID)
 VALUES (105, 4);
-
-# Hi
