@@ -34,7 +34,6 @@ CREATE TABLE Animals_Adopt_Shelter (
     species         CHAR(40) NOT NULL,
     found_location  CHAR(50) NOT NULL,
     found_date      DATE NOT NULL,
-    name            CHAR(50),
     email           CHAR(50),
     address         CHAR(255),
     FOREIGN KEY (email)   REFERENCES Adopter(email)   ON DELETE SET NULL,
@@ -191,25 +190,26 @@ VALUES (104, 'ABC Foundation');
 INSERT INTO Donator (DID, name)
 VALUES (105, 'XYZ Philanthropy');
 
+-- 3.7 Animals Adopt Shelter
 INSERT INTO Animals_Adopt_Shelter
-(aid, species, found_location, found_date, name, email, address)
-VALUES (100, 'Dog', 'City Park', DATE '2023-01-10', 'p1', 'abc@hotmail.com', 'Station A');
+(aid, species, found_location, found_date, email, address)
+VALUES (100, 'Dog', 'City Park', DATE '2023-01-10', 'abc@hotmail.com', 'Station A');
 
 INSERT INTO Animals_Adopt_Shelter
-(aid, species, found_location, found_date, name, email, address)
-VALUES (101, 'Cat', 'Downtown', DATE '2023-01-20', 'p2', 'bcd@gmail.com', 'Station B');
+(aid, species, found_location, found_date, email, address)
+VALUES (101, 'Cat', 'Downtown', DATE '2023-01-20', 'bcd@gmail.com', 'Station B');
 
 INSERT INTO Animals_Adopt_Shelter
-(aid, species, found_location, found_date, name, email, address)
-VALUES (102, 'Rabbit', 'Suburbs', DATE '2022-12-01', 'p3', 'cde@gmail.com', 'Station C');
+(aid, species, found_location, found_date, email, address)
+VALUES (102, 'Rabbit', 'Suburbs', DATE '2022-12-01', 'cde@gmail.com', 'Station C');
 
 INSERT INTO Animals_Adopt_Shelter
-(aid, species, found_location, found_date, name, email, address)
-VALUES (103, 'Parrot', 'TropicalGarden', DATE '2022-11-15', 'p4', 'def@163.com', 'Station D');
+(aid, species, found_location, found_date, email, address)
+VALUES (103, 'Parrot', 'TropicalGarden', DATE '2022-11-15', 'def@163.com', 'Station D');
 
 INSERT INTO Animals_Adopt_Shelter
-(aid, species, found_location, found_date, name, email, address)
-VALUES (104, 'Dog', 'School Yard', DATE '2023-02-10', 'p5', 'efg@gmail.com', 'Station E');
+(aid, species, found_location, found_date, email, address)
+VALUES (104, 'Dog', 'School Yard', DATE '2023-02-10', 'efg@gmail.com', 'Station E');
 
 -- 3.8 Donation_Account_Hold
 --    如果 address 外键要引用Station(address)，就用已有 'Station A' ~ 'Station E'
