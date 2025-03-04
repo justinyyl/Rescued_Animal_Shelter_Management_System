@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+    <!-- <link rel="stylesheet" href="styles.css">   -->
+
+    <title>Database Application</title>
+</head>
+<body>
+    <!-- ===================================================================================== -->
+    <!-- Display the current status of the database connection. 
+         !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
+         -->
+    <h1>Database Connection Status: 
+        <!-- An in-line placeholder to display connection status. -->
+        <span id="dbStatus"> </span>
+        <!-- A loading GIF, will be hided once get the status. -->
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <!-- Show 'Demotable'. 
+        Data will be fetched and inserted here dynamically using JavaScript. -->
+    <h2>Show Tables</h2>
+    <!-- Buttons for each table -->
+    <div id="table-buttons">
+        <button id="Adopter">Show Adopter</button>
+        <button id="Station">Show Station</button>
+        <button id="Donator">Show Donator</button>
+        <button id="Animals_Adopt_Shelter">Show Animals Adopt Shelter</button>
+        <button id="Donation_Account_Hold">Show Donation Account Hold</button>
+        <button id="MedicalRecord_Has">Show MedicalRecord Has</button>
+        <button id="Lifecare_Volunteer">Show Lifecare Volunteer</button>
+        <button id="Volunteer_Recruit">Show Volunteer Recruit</button>
+        <button id="Staff_Hire">Show Staff Hire</button>
+        <button id="TakeCare">Show TakeCare</button>
+    </div>
+    <!-- Tables (Initially Hidden) -->
+    <div id="table-container">
+        <table id="adopter" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Phone</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="station" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Address</th>
+                <th>Max Capacity</th>
+                <th>Environment</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="donator" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Donator ID</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="animals_adopt_shelter" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Animal ID</th>
+                <th>Species</th>
+                <th>Found Location</th>
+                <th>Found Date</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="donation_account_hold" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Account ID</th>
+                <th>Balance</th>
+                <th>Donation Date</th>
+                <th>Station Address</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="medicalrecord_has" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Record Date</th>
+                <th>Animal ID</th>
+                <th>Vaccination</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="lifecare_volunteer" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Volunteer ID</th>
+                <th>Domain of Responsibility</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="volunteer_recruit" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Volunteer ID</th>
+                <th>Total Working Hours</th>
+                <th>Name</th>
+                <th>Schedule</th>
+                <th>Address</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="staff_hire" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Email</th>
+                <th>Salary</th>
+                <th>Phone Number</th>
+                <th>Name</th>
+                <th>Address</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="takecare" border="1" style="display: none;">
+            <thead>
+            <tr>
+                <th>Animal ID</th>
+                <th>Volunteer ID</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>Reset Tables</h2>
+    <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
+    <button id="resetTables"> reset </button> <br>
+    <!-- A placeholder to display messages related to the reset operation. -->
+    <div id="resetResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2> Insert Values into Tables </h2>
+    <form id="insertDemotable">
+        ID: <input type="number" id="insertId" placeholder="Enter ID" required> <br><br>
+        Name: <input type="text" id="insertName" placeholder="Enter Name" maxlength="20"> <br><br>
+
+        <button type="submit"> insert </button> <br>
+    </form>
+    <div id="insertResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>Update Name in DemoTable</h2>
+    <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+    <form id="updataNameDemotable">
+        Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Name" required> <br><br>
+        New Name: <input type="text" id="updateNewName" placeholder="Enter New Name" maxlength="20"> <br><br>
+
+        <button type="submit"> update </button> <br>
+    </form>
+    <!-- A placeholder to display messages related to the update operation. -->
+    <div id="updateNameResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>Count the Tuples in DemoTable</h2>
+    <button id="countDemotable"> count </button> <br><br>
+    <!-- A placeholder to display the count result. -->
+    <div id="countResultMsg"></div> <br>
+
+    <!-- ===================================================================================== -->
+    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
+    <script src="scripts.js"></script>
+</body>
+</html>
