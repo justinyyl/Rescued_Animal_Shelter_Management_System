@@ -168,7 +168,7 @@ VALUES ('james@rescue.com', 4000.00, '587-446-1677', 'James Brown', 'Station E')
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
 VALUES ('lucy@rescue.com', 4500.00, '264-267-3640', 'Lucy James', 'Station D');
 
-INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule，address)
+INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
 VALUES (1, 20, 'Tom', 1, 'Station A');
 
 INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
