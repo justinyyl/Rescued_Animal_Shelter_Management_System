@@ -31,12 +31,14 @@ CREATE TABLE Staff_Hire (
     FOREIGN KEY (address) REFERENCES Station(address) ON DELETE SET NULL
 );
 
-CREATE TABLE Volunteer (
-    ID INT,
+CREATE TABLE Volunteer_Recruit (
+	ID INT,
     total_working_hours INT NOT NULL,
     name CHAR(50) NOT NULL,
     schedule INT,
-    PRIMARY KEY(ID)
+	address CHAR(255) NOT NULL,
+  	PRIMARY KEY(ID),
+  	FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
 );
 
 CREATE TABLE Lifecare_Volunteer (
@@ -166,20 +168,20 @@ VALUES ('james@rescue.com', 4000.00, '587-446-1677', 'James Brown', 'Station E')
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
 VALUES ('lucy@rescue.com', 4500.00, '264-267-3640', 'Lucy James', 'Station D');
 
-INSERT INTO Volunteer (ID, total_working_hours, name, schedule)
-VALUES (1, 20, 'Tom', 1);
+INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule，address)
+VALUES (1, 20, 'Tom', 1, 'Station A');
 
-INSERT INTO Volunteer (ID, total_working_hours, name, schedule)
-VALUES (2, 30, 'Jerry', 2);
+INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
+VALUES (2, 30, 'Jerry', 2, 'Station A');
 
-INSERT INTO Volunteer (ID, total_working_hours, name, schedule)
-VALUES (3, 15, 'Maggie', 3);
+INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
+VALUES (3, 15, 'Maggie', 3, 'Station B');
 
-INSERT INTO Volunteer (ID, total_working_hours, name, schedule)
-VALUES (4, 25, 'Finn', 4);
+INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
+VALUES (4, 25, 'Finn', 4, 'Station B');
 
-INSERT INTO Volunteer (ID, total_working_hours, name, schedule)
-VALUES (5, 10, 'Sophie', 5);
+INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
+VALUES (5, 10, 'Sophie', 5, 'Station C');
 
 INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
 VALUES (1, 'Medical Care');
