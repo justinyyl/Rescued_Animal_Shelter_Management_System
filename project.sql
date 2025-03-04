@@ -4,14 +4,24 @@ CREATE TABLE Adopter (
     phone_number CHAR(20) UNIQUE NOT NULL,
     PRIMARY KEY(email)
 );
-CREATE TABLE Animal_Has (
-    animalID INT,
+
+CREATE TABLE Animals_Adopt_Shelter (
+    aid INT PRIMARY KEY,
     species CHAR(40) NOT NULL,
-    found_location CHAR(40) NOT NULL,
+    found_location CHAR(50) NOT NULL,
     found_date DATE NOT NULL,
-    vaccination_date DATE,
+    name CHAR(50),
+    email CHAR(50),
+    address CHAR(255),
+    FOREIGN KEY (name, email) REFERENCES Adopter(email, name) ON DELETE SET NULL,
+    FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
+);
+
+CREATE TABLE MedicalRecord_Has (
+    recordDate DATE PRIMARY KEY,
+    aid INT PRIMARY KEY,
     vaccination CHAR(1),
-    PRIMARY KEY(animalID)
+    FOREIGN KEY (aid) REFERENCES Animals_Adopt_Shelter(aid) ON DELETE CASCADE
 );
 
 CREATE TABLE Station (
@@ -54,10 +64,12 @@ CREATE TABLE Donator (
     PRIMARY KEY(DID)
 );
 
-CREATE TABLE Donation_Account (
-    accountID INT, 
+CREATE TABLE Donation_Account_Hold (
+    accountID INT PRIMARY KEY, 
     balance INT NOT NULL,
-    PRIMARY KEY(accountID)
+    date DATE NOT NULL,
+    address CHAR(255),
+    FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
 );
 
 CREATE TABLE Donation (
@@ -68,22 +80,14 @@ CREATE TABLE Donation (
     donation_date DATE NOT NULL,
     PRIMARY KEY (DonationID),
     FOREIGN KEY (DID) REFERENCES Donator(DID) ON DELETE CASCADE,
-    FOREIGN KEY (accountID) REFERENCES Donation_Account(accountID) ON DELETE CASCADE
-);
-
-CREATE TABLE Hold (
-    accountID INT NOT NULL,
-    address CHAR(255) NOT NULL,
-    PRIMARY KEY (accountID, address),
-    FOREIGN KEY (accountID) REFERENCES Donation_Account(accountID) ON DELETE CASCADE,
-    FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
+    FOREIGN KEY (accountID) REFERENCES Donation_Account_Hold(accountID) ON DELETE CASCADE
 );
 
 CREATE TABLE Shelter (
     animalID INT NOT NULL,
     address CHAR(255) NOT NULL,
     PRIMARY KEY (animalID, address),
-    FOREIGN KEY (animalID) REFERENCES Animal_Has(animalID) ON DELETE CASCADE,
+    FOREIGN KEY (animalID) REFERENCES Animals_Adopt_Shelter(animalID) ON DELETE CASCADE,
     FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
 );
 
@@ -91,7 +95,7 @@ CREATE TABLE TakeCare (
     animalID INT NOT NULL,
     ID INT NOT NULL,
     PRIMARY KEY (animalID, ID),
-    FOREIGN KEY (animalID) REFERENCES Animal_Has(animalID) ON DELETE CASCADE,
+    FOREIGN KEY (animalID) REFERENCES Animals_Adopt_Shelter(animalID) ON DELETE CASCADE,
     FOREIGN KEY (ID) REFERENCES Volunteer_Recruit(ID) ON DELETE CASCADE
 );
 
