@@ -13,7 +13,7 @@ CREATE TABLE Animals_Adopt_Shelter (
     name CHAR(50),
     email CHAR(50),
     address CHAR(255),
-    FOREIGN KEY (name, email) REFERENCES Adopter(email, name) ON DELETE SET NULL,
+    FOREIGN KEY (email) REFERENCES Adopter(email) ON DELETE SET NULL,
     FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
 );
 
