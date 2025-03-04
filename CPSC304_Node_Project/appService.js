@@ -92,7 +92,7 @@ async function initiateTables() {
     return await withOracleDB(async (connection) => {
         for (const tableName of allowedTables) {
             try {
-                await connection.execute(`DROP TABLE ${tableName}  CASCADE CONSTRAINTS`);
+                await connection.execute(`DROP TABLE ${tableName} CASCADE CONSTRAINTS`);
             } catch (err) {
                 console.log('Table might not exist, proceeding to create...');
             }
