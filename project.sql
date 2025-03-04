@@ -94,6 +94,30 @@ VALUES ('def@163.com', 'p4', '456-789-4756');
 INSERT INTO Adopter (email, name, phone_number)
 VALUES ('efg@gmail.com', 'p5', '125-732-5629');
 
+INSERT INTO Animals_Adopt_Shelter
+(animalID, species, found_location, found_date, name, email, address)
+VALUES (100, 'Dog', 'City Park', DATE '2023-01-10', DATE '2023-01-15', 'p1', 'abc@hotmail.com');
+
+INSERT INTO Animals_Adopt_Shelter
+(animalID, species, found_location, found_date, name, email, address)
+VALUES (101, 'Cat', 'Downtown', DATE '2023-01-20', DATE '2023-02-01', 'p2', 'bcd@gmail.com');
+
+INSERT INTO Animals_Adopt_Shelter
+(animalID, species, found_location, found_date, name, email, address)
+VALUES (102, 'Rabbit', 'Suburbs', DATE '2022-12-01', NULL, 'p3', 'cde@gmail.com');
+
+INSERT INTO Animals_Adopt_Shelter
+(animalID, species, found_location, found_date, name, email, address)
+VALUES (103, 'Parrot', 'TropicalGarden', DATE '2022-11-15', DATE '2022-11-20', 'p4', 'def@163.com');
+
+INSERT INTO Animals_Adopt_Shelter
+(animalID, species, found_location, found_date, name, email, address)
+VALUES (104, 'Dog', 'School Yard', DATE '2023-02-10', NULL, 'p5', 'efg@gmail.com');
+
+INSERT INTO Animals_Adopt_Shelter
+(animalID, species, found_location, found_date, name, email, address)
+VALUES (105, 'Dog', 'Highway Road', DATE '2023-03-01', DATE '2023-03-05', 'Y');
+
 INSERT INTO Station (address, max_capacity, environment)
 VALUES ('Station A', 50, 'Urban');
 
@@ -167,27 +191,27 @@ INSERT INTO Donator (DID, name)
 VALUES (105, 'XYZ Philanthropy');
 
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
-VALUES (1001, 5000, DATE'2024-01-10', '123 Main St');
+VALUES (101, 5000, DATE'2024-01-10', '123 Main St');
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
-VALUES (1002, 3000, DATE'2024-02-05', '456 Elm St');
+VALUES (102, 3000, DATE'2024-02-05', '456 Elm St');
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
-VALUES (1003, 7000, DATE'2024-02-20', '789 Oak Ave');
+VALUES (103, 7000, DATE'2024-02-20', '789 Oak Ave');
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
-VALUES (1004, 2000, DATE'2024-03-01', '101 Pine Rd');
+VALUES (104, 2000, DATE'2024-03-01', '101 Pine Rd');
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address) 
-VALUES (1005, 4500, DATE'2024-03-15', '202 Birch Ln');
+VALUES (105, 4500, DATE'2024-03-15', '202 Birch Ln');
 
 INSERT INTO TakeCare (aid, ID)
-VALUES (100, 1);
+VALUES (101, 1);
 
 INSERT INTO TakeCare (aid, ID)
-VALUES (101, 2);
+VALUES (102, 2);
 
 INSERT INTO TakeCare (aid, ID)
-VALUES (102, 3);
+VALUES (103, 3);
 
 INSERT INTO TakeCare (aid, ID)
-VALUES (103, 1);
+VALUES (104, 1);
 
 INSERT INTO TakeCare (aid, ID)
 VALUES (105, 4);
