@@ -71,17 +71,6 @@ CREATE TABLE Donation_Account_Hold (
     FOREIGN KEY (address) REFERENCES Station(address) ON DELETE CASCADE
 );
 
-CREATE TABLE Donation (
-    DonationID INT,
-    DID INT NOT NULL,
-    accountID INT NOT NULL,
-    donated_amount DECIMAL(15,2) NOT NULL,
-    donation_date DATE NOT NULL,
-    PRIMARY KEY (DonationID),
-    FOREIGN KEY (DID) REFERENCES Donator(DID) ON DELETE CASCADE,
-    FOREIGN KEY (accountID) REFERENCES Donation_Account_Hold(accountID) ON DELETE CASCADE
-);
-
 CREATE TABLE TakeCare (
     aid INT NOT NULL,
     ID INT NOT NULL,
@@ -177,68 +166,12 @@ VALUES (104, 'ABC Foundation');
 INSERT INTO Donator (DID, name)
 VALUES (105, 'XYZ Philanthropy');
 
-INSERT INTO Donation_Account (accountID, balance)
-VALUES (1000, 5000);
-
-INSERT INTO Donation_Account (accountID, balance)
-VALUES (1001, 2000);
-
-INSERT INTO Donation_Account (accountID, balance)
-VALUES (1002, 10000);
-
-INSERT INTO Donation_Account (accountID, balance)
-VALUES (1003, 1500);
-
-INSERT INTO Donation_Account (accountID, balance)
-VALUES (1004, 7500);
-
-INSERT INTO Donation (DonationID, DID, accountID, donated_amount, donation_date)
-VALUES (1, 101, 1000, 1000.00, DATE '2023-01-05');
-
-INSERT INTO Donation (DonationID, DID, accountID, donated_amount, donation_date)
-VALUES (2, 102, 1001, 500.00, DATE '2023-02-10');
-
-INSERT INTO Donation (DonationID, DID, accountID, donated_amount, donation_date)
-VALUES (3, 103, 1002, 2000.00, DATE '2023-03-15');
-
-INSERT INTO Donation (DonationID, DID, accountID, donated_amount, donation_date)
-VALUES (4, 104, 1003, 300.00, DATE '2023-04-20');
-
-INSERT INTO Donation (DonationID, DID, accountID, donated_amount, donation_date)
-VALUES (5, 105, 1004, 1500.00, DATE '2023-05-25');
-
-INSERT INTO Hold (accountID, address)
-VALUES (1000, 'Station A');
-
-INSERT INTO Hold (accountID, address)
-VALUES (1001, 'Station B');
-
-INSERT INTO Hold (accountID, address)
-VALUES (1002, 'Station C');
-
-INSERT INTO Hold (accountID, address)
-VALUES (1003, 'Station D');
-
-INSERT INTO Hold (accountID, address)
-VALUES (1004, 'Station E');
-
-INSERT INTO Shelter (aid, address)
-VALUES (100, 'Station A');
-
-INSERT INTO Shelter (aid, address)
-VALUES (101, 'Station A');
-
-INSERT INTO Shelter (aid, address)
-VALUES (102, 'Station B');
-
-INSERT INTO Shelter (aid, address)
-VALUES (103, 'Station C');
-
-INSERT INTO Shelter (aid, address)
-VALUES (104, 'Station D');
-
-INSERT INTO Shelter (aid, address)
-VALUES (105, 'Station E');
+INSERT INTO Donation_Account_Hold (accountID, balance, date, address) VALUES
+(1001, 5000, '2024-01-10', '123 Main St'),
+(1002, 3000, '2024-02-05', '456 Elm St'),
+(1003, 7000, '2024-02-20', '789 Oak Ave'),
+(1004, 2000, '2024-03-01', '101 Pine Rd'),
+(1005, 4500, '2024-03-15', '202 Birch Ln');
 
 INSERT INTO TakeCare (aid, ID)
 VALUES (100, 1);
@@ -254,3 +187,10 @@ VALUES (103, 1);
 
 INSERT INTO TakeCare (aid, ID)
 VALUES (105, 4);
+
+INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination) VALUES
+('2024-02-01', 101, 'Y'),
+('2024-02-15', 102, 'N'),
+('2024-03-05', 103, 'Y'),
+('2024-03-10', 104, 'Y'),
+('2024-03-20', 105, 'N');
