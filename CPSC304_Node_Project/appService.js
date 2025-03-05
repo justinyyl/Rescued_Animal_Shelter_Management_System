@@ -1,73 +1,79 @@
+// appService.js
 const oracledb = require('oracledb');
 const loadEnvFile = require('./utils/envUtil');
-
 const envVariables = loadEnvFile('./.env');
 
-// Database configuration setup. Ensure your .env file has the required database credentials.
+
 const dbConfig = {
-    user: envVariables.ORACLE_USER,
-    password: envVariables.ORACLE_PASS,
-    connectString: `${envVariables.ORACLE_HOST}:${envVariables.ORACLE_PORT}/${envVariables.ORACLE_DBNAME}`,
-    poolMin: 1,
-    poolMax: 3,
-    poolIncrement: 1,
-    poolTimeout: 60
+  user: envVariables.ORACLE_USER,
+  password: envVariables.ORACLE_PASS,
+  connectString: `${envVariables.ORACLE_HOST}:${envVariables.ORACLE_PORT}/${envVariables.ORACLE_DBNAME}`,
+  poolMin: 1,
+  poolMax: 3,
+  poolIncrement: 1,
+  poolTimeout: 60
 };
 
-// initialize connection pool
+
 async function initializeConnectionPool() {
-    try {
-        await oracledb.createPool(dbConfig);
-        console.log('Connection pool started');
-    } catch (err) {
-        console.error('Initialization error: ' + err.message);
-    }
+  try {
+    await oracledb.createPool(dbConfig);
+    console.log('Connection pool started');
+  } catch (err) {
+    console.error('Initialization error:', err.message);
+  }
 }
 
+
 async function closePoolAndExit() {
-    console.log('\nTerminating');
-    try {
-        await oracledb.getPool().close(10); // 10 seconds grace period for connections to finish
-        console.log('Pool closed');
-        process.exit(0);
-    } catch (err) {
-        console.error(err.message);
-        process.exit(1);
-    }
+  console.log('\nTerminating');
+  try {
+    await oracledb.getPool().close(10);
+    console.log('Pool closed');
+    process.exit(0);
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
 }
 
 initializeConnectionPool();
-
-process
-    .once('SIGTERM', closePoolAndExit)
-    .once('SIGINT', closePoolAndExit);
+process.once('SIGTERM', closePoolAndExit).once('SIGINT', closePoolAndExit);
 
 
-// ----------------------------------------------------------
-// Wrapper to manage OracleDB actions, simplifying connection handling.
 async function withOracleDB(action) {
-    let connection;
-    try {
-        connection = await oracledb.getConnection(); // Gets a connection from the default pool
-        return await action(connection);
-    } catch (err) {
-        console.error(err);
-        throw err;
-    } finally {
-        if (connection) {
-            try {
-                await connection.close();
-            } catch (err) {
-                console.error(err);
-            }
-        }
+  let connection;
+  try {
+    connection = await oracledb.getConnection();
+    return await action(connection);
+  } catch (err) {
+    console.error(err);
+    throw err;
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (closeErr) {
+        console.error(closeErr);
+      }
     }
+  }
 }
 
 
-// ----------------------------------------------------------
-// Core functions for database operations
-// Modify these functions, especially the SQL queries, based on your project's requirements and design.
+async function testOracleConnection() {
+  return await withOracleDB(async () => true).catch(() => false);
+}
+
+
+async function fetchTableFromDb(tableName) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(`SELECT * FROM ${tableName}`);
+    return result.rows;
+  }).catch(() => []);
+}
+
+
 const allowedTables = [
   "TakeCare",
   "MedicalRecord_Has",
@@ -81,34 +87,19 @@ const allowedTables = [
   "Adopter"
 ];
 
-async function testOracleConnection() {
-    return await withOracleDB(async (connection) => {
-        return true;
-    }).catch(() => {
-        return false;
-    });
-}
-
-async function fetchTableFromDb(tableName) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(`SELECT * FROM ${tableName}`);
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
-}
-
 async function initiateTables() {
-  return await withOracleDB(async (connection) => {
+  return await withOracleDB(async (conn) => {
+    // 1) Drop existing tables
     for (const tableName of allowedTables) {
-        try {
-            await connection.execute(`DROP TABLE ${tableName} CASCADE CONSTRAINTS`);
-        } catch (err) {
-            console.log('Table might not exist, proceeding to create...');
-        }
+      try {
+        await conn.execute(`DROP TABLE ${tableName} CASCADE CONSTRAINTS`);
+      } catch (err) {
+        console.log(`[initiateTables] Table ${tableName} may not exist. Skipping drop.`);
+      }
     }
-    // Create parent tables first, then children
-    await connection.execute(`
+
+    // 2) Create parent tables first
+    await conn.execute(`
       CREATE TABLE Adopter (
           email        CHAR(50),
           name         CHAR(50) NOT NULL,
@@ -117,7 +108,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE Station (
           address      CHAR(255) PRIMARY KEY,
           max_capacity INT NOT NULL,
@@ -125,7 +116,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE Donator (
           DID  INT,
           name CHAR(50) NOT NULL,
@@ -133,7 +124,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE Animals_Adopt_Shelter (
           aid             INT PRIMARY KEY,
           species         CHAR(40) NOT NULL,
@@ -146,7 +137,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE Donation_Account_Hold (
           accountID      INT PRIMARY KEY,
           balance        INT NOT NULL,
@@ -156,7 +147,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE Volunteer_Recruit (
           ID                 INT,
           total_working_hours INT NOT NULL,
@@ -168,7 +159,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE Lifecare_Volunteer (
           ID                       INT,
           domain_of_responsibility CHAR(50) NOT NULL,
@@ -177,7 +168,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE MedicalRecord_Has (
           recordDate  DATE,
           aid         INT PRIMARY KEY,
@@ -186,7 +177,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE Staff_Hire (
           email        CHAR(50),
           salary       DECIMAL(10,2) NOT NULL,
@@ -198,7 +189,7 @@ async function initiateTables() {
       )
     `);
 
-    await connection.execute(`
+    await conn.execute(`
       CREATE TABLE TakeCare (
           aid INT NOT NULL,
           ID  INT NOT NULL,
@@ -208,19 +199,24 @@ async function initiateTables() {
       )
     `);
 
-    await connection.commit();
-    console.log("All tables created successfully!");
+    await conn.commit();
+    console.log("[initiateTables] All tables created successfully!");
     return true;
   }).catch((err) => {
-    console.error("Error initiating tables:", err);
+    console.error("[initiateTables] Error initiating tables:", err);
     return false;
   });
 }
-// Inserts a new Adopter record.
+
+// --------------------------------------------------
+// D) Insert Operations
+
+// Adopter
 async function insertAdopter(email, name, phone_number) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO ADOPTER (email, name, phone_number) VALUES (:email, :name, :phone_number)`,
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Adopter (email, name, phone_number)
+       VALUES (:email, :name, :phone_number)`,
       [email, name, phone_number],
       { autoCommit: true }
     );
@@ -228,11 +224,12 @@ async function insertAdopter(email, name, phone_number) {
   }).catch(() => false);
 }
 
-// Inserts a new Station record.
+// Station
 async function insertStation(address, max_capacity, environment) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO STATION (address, max_capacity, environment) VALUES (:address, :max_capacity, :environment)`,
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Station (address, max_capacity, environment)
+       VALUES (:address, :max_capacity, :environment)`,
       [address, max_capacity, environment],
       { autoCommit: true }
     );
@@ -240,11 +237,12 @@ async function insertStation(address, max_capacity, environment) {
   }).catch(() => false);
 }
 
-// Inserts a new Donator record.
+// Donator
 async function insertDonator(DID, name) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO DONATOR (DID, name) VALUES (:DID, :name)`,
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Donator (DID, name)
+       VALUES (:DID, :name)`,
       [DID, name],
       { autoCommit: true }
     );
@@ -252,11 +250,11 @@ async function insertDonator(DID, name) {
   }).catch(() => false);
 }
 
-// Inserts a new Animals_Adopt_Shelter record.
+// Animals_Adopt_Shelter
 async function insertAnimalsAdoptShelter(aid, species, found_location, found_date, email, address) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO ANIMALS_ADOPT_SHELTER (aid, species, found_location, found_date, email, address)
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Animals_Adopt_Shelter (aid, species, found_location, found_date, email, address)
        VALUES (:aid, :species, :found_location, :found_date, :email, :address)`,
       [aid, species, found_location, found_date, email, address],
       { autoCommit: true }
@@ -265,11 +263,11 @@ async function insertAnimalsAdoptShelter(aid, species, found_location, found_dat
   }).catch(() => false);
 }
 
-// Inserts a new Donation_Account_Hold record.
+// Donation_Account_Hold
 async function insertDonationAccountHold(accountID, balance, donation_date, address) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO DONATION_ACCOUNT_HOLD (accountID, balance, donation_date, address)
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
        VALUES (:accountID, :balance, :donation_date, :address)`,
       [accountID, balance, donation_date, address],
       { autoCommit: true }
@@ -278,24 +276,11 @@ async function insertDonationAccountHold(accountID, balance, donation_date, addr
   }).catch(() => false);
 }
 
-// Inserts a new MedicalRecord_Has record.
-async function insertMedicalRecordHas(recordDate, aid, vaccination) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO MEDICALRECORD_HAS (recordDate, aid, vaccination)
-       VALUES (:recordDate, :aid, :vaccination)`,
-      [recordDate, aid, vaccination],
-      { autoCommit: true }
-    );
-    return result.rowsAffected && result.rowsAffected > 0;
-  }).catch(() => false);
-}
-
-// Inserts a new Volunteer_Recruit record.
+// Volunteer_Recruit
 async function insertVolunteerRecruit(ID, total_working_hours, name, schedule, address) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO VOLUNTEER_RECRUIT (ID, total_working_hours, name, schedule, address)
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
        VALUES (:ID, :total_working_hours, :name, :schedule, :address)`,
       [ID, total_working_hours, name, schedule, address],
       { autoCommit: true }
@@ -304,11 +289,11 @@ async function insertVolunteerRecruit(ID, total_working_hours, name, schedule, a
   }).catch(() => false);
 }
 
-// Inserts a new Lifecare_Volunteer record.
+// Lifecare_Volunteer
 async function insertLifecareVolunteer(ID, domain_of_responsibility) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO LIFECARE_VOLUNTEER (ID, domain_of_responsibility)
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
        VALUES (:ID, :domain_of_responsibility)`,
       [ID, domain_of_responsibility],
       { autoCommit: true }
@@ -317,11 +302,24 @@ async function insertLifecareVolunteer(ID, domain_of_responsibility) {
   }).catch(() => false);
 }
 
-// Inserts a new Staff_Hire record.
+// MedicalRecord_Has
+async function insertMedicalRecordHas(recordDate, aid, vaccination) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
+       VALUES (:recordDate, :aid, :vaccination)`,
+      [recordDate, aid, vaccination],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Staff_Hire
 async function insertStaffHire(email, salary, phone_number, name, address) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO STAFF_HIRE (email, salary, phone_number, name, address)
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
        VALUES (:email, :salary, :phone_number, :name, :address)`,
       [email, salary, phone_number, name, address],
       { autoCommit: true }
@@ -330,11 +328,11 @@ async function insertStaffHire(email, salary, phone_number, name, address) {
   }).catch(() => false);
 }
 
-// Inserts a new TakeCare record.
+// TakeCare
 async function insertTakeCare(aid, ID) {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute(
-      `INSERT INTO TAKECARE (aid, ID)
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `INSERT INTO TakeCare (aid, ID)
        VALUES (:aid, :ID)`,
       [aid, ID],
       { autoCommit: true }
@@ -343,43 +341,21 @@ async function insertTakeCare(aid, ID) {
   }).catch(() => false);
 }
 
-async function updateNameDemotable(oldName, newName) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `UPDATE DEMOTABLE SET name=:newName where name=:oldName`,
-            [newName, oldName],
-            { autoCommit: true }
-        );
-
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch(() => {
-        return false;
-    });
-}
-
-async function countDemotable() {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT Count(*) FROM DEMOTABLE');
-        return result.rows[0][0];
-    }).catch(() => {
-        return -1;
-    });
-}
-
+// --------------------------------------------------
+// Export all
 module.exports = {
   testOracleConnection,
   fetchTableFromDb,
   initiateTables,
-  updateNameDemotable,
-  countDemotable,
+
   insertAdopter,
   insertStation,
   insertDonator,
   insertAnimalsAdoptShelter,
   insertDonationAccountHold,
-  insertMedicalRecordHas,
   insertVolunteerRecruit,
   insertLifecareVolunteer,
+  insertMedicalRecordHas,
   insertStaffHire,
   insertTakeCare
 };
