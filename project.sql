@@ -15,7 +15,7 @@ DROP TABLE Adopter CASCADE CONSTRAINTS;
 ------------------------------------------------------------------------
 -- 2) CREATE TABLE
 ------------------------------------------------------------------------
-
+--hello 
 CREATE TABLE Adopter (
     email        CHAR(50),
     name         CHAR(50) NOT NULL,
