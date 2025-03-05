@@ -16,7 +16,7 @@ const allowedTables = [
   "Staff_Hire",
   "TakeCare"
 ];
-
+//sss
 
 router.get('/check-db-connection', async (req, res) => {
     const isConnected = await appService.testOracleConnection();

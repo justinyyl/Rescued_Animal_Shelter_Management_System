@@ -65,7 +65,7 @@ async function testOracleConnection() {
   return await withOracleDB(async () => true).catch(() => false);
 }
 
-
+//
 async function fetchTableFromDb(tableName) {
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(`SELECT * FROM ${tableName}`);
@@ -73,7 +73,7 @@ async function fetchTableFromDb(tableName) {
   }).catch(() => []);
 }
 
-
+ 
 const allowedTables = [
   "TakeCare",
   "MedicalRecord_Has",
