@@ -171,12 +171,125 @@
     <br><hr><br> <!-- ========================================================================= -->
 
     <h2> Insert Values into Tables </h2>
-    <form id="insertDemotable">
-        ID: <input type="number" id="insertId" placeholder="Enter ID" required> <br><br>
-        Name: <input type="text" id="insertName" placeholder="Enter Name" maxlength="20"> <br><br>
+    <label for="tableSelect">Choose a table to insert data:</label>
+    <select id="tableSelect" onchange="showForm()">
+        <option value="">-- Select a table --</option>
+        <option value="insert-adopter">Adopter</option>
+        <option value="insert-station">Station</option>
+        <option value="insert-donator">Donator</option>
+        <option value="insert-animals_adopt_shelter">Animals Adopt Shelter</option>
+        <option value="insert-donation_account_hold">Donation Account Hold</option>
+        <option value="insert-medicalrecord_has">Medical Record</option>
+        <option value="insert-lifecare_volunteer">Lifecare Volunteer</option>
+        <option value="insert-volunteer_recruit">Volunteer Recruit</option>
+        <option value="insert-staff_hire">Staff Hire</option>
+        <option value="insert-takecare">Take Care</option>
+    </select>
 
-        <button type="submit"> insert </button> <br>
-    </form>
+    <!-- Insert Forms for Each Table -->
+    <div id="insert-adopter" class="container" style="display: none;">
+        <h2>Insert into Adopter</h2>
+        <label>Email:</label>
+        <input type="text" id="adopterEmail">
+        <label>Name:</label>
+        <input type="text" id="adopterName">
+        <label>Phone Number:</label>
+        <input type="text" id="adopterPhone">
+        <button onclick="insertAdopter(event)">Insert</button>
+        <p class="message" id="adopterInsertResult"></p>
+    </div>
+
+    <div id="insert-station" class="container" style="display: none;">
+        <h2>Insert into Station</h2>
+        <label>Address:</label>
+        <input type="text" id="stationAddress">
+        <label>Max Capacity:</label>
+        <input type="number" id="stationCapacity">
+        <label>Environment:</label>
+        <input type="text" id="stationEnvironment">
+        <button onclick="insertStation(event)">Insert</button>
+        <p class="message" id="stationInsertResult"></p>
+    </div>
+
+    <div id="insert-donator" class="container" style="display: none;">
+        <h2>Insert into Donator</h2>
+        <label>Donator ID:</label>
+        <input type="text" id="donatorId">
+        <label>Name:</label>
+        <input type="text" id="donatorName">
+        <button onclick="insertDonator(event)">Insert</button>
+        <p class="message" id="donatorInsertResult"></p>
+    </div>
+
+    <div id="insert-animals_adopt_shelter" class="container" style="display: none;">
+        <h2>Insert into Animals Adopt Shelter</h2>
+        <label>Animal ID:</label>
+        <input type="text" id="animalId">
+        <label>Species:</label>
+        <input type="text" id="animalSpecies">
+        <button onclick="insertAnimalsAdoptShelter(event)">Insert</button>
+        <p class="message" id="animalsAdoptShelterInsertResult"></p>
+    </div>
+
+    <div id="insert-donation_account_hold" class="container" style="display: none;">
+        <h2>Insert into Donation Account Hold</h2>
+        <label>Account ID:</label>
+        <input type="text" id="accountId">
+        <label>Balance:</label>
+        <input type="number" id="accountBalance">
+        <button onclick="insertDonationAccountHold(event)">Insert</button>
+        <p class="message" id="donationAccountHoldInsertResult"></p>
+    </div>
+
+    <div id="insert-medicalrecord_has" class="container" style="display: none;">
+        <h2>Insert into Medical Record</h2>
+        <label>Record Date:</label>
+        <input type="date" id="recordDate">
+        <label>Animal ID:</label>
+        <input type="text" id="recordAnimalId">
+        <button onclick="insertMedicalRecordHas(event)">Insert</button>
+        <p class="message" id="medicalRecordInsertResult"></p>
+    </div>
+
+    <div id="insert-lifecare_volunteer" class="container" style="display: none;">
+        <h2>Insert into Lifecare Volunteer</h2>
+        <label>Volunteer ID:</label>
+        <input type="text" id="lifeVolunteerId">
+        <label>Responsibility:</label>
+        <input type="text" id="responsibility">
+        <button onclick="insertLifecareVolunteer(event)">Insert</button>
+        <p class="message" id="lifecareVolunteerInsertResult"></p>
+    </div>
+
+    <div id="insert-volunteer_recruit" class="container" style="display: none;">
+        <h2>Insert into Volunteer Recruit</h2>
+        <label>Volunteer ID:</label>
+        <input type="text" id="volunteerId">
+        <label>Working Hours:</label>
+        <input type="number" id="workingHours">
+        <button onclick="insertVolunteerRecruit(event)">Insert</button>
+        <p class="message" id="volunteerRecruitInsertResult"></p>
+    </div>
+
+    <div id="insert-staff_hire" class="container" style="display: none;">
+        <h2>Insert into Staff Hire</h2>
+        <label>Email:</label>
+        <input type="email" id="staffEmail">
+        <label>Salary:</label>
+        <input type="number" id="staffSalary">
+        <button onclick="insertStaffHire(event)">Insert</button>
+        <p class="message" id="staffHireInsertResult"></p>
+    </div>
+
+    <div id="insert-takecare" class="container" style="display: none;">
+        <h2>Insert into Take Care</h2>
+        <label>Animal ID:</label>
+        <input type="text" id="careAnimalId">
+        <label>Volunteer ID:</label>
+        <input type="text" id="careVolunteerId">
+        <button onclick="insertTakeCare(event)">Insert</button>
+        <p class="message" id="takeCareInsertResult"></p>
+    </div>
     <div id="insertResultMsg"></div>
 
     <br><hr><br> <!-- ========================================================================= -->

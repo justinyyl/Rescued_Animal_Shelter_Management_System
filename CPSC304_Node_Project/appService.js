@@ -48,7 +48,7 @@ process
 async function withOracleDB(action) {
     let connection;
     try {
-        connection = await oracledb.getConnection(); // Gets a connection from the default pool 
+        connection = await oracledb.getConnection(); // Gets a connection from the default pool
         return await action(connection);
     } catch (err) {
         console.error(err);
@@ -194,18 +194,131 @@ async function initiateTables() {
     });
 }
 
-async function insertDemotable(id, name) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `INSERT INTO DEMOTABLE (id, name) VALUES (:id, :name)`,
-            [id, name],
-            { autoCommit: true }
-        );
+// Inserts a new Adopter record.
+async function insertAdopter(email, name, phone_number) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO ADOPTER (email, name, phone_number) VALUES (:email, :name, :phone_number)`,
+      [email, name, phone_number],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
 
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch(() => {
-        return false;
-    });
+// Inserts a new Station record.
+async function insertStation(address, max_capacity, environment) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO STATION (address, max_capacity, environment) VALUES (:address, :max_capacity, :environment)`,
+      [address, max_capacity, environment],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new Donator record.
+async function insertDonator(DID, name) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO DONATOR (DID, name) VALUES (:DID, :name)`,
+      [DID, name],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new Animals_Adopt_Shelter record.
+async function insertAnimalsAdoptShelter(aid, species, found_location, found_date, email, address) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO ANIMALS_ADOPT_SHELTER (aid, species, found_location, found_date, email, address)
+       VALUES (:aid, :species, :found_location, :found_date, :email, :address)`,
+      [aid, species, found_location, found_date, email, address],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new Donation_Account_Hold record.
+async function insertDonationAccountHold(accountID, balance, donation_date, address) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO DONATION_ACCOUNT_HOLD (accountID, balance, donation_date, address)
+       VALUES (:accountID, :balance, :donation_date, :address)`,
+      [accountID, balance, donation_date, address],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new MedicalRecord_Has record.
+async function insertMedicalRecordHas(recordDate, aid, vaccination) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO MEDICALRECORD_HAS (recordDate, aid, vaccination)
+       VALUES (:recordDate, :aid, :vaccination)`,
+      [recordDate, aid, vaccination],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new Volunteer_Recruit record.
+async function insertVolunteerRecruit(ID, total_working_hours, name, schedule, address) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO VOLUNTEER_RECRUIT (ID, total_working_hours, name, schedule, address)
+       VALUES (:ID, :total_working_hours, :name, :schedule, :address)`,
+      [ID, total_working_hours, name, schedule, address],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new Lifecare_Volunteer record.
+async function insertLifecareVolunteer(ID, domain_of_responsibility) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO LIFECARE_VOLUNTEER (ID, domain_of_responsibility)
+       VALUES (:ID, :domain_of_responsibility)`,
+      [ID, domain_of_responsibility],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new Staff_Hire record.
+async function insertStaffHire(email, salary, phone_number, name, address) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO STAFF_HIRE (email, salary, phone_number, name, address)
+       VALUES (:email, :salary, :phone_number, :name, :address)`,
+      [email, salary, phone_number, name, address],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Inserts a new TakeCare record.
+async function insertTakeCare(aid, ID) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `INSERT INTO TAKECARE (aid, ID)
+       VALUES (:aid, :ID)`,
+      [aid, ID],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
 }
 
 async function updateNameDemotable(oldName, newName) {
@@ -232,10 +345,19 @@ async function countDemotable() {
 }
 
 module.exports = {
-    testOracleConnection,
-    fetchTableFromDb,
-    initiateTables,
-    insertDemotable, 
-    updateNameDemotable, 
-    countDemotable
+  testOracleConnection,
+  fetchTableFromDb,
+  initiateTables,
+  updateNameDemotable,
+  countDemotable,
+  insertAdopter,
+  insertStation,
+  insertDonator,
+  insertAnimalsAdoptShelter,
+  insertDonationAccountHold,
+  insertMedicalRecordHas,
+  insertVolunteerRecruit,
+  insertLifecareVolunteer,
+  insertStaffHire,
+  insertTakeCare
 };
