@@ -135,12 +135,17 @@ async function insertAnimalsAdoptShelter(event) {
     event.preventDefault();
 
     const animal_id = document.getElementById('animalId').value;
-    const adopter_email = document.getElementById('adopterEmailForAnimal').value;
+    const species = document.getElementById('animalSpecies').value;
+    const found_location = document.getElementById('foundLocation').value;
+    const found_date = document.getElementById('foundDate').value;
+    const email = document.getElementById('ADemail').value;
+    const address = document.getElementById('STaddress').value;
 
     const response = await fetch('/insert-animals-adopt-shelter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ animal_id, adopter_email })
+        body: JSON.stringify({ aid: animal_id, species, found_location,
+                               found_date, email, address })
     });
 
     handleInsertResponse(response, 'animalsAdoptShelterInsertResult');
