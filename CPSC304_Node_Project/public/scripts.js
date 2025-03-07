@@ -246,13 +246,13 @@ async function insertMedicalRecordHas(event) {
 async function insertTakeCare(event) {
     event.preventDefault();
 
-    const caretaker_id = document.getElementById('caretakerId').value;
+    const caretaker_id = document.getElementById('careVolunteerId').value;
     const animal_id = document.getElementById('careAnimalId').value;
 
     const response = await fetch('/insert-takecare', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ caretaker_id, animal_id })
+        body: JSON.stringify({ aid: animal_id, ID: caretaker_id })
     });
 
     handleInsertResponse(response, 'takeCareInsertResult');
