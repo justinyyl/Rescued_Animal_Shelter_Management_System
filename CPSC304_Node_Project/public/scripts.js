@@ -171,13 +171,16 @@ async function insertStaffHire(event) {
 async function insertVolunteerRecruit(event) {
     event.preventDefault();
 
-    const volunteer_id = document.getElementById('volunteerId').value;
-    const recruit_date = document.getElementById('recruitDate').value;
+    const ID = document.getElementById('volunteerID').value;
+    const total_working_hours = document.getElementById('workingHours').value;
+    const name = document.getElementById('VolunteerName').value;
+    const schedule = document.getElementById('schedule').value;
+    const address = document.getElementById('stationAddress').value;
 
     const response = await fetch('/insert-volunteer-recruit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ volunteer_id, recruit_date })
+        body: JSON.stringify({ ID, total_working_hours, name, schedule, address })
     });
 
     handleInsertResponse(response, 'volunteerRecruitInsertResult');
@@ -187,13 +190,13 @@ async function insertVolunteerRecruit(event) {
 async function insertLifecareVolunteer(event) {
     event.preventDefault();
 
-    const volunteer_id = document.getElementById('lifeVolunteerId').value;
-    const care_task = document.getElementById('careTask').value;
+    const ID = document.getElementById('VolunteerID').value;
+    const domain_of_responsibility = document.getElementById('responsibility').value;
 
     const response = await fetch('/insert-lifecare-volunteer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ volunteer_id, care_task })
+        body: JSON.stringify({ ID, domain_of_responsibility })
     });
 
     handleInsertResponse(response, 'lifecareVolunteerInsertResult');
@@ -219,13 +222,15 @@ async function insertDonator(event) {
 async function insertDonationAccountHold(event) {
     event.preventDefault();
 
-    const account_id = document.getElementById('accountId').value;
+    const accountID = document.getElementById('accountId').value;
     const balance = document.getElementById('accountBalance').value;
+    const donation_date = document.getElementById('donationDate').value;
+    const address = document.getElementById('donatorAddress').value;
 
     const response = await fetch('/insert-donation-account-hold', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ account_id, balance })
+        body: JSON.stringify({ accountID, balance, donation_date, address })
     });
 
     handleInsertResponse(response, 'donationAccountHoldInsertResult');
@@ -235,13 +240,14 @@ async function insertDonationAccountHold(event) {
 async function insertMedicalRecordHas(event) {
     event.preventDefault();
 
-    const record_id = document.getElementById('recordId').value;
-    const details = document.getElementById('medicalDetails').value;
+    const recordDate = document.getElementById('recordDate').value;
+    const aid = document.getElementById('recordAnimalId').value;
+    const vaccination = document.getElementById('vaccination').value;
 
     const response = await fetch('/insert-medicalrecord-has', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ record_id, details })
+        body: JSON.stringify({ recordDate, aid, vaccination })
     });
 
     handleInsertResponse(response, 'medicalRecordInsertResult');
