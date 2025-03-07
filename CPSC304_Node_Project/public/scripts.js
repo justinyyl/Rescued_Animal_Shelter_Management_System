@@ -107,7 +107,7 @@ async function insertAdopter(event) {
     const response = await fetch('/insert-adopter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, name: name, phone_number })
+        body: JSON.stringify({ email: email, name: name, phone_number: phone_number })
     });
 
     handleInsertResponse(response, 'adopterInsertResult');
@@ -118,11 +118,13 @@ async function insertStation(event) {
     event.preventDefault();
 
     const address = document.getElementById('stationAddress').value;
+    const max_capacity = document.getElementById('stationCapacity').value;
+    const environment = document.getElementById('stationEnvironment').value;
 
     const response = await fetch('/insert-station', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address })
+        body: JSON.stringify({ address, max_capacity, environment})
     });
 
     handleInsertResponse(response, 'stationInsertResult');
@@ -196,14 +198,14 @@ async function insertLifecareVolunteer(event) {
 async function insertDonator(event) {
     event.preventDefault();
 
-    const donor_id = document.getElementById('donorId').value;
-    const donation_amount = document.getElementById('donationAmount').value;
+    const donor_id = document.getElementById('donatorId').value;
+    const donatorName = document.getElementById('donatorName').value;
 
     const response = await fetch('/insert-donator', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ donor_id, donation_amount })
-    });
+        body: JSON.stringify({ DID: donor_id, name: donatorName })
+    }); 
 
     handleInsertResponse(response, 'donatorInsertResult');
 }
