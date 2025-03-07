@@ -155,13 +155,16 @@ async function insertAnimalsAdoptShelter(event) {
 async function insertStaffHire(event) {
     event.preventDefault();
 
-    const staff_id = document.getElementById('staffId').value;
-    const hire_date = document.getElementById('hireDate').value;
+    const email = document.getElementById('staffEmail').value;
+    const salary = document.getElementById('staffSalary').value;
+    const phone_number = document.getElementById('phoneNUmber').value;
+    const name = document.getElementById('staffName').value;
+    const address = document.getElementById('stationADDRESS').value;
 
     const response = await fetch('/insert-staff-hire', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ staff_id, hire_date })
+        body: JSON.stringify({ email, salary, phone_number, name, address })
     });
 
     handleInsertResponse(response, 'staffHireInsertResult');
@@ -180,7 +183,7 @@ async function insertVolunteerRecruit(event) {
     const response = await fetch('/insert-volunteer-recruit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ID: ID, total_working_hours: total_working_hours, name: name, schedule:schedule, address: st_address })
+        body: JSON.stringify({ ID, total_working_hours, name, schedule, address: st_address })
     });
 
     handleInsertResponse(response, 'volunteerRecruitInsertResult');
@@ -225,7 +228,7 @@ async function insertDonationAccountHold(event) {
     const accountID = document.getElementById('accountId').value;
     const balance = document.getElementById('accountBalance').value;
     const donation_date = document.getElementById('donationDate').value;
-    const address = document.getElementById('donatorAddress').value;
+    const address = document.getElementById('STAddress').value;
 
     const response = await fetch('/insert-donation-account-hold', {
         method: 'POST',
