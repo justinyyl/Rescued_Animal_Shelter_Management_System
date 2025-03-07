@@ -175,12 +175,12 @@ async function insertVolunteerRecruit(event) {
     const total_working_hours = document.getElementById('workingHours').value;
     const name = document.getElementById('VolunteerName').value;
     const schedule = document.getElementById('schedule').value;
-    const address = document.getElementById('stationAddress').value;
+    const st_address = document.getElementById('staAD').value;
 
     const response = await fetch('/insert-volunteer-recruit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ID, total_working_hours, name, schedule, address })
+        body: JSON.stringify({ ID: ID, total_working_hours: total_working_hours, name: name, schedule:schedule, address: st_address })
     });
 
     handleInsertResponse(response, 'volunteerRecruitInsertResult');
