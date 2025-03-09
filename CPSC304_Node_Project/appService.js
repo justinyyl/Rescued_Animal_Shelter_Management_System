@@ -253,10 +253,12 @@ async function insertDonator(DID, name) {
 // Animals_Adopt_Shelter
 async function insertAnimalsAdoptShelter(aid, species, found_location, found_date, email, address) {
   return await withOracleDB(async (conn) => {
+    // const dateValue = new Date(found_date);
+    // const date = dateValue.toISOString().slice(0, 19).replace('T', ' ');
     const result = await conn.execute(
       `INSERT INTO Animals_Adopt_Shelter (aid, species, found_location, found_date, email, address)
-       VALUES (:aid, :species, :found_location, :found_date, :email, :address)`,
-      [aid, species, found_location, found_date, email, address],
+       VALUES (:aid, :species, :found_location, TO_DATE(:found_date, 'YYYY-MM-DD'), :email, :address)`,
+      [aid, species,found_location,found_date, email, address],
       { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
