@@ -270,7 +270,7 @@ async function insertDonationAccountHold(accountID, balance, donation_date, addr
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(
       `INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
-       VALUES (:accountID, :balance, :donation_date, :address)`,
+       VALUES (:accountID, :balance, TO_DATE(:donation_date, 'YYYY-MM-DD'), :address)`,
       [accountID, balance, donation_date, address],
       { autoCommit: true }
     );
@@ -309,7 +309,7 @@ async function insertMedicalRecordHas(recordDate, aid, vaccination) {
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(
       `INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
-       VALUES (:recordDate, :aid, :vaccination)`,
+       VALUES (TO_DATE(:recordDate, 'YYYY-MM-DD'), :aid, :vaccination)`,
       [recordDate, aid, vaccination],
       { autoCommit: true }
     );
