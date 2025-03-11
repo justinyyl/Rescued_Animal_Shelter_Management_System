@@ -342,6 +342,128 @@ async function insertTakeCare(aid, ID) {
     return result.rowsAffected && result.rowsAffected > 0;
   }).catch(() => false);
 }
+// Delete AnimalsAdoptShelter
+async function deleteAnimalsAdoptShelter(aid) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Animals_Adopt_Shelter
+       WHERE aid = :aid`,
+      [aid],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+// Delete Adoptor
+async function deleteAdoptor(email) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Adoptor
+       WHERE email = :email`,
+      [aid],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+// Delete Volunteer_recruit
+async function deleteVolunteer_recruit(address,VolunteerID) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Volunteer_recruit
+       WHERE address = :address AND VolunteerID = VolunteerID`,
+      [aid],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+// Delete MedicalRecord_Has
+async function deleteMedicalRecord_Has( recordDate,animalID) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM MedicalRecord_Has
+       WHERE recordDate = :recordDate AND animalID = animalID`,
+      [aid],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Delete Station
+async function deleteStation(address) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Station
+       WHERE address = :address`,
+      [aid],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Delete Donator
+async function deleteDonator(DID) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Donator WHERE DID = :DID`,
+      [DID],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Delete Donation_Account_Hold
+async function deleteDonationAccountHold(accountID) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Donation_Account_Hold WHERE accountID = :accountID`,
+      [accountID],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+
+// Delete Lifecare_Volunteer
+async function deleteLifecareVolunteer(ID) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Lifecare_Volunteer WHERE ID = :ID`,
+      [ID],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Delete Staff_Hire
+async function deleteStaffHire(email) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM Staff_Hire WHERE email = :email`,
+      [email],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+// Delete TakeCare
+async function deleteTakeCare(aid, ID) {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `DELETE FROM TakeCare WHERE aid = :aid AND ID = :ID`,
+      [aid, ID],
+      { autoCommit: true }
+    );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
 
 // --------------------------------------------------
 // Export all
@@ -359,5 +481,16 @@ module.exports = {
   insertLifecareVolunteer,
   insertMedicalRecordHas,
   insertStaffHire,
-  insertTakeCare
+  insertTakeCare,
+
+  deleteAdoptor,
+  deleteAnimalsAdoptShelter,
+  deleteVolunteerRecruit,
+  deleteMedicalRecord_Has,
+  deleteStation,
+  deleteDonator,
+  deleteDonationAccountHold,
+  deleteLifecareVolunteer,
+  deleteStaffHire,
+  deleteTakeCare
 };

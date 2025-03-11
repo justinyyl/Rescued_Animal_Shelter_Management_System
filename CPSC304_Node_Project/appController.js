@@ -125,4 +125,84 @@ router.post('/insert-takecare', async (req, res) => {
     else         res.status(500).json({ success: false });
 });
 
+// Delete Adopter
+router.post('/delete-adopter', async (req, res) => {
+    const { email } = req.body;
+    const deleted = await appService.deleteAdopter(email);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete Station
+router.post('/delete-station', async (req, res) => {
+    const { address } = req.body;
+    const deleted = await appService.deleteStation(address);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete Donator
+router.post('/delete-donator', async (req, res) => {
+    const { DID } = req.body;
+    const deleted = await appService.deleteDonator(DID);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete Animals_Adopt_Shelter
+router.post('/delete-animals-adopt-shelter', async (req, res) => {
+    const { aid } = req.body;
+    const deleted = await appService.deleteAnimalsAdoptShelter(aid);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete Donation_Account_Hold
+router.post('/delete-donation-account-hold', async (req, res) => {
+    const { accountID } = req.body;
+    const deleted = await appService.deleteDonationAccountHold(accountID);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete MedicalRecord_Has
+router.post('/delete-medicalrecord-has', async (req, res) => {
+    const { aid } = req.body;
+    const deleted = await appService.deleteMedicalRecordHas(aid);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete Volunteer_Recruit
+router.post('/delete-volunteer-recruit', async (req, res) => {
+    const { ID } = req.body;
+    const deleted = await appService.deleteVolunteerRecruit(ID);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete Lifecare_Volunteer
+router.post('/delete-lifecare-volunteer', async (req, res) => {
+    const { ID } = req.body;
+    const deleted = await appService.deleteLifecareVolunteer(ID);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete Staff_Hire
+router.post('/delete-staff-hire', async (req, res) => {
+    const { email } = req.body;
+    const deleted = await appService.deleteStaffHire(email);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
+// Delete TakeCare
+router.post('/delete-takecare', async (req, res) => {
+    const { aid, ID } = req.body;
+    const deleted = await appService.deleteTakeCare(aid, ID);
+    if (deleted) res.json({ success: true });
+    else         res.status(500).json({ success: false });
+});
+
 module.exports = router;
