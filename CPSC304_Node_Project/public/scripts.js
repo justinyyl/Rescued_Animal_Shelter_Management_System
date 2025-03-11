@@ -85,7 +85,7 @@ async function resetTables() {
     }
 }
 
-function showForm() {
+function showFormInsert() {
     selectedTable = document.getElementById("tableSelect").value;
     allForms = document.querySelectorAll(".container");
 
@@ -313,6 +313,184 @@ async function updateNameDemotable(event) {
     } else {
         messageElement.textContent = "Error updating name!";
     }
+}
+
+// Delete Data
+
+function showFormDelete() {
+    selectedTable = document.getElementById("DeleteSelect").value;
+    allForms = document.querySelectorAll(".container");
+
+    allForms.forEach(form => form.style.display = "none");
+
+    if (selectedTable) {
+        document.getElementById(selectedTable).style.display = "block";
+    }
+}
+
+// Handles the response, shows a success or error message, and hides the delete panel.
+async function handleDeleteResponse(response, resultElementId) {
+    const responseData = await response.json();
+    const messageElement = document.getElementById(resultElementId);
+
+    if (responseData.success) {
+        messageElement.textContent = "Data deleting successfully!";
+        messageElement.style.color = "green";
+    } else {
+        messageElement.textContent = "Error deleting data!";
+        messageElement.style.color = "red";
+    }
+}
+
+// delete row of Adopter by email
+async function deleteAdopter(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('deleteAdopterEmail').value;
+
+    const response = await fetch('/delete-adopter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+    });
+
+    handleDeleteResponse(response, 'adopterDeleteResult');
+}
+
+// delete row of Station by address
+async function deleteStation(event) {
+    event.preventDefault();
+
+    const address = document.getElementById('deleteStationAddress').value;
+
+    const response = await fetch('/delete-station', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: address })
+    });
+
+    handleDeleteResponse(response, 'stationDeleteResult');
+}
+
+// delete row of Donator by DID
+async function deleteDonator(event) {
+    event.preventDefault();
+
+    const did = document.getElementById('deleteDID').value;
+
+    const response = await fetch('/delete-donator', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ DID: did })
+    });
+
+    handleDeleteResponse(response, 'donatorDeleteResult');
+}
+
+// Delete row from Animals Adopt Shelter by Animal ID
+async function deleteAnimalsAdoptShelter(event) {
+    event.preventDefault();
+
+    const aid = document.getElementById('deleteAID').value;
+
+    const response = await fetch('/delete-animals-adopt-shelter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ aid: aid })
+    });
+
+    handleDeleteResponse(response, 'adsDeleteResult');
+}
+
+// Delete row from Donation Account Hold by Account ID
+async function deleteDonationAccountHold(event) {
+    event.preventDefault();
+
+    const accountID = document.getElementById('deleteAccountID').value;
+
+    const response = await fetch('/delete-donation-account-hold', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accountID: accountID })
+    });
+
+    handleDeleteResponse(response, 'donationAccountDeleteResult');
+}
+
+// Delete row from Medical Record Has by Animal ID
+async function deleteMedicalRecordHas(event) {
+    event.preventDefault();
+
+    const aid = document.getElementById('deleteMDanimalID').value;
+
+    const response = await fetch('/delete-medicalrecord-has', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ aid: aid })
+    });
+
+    handleDeleteResponse(response, 'MDrecordDeleteResult');
+}
+
+// Delete row from Lifecare Volunteer by Volunteer ID
+async function deleteLifecareVolunteer(event) {
+    event.preventDefault();
+
+    const ID = document.getElementById('deleteLifecareVID').value;
+
+    const response = await fetch('/delete-lifecare-volunteer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ID: ID })
+    });
+
+    handleDeleteResponse(response, 'LCvolunteerDeleteResult');
+}
+
+// Delete row from Volunteer Recruit by Volunteer ID
+async function deleteVolunteerRecruit(event) {
+    event.preventDefault();
+
+    const ID = document.getElementById('deleteVID').value;
+
+    const response = await fetch('/delete-volunteer-recruit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ID: ID })
+    });
+
+    handleDeleteResponse(response, 'volunteerDeleteResult');
+}
+
+// Delete row from Staff Hire by Staff Email
+async function deleteStaffHire(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('deleteStaffEmail').value;
+
+    const response = await fetch('/delete-staff-hire', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+    });
+
+    handleDeleteResponse(response, 'staffDeleteResult');
+}
+
+// Delete row from Take Care by Animal ID and Volunteer ID
+async function deleteTakeCare(event) {
+    event.preventDefault();
+
+    const aid = document.getElementById('deleteTKAID').value;
+    const ID = document.getElementById('deleteTKVID').value;
+
+    const response = await fetch('/delete-takecare', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ aid: aid, ID: ID })
+    });
+
+    handleDeleteResponse(response, 'TKDeleteResult');
 }
 
 // Counts rows in the demotable.

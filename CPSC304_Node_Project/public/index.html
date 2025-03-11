@@ -171,7 +171,7 @@
 
     <h2> Insert Values into Tables </h2>
     <label for="tableSelect">Choose a table to insert data:</label>
-    <select id="tableSelect" onchange="showForm()">
+    <select id="tableSelect" onchange="showFormInsert()">
         <option value="">-- Select a table --</option>
         <option value="insert-adopter">Adopter</option>
         <option value="insert-station">Station</option>
@@ -329,6 +329,106 @@
     </form>
     <!-- A placeholder to display messages related to the update operation. -->
     <div id="updateNameResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+    <h2>Delete Row of Tables</h2>
+    <label for="DeleteSelect">Delete a row from data:</label>
+    <select id="DeleteSelect" onchange="showFormDelete()">
+        <option value="">-- Select a table --</option>
+        <option value="delete-adopter">Adopter</option>
+        <option value="delete-station">Station</option>
+        <option value="delete-donator">Donator</option>
+        <option value="delete-animals_adopt_shelter">Animals Adopt Shelter</option>
+        <option value="delete-donation_account_hold">Donation Account Hold</option>
+        <option value="delete-medicalrecord_has">Medical Record</option>
+        <option value="delete-lifecare_volunteer">Lifecare Volunteer</option>
+        <option value="delete-volunteer_recruit">Volunteer Recruit</option>
+        <option value="delete-staff_hire">Staff Hire</option>
+        <option value="delete-takecare">Take Care</option>
+    </select>
+
+    <!-- Delete Forms for Each Table -->
+    <div id="delete-adopter" class="container" style="display: none;">
+        <h2>Delete from Adopter</h2>
+        <label>Delete by Email:</label>
+        <input type="text" id="deleteAdopterEmail">
+        <button onclick="deleteAdopter(event)">Insert</button>
+        <p class="message" id="adopterDeleteResult"></p>
+    </div>
+
+    <div id="delete-station" class="container" style="display: none;">
+        <h2>Delete from Station</h2>
+        <label>Delete by Address:</label>
+        <input type="text" id="deleteStationAddress">
+        <button onclick="deleteStation(event)">Insert</button>
+        <p class="message" id="stationDeleteResult"></p>
+    </div>
+
+    <div id="delete-donator" class="container" style="display: none;">
+        <h2>Delete from Donator</h2>
+        <label>Delete by Donator ID:</label>
+        <input type="number" id="deleteDID">
+        <button onclick="deleteDonator(event)">Insert</button>
+        <p class="message" id="donatorDeleteResult"></p>
+    </div>
+
+    <div id="delete-animals_adopt_shelter" class="container" style="display: none;">
+        <h2>Delete from Animals Adopt Shelter</h2>
+        <label>Delete by Animal ID:</label>
+        <input type="number" id="deleteAID">
+        <button onclick="deleteAnimalsAdoptShelter(event)">Insert</button>
+        <p class="message" id="adsDeleteResult"></p>
+    </div>
+
+    <div id="delete-donation_account_hold" class="container" style="display: none;">
+        <h2>Delete from Donation Account Hold</h2>
+        <label>Delete by Account ID:</label>
+        <input type="number" id="deleteAccountID">
+        <button onclick="deleteDonationAccountHold(event)">Insert</button>
+        <p class="message" id="donationAccountDeleteResult"></p>
+    </div>
+
+    <div id="delete-medicalrecord_has" class="container" style="display: none;">
+        <h2>Delete from Medical record Has</h2>
+        <label>Delete by Animal ID:</label>
+        <input type="number" id="deleteMDanimalID">
+        <button onclick="deleteMedicalRecordHas(event)">Insert</button>
+        <p class="message" id="MDrecordDeleteResult"></p>
+    </div>
+
+    <div id="delete-lifecare_volunteer" class="container" style="display: none;">
+        <h2>Delete from Lifecare Volunteer</h2>
+        <label>Delete by Volunteer ID:</label>
+        <input type="number" id="deleteLifecareVID">
+        <button onclick="deleteLifecareVolunteer(event)">Insert</button>
+        <p class="message" id="LCvolunteerDeleteResult"></p>
+    </div>
+
+    <div id="delete-volunteer_recruit" class="container" style="display: none;">
+        <h2>Delete from Volunteer Recruit</h2>
+        <label>Delete by Volunteer ID:</label>
+        <input type="number" id="deleteVID">
+        <button onclick="deleteVolunteerRecruit(event)">Insert</button>
+        <p class="message" id="volunteerDeleteResult"></p>
+    </div>
+
+    <div id="delete-staff_hire" class="container" style="display: none;">
+        <h2>Delete from Staff Hire</h2>
+        <label>Delete by Staff Email:</label>
+        <input type="text" id="deleteStaffEmail">
+        <button onclick="deleteStaffHire(event)">Insert</button>
+        <p class="message" id="staffDeleteResult"></p>
+    </div>
+
+    <div id="delete-takecare" class="container" style="display: none;">
+        <h2>Delete from Take Care</h2>
+        <label>Delete by Animal ID:</label>
+        <input type="number" id="deleteTKAID">
+        <label>Delete by Volunteer ID:</label>
+        <input type="number" id="deleteTKVID">
+        <button onclick="deleteTakeCare(event)">Insert</button>
+        <p class="message" id="TKDeleteResult"></p>
+    </div>
 
     <br><hr><br> <!-- ========================================================================= -->
 
