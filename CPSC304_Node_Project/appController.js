@@ -125,6 +125,17 @@ router.post('/insert-takecare', async (req, res) => {
     else         res.status(500).json({ success: false });
 });
 
+/*Receive message from the update value in scripts
+ and call updateValue function in appService*/
+router.post('/update-value-table',async (req,res) => {
+    const {table,attribute,oldName,newName} = req.body;
+    const updated = await appService.updateValue(table,attribute,oldName,newName);
+    if (updated) res.json({success: true});
+    else         res.status(500).json({success: false});
+});
+
+/*Implementation of deletion operations,
+  Might cannot be used?*/
 // Delete Adopter
 router.post('/delete-adopter', async (req, res) => {
     const { email } = req.body;

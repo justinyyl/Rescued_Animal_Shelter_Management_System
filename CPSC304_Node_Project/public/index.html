@@ -8,7 +8,7 @@
     <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
     <!-- <link rel="stylesheet" href="styles.css">   -->
 
-    <title>Group 63 Prject</title>
+    <title>Group 63 Project</title>
 </head>
 <body>
     <!-- ===================================================================================== -->
@@ -321,26 +321,26 @@
 
     <h2>Update Value in Table</h2>
     <label for="UpdateSelect">Select a table:</label>
-    <select id="UpdateSelect" onchange="showFormUpdate()">
+    <select id="UpdateSelect">
         <option value="">-- Select a table --</option>
-        <option value="delete-adopter">Adopter</option>
-        <option value="delete-station">Station</option>
-        <option value="delete-donator">Donator</option>
-        <option value="delete-animals_adopt_shelter">Animals Adopt Shelter</option>
-        <option value="delete-donation_account_hold">Donation Account Hold</option>
-        <option value="delete-medicalrecord_has">Medical Record</option>
-        <option value="delete-lifecare_volunteer">Lifecare Volunteer</option>
-        <option value="delete-volunteer_recruit">Volunteer Recruit</option>
-        <option value="delete-staff_hire">Staff Hire</option>
-        <option value="delete-takecare">Take Care</option>
+        <option value="Adopter">Adopter</option>
+        <option value="Station">Station</option>
+        <option value="Donator">Donator</option>
+        <option value="Animals_Adopt_Shelter">Animals Adopt Shelter</option>
+        <option value="Donation_Account_Hold">Donation Account Hold</option>
+        <option value="MedicalRecord_Has">Medical Record</option>
+        <option value="Lifecare_Volunteer">Lifecare Volunteer</option>
+        <option value="Volunteer_Recruit">Volunteer Recruit</option>
+        <option value="Staff_Hire">Staff Hire</option>
+        <option value="TakeCare">Take Care</option>
     </select>
     </br></br>
-    <form id="updataNameDemotable">
+    <form id="updateTableValue">
         Attribute: <input type="text" id="selectAttribute" placeholder="Attribute" required> <br><br>
-        Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Value" required> <br><br>
-        New Name: <input type="text" id="updateNewValue" placeholder="Enter New Value" maxlength="20"> <br><br>
+        Old Value: <input type="text" id="updateOldValue" placeholder="Enter Old Value" required> <br><br>
+        New Value: <input type="text" id="updateNewValue" placeholder="Enter New Value" maxlength="20"> <br><br>
 
-        <button type="submit"> update </button> <br>
+        <button onclick="updateValue(event)"> update </button> <br>
     </form>
     <!-- A placeholder to display messages related to the update operation. -->
     <div id="updateNameResultMsg"></div>

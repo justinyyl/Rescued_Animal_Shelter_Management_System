@@ -342,6 +342,24 @@ async function insertTakeCare(aid, ID) {
     return result.rowsAffected && result.rowsAffected > 0;
   }).catch(() => false);
 }
+
+//implement Update Table value
+async function updateValue(table,attribute,oldName,newName) {
+  console.log(table,attribute,oldName,newName);
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(
+      `UPDATE ${table} 
+       SET ${attribute} = :newName
+       WHERE ${attribute} = :oldName`,
+      { newName, oldName },
+      { autoCommit: true }
+    );
+    console.log("RowsAffected:", result.rowsAffected);
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => false);
+}
+
+//implementation of Delete Operations
 // Delete AnimalsAdoptShelter
 async function deleteAnimalsAdoptShelter(aid) {
   return await withOracleDB(async (conn) => {
@@ -367,7 +385,7 @@ async function deleteAdoptor(email) {
   }).catch(() => false);
 }
 // Delete Volunteer_recruit
-async function deleteVolunteer_recruit(address,VolunteerID) {
+async function deleteVolunteerRecruit(address,VolunteerID) {
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(
       `DELETE FROM Volunteer_recruit
@@ -482,6 +500,8 @@ module.exports = {
   insertMedicalRecordHas,
   insertStaffHire,
   insertTakeCare,
+
+  updateValue,
 
   deleteAdoptor,
   deleteAnimalsAdoptShelter,

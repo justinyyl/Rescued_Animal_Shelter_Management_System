@@ -286,19 +286,24 @@ async function handleInsertResponse(response, resultElementId) {
     }
 }
 
-// Updates names in the demotable.
-async function updateNameDemotable(event) {
+
+// Updates names in selected table.
+async function updateValue(event) {
     event.preventDefault();
+    const selectedTable = document.getElementById("UpdateSelect").value;
+    console.log(selectedTable);
+    const Attribute = document.getElementById("selectAttribute").value;
+    const oldNameValue = document.getElementById('updateOldValue').value;
+    const newNameValue = document.getElementById('updateNewValue').value;
 
-    const oldNameValue = document.getElementById('updateOldName').value;
-    const newNameValue = document.getElementById('updateNewName').value;
-
-    const response = await fetch('/update-name-demotable', {
+    const response = await fetch('/update-value-table', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            table: selectedTable,
+            attribute: Attribute,
             oldName: oldNameValue,
             newName: newNameValue
         })
@@ -315,8 +320,9 @@ async function updateNameDemotable(event) {
     }
 }
 
-// Delete Data
 
+
+// Delete Data
 function showFormDelete() {
     selectedTable = document.getElementById("DeleteSelect").value;
     allForms = document.querySelectorAll(".container");
@@ -327,6 +333,8 @@ function showFormDelete() {
         document.getElementById(selectedTable).style.display = "block";
     }
 }
+
+
 
 // Handles the response, shows a success or error message, and hides the delete panel.
 async function handleDeleteResponse(response, resultElementId) {
