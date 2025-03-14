@@ -344,20 +344,28 @@ async function insertTakeCare(aid, ID) {
 }
 
 //implement Update Table value
-async function updateValue(table,attribute,oldName,newName) {
-  console.log(table,attribute,oldName,newName);
+async function updateValue(table, attribute, oldName, newName) {
+  console.log(table, attribute, oldName, newName);
   return await withOracleDB(async (conn) => {
+    const sql = `
+      UPDATE ${table}
+      SET ${attribute} = :newName
+      WHERE ${attribute} = :oldName
+    `;
+    //console.log(sql)
     const result = await conn.execute(
-      `UPDATE ${table} 
-       SET ${attribute} = :newName
-       WHERE ${attribute} = :oldName`,
+      sql,
       { newName, oldName },
       { autoCommit: true }
     );
-    console.log("RowsAffected:", result.rowsAffected);
+    console.log("Execute result:", result);
     return result.rowsAffected && result.rowsAffected > 0;
-  }).catch(() => false);
+  }).catch((err) => {
+    console.error("DB Error:", err);
+    return false;
+  });
 }
+
 
 //implementation of Delete Operations
 // Delete AnimalsAdoptShelter

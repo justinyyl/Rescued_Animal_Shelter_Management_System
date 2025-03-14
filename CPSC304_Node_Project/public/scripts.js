@@ -293,8 +293,8 @@ async function updateValue(event) {
     const selectedTable = document.getElementById("UpdateSelect").value;
     console.log(selectedTable);
     const Attribute = document.getElementById("selectAttribute").value;
-    const oldNameValue = document.getElementById('updateOldValue').value;
-    const newNameValue = document.getElementById('updateNewValue').value;
+    const oldValue = document.getElementById('updateOldValue').value;
+    const newValue = document.getElementById('updateNewValue').value;
 
     const response = await fetch('/update-value-table', {
         method: 'POST',
@@ -304,8 +304,8 @@ async function updateValue(event) {
         body: JSON.stringify({
             table: selectedTable,
             attribute: Attribute,
-            oldName: oldNameValue,
-            newName: newNameValue
+            oldName: oldValue,
+            newName: newValue
         })
     });
 
