@@ -1,3 +1,3 @@
-# project_template
-# Please include any additional information that will be useful to your TA in your README! Remember, your goal is to make it easy for your TA to give you points!
+Project Description
+Our project focuses on the database for management for rescued animals.It tracks animal details (species, rescue history), volunteer activities (schedules, specialized roles), adaptors, and medical care (vaccinations), while coordinating shelter resources (station capacity, donation funds).
 https://www.students.cs.ubc.ca/~cs-304/resources/javascript-oracle-resources/node-setup.html
