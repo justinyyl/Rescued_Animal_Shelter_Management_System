@@ -139,7 +139,7 @@ router.post('/update-value-table',async (req,res) => {
 // Delete Adopter
 router.post('/delete-adopter', async (req, res) => {
     const { email } = req.body;
-    const deleted = await appService.deleteAdopter(email);
+    const deleted = await appService.deleteAdoptor(email);
     if (deleted) res.json({ success: true });
     else         res.status(500).json({ success: false });
 });

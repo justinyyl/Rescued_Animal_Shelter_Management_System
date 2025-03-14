@@ -383,22 +383,37 @@ async function deleteAnimalsAdoptShelter(aid) {
 // Delete Adoptor
 async function deleteAdoptor(email) {
   return await withOracleDB(async (conn) => {
-    const result = await conn.execute(
-      `DELETE FROM Adoptor
-       WHERE email = :email`,
-      [aid],
-      { autoCommit: true }
-    );
-    return result.rowsAffected && result.rowsAffected > 0;
-  }).catch(() => false);
+    try {
+      const result = await conn.execute(
+        `DELETE FROM Adopter WHERE TRIM(email) = :email`,
+        [email],
+        { autoCommit: true }
+      );
+
+      if (result.rowsAffected > 0) {
+        console.log(`[deleteAdopter] Successfully deleted adopter with email: ${email}`);//test to find where is the error
+        return true;
+      } else {
+        console.warn(`[deleteAdopter] No rows deleted. Email might not exist: ${email}`);
+        return false;
+      }
+    } catch (err) {
+      console.error(`[deleteAdopter] Error deleting adopter: ${err.message}`);
+      throw err; // Rethrow error so it's logged in appController
+    }
+  }).catch((err) => {
+    console.error(`[deleteAdopter] Catch block error:`, err);
+    return false;
+  });
 }
+
 // Delete Volunteer_recruit
 async function deleteVolunteerRecruit(address,VolunteerID) {
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(
       `DELETE FROM Volunteer_recruit
        WHERE address = :address AND VolunteerID = VolunteerID`,
-      [aid],
+      [address,VolunteerID],
       { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
@@ -410,7 +425,7 @@ async function deleteMedicalRecord_Has( recordDate,animalID) {
     const result = await conn.execute(
       `DELETE FROM MedicalRecord_Has
        WHERE recordDate = :recordDate AND animalID = animalID`,
-      [aid],
+      [recordDate,animalID],
       { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
@@ -422,8 +437,8 @@ async function deleteStation(address) {
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(
       `DELETE FROM Station
-       WHERE address = :address`,
-      [aid],
+       WHERE TRIM(address) = :address`,
+      [address],
       { autoCommit: true }
     );
     return result.rowsAffected && result.rowsAffected > 0;
@@ -471,7 +486,7 @@ async function deleteLifecareVolunteer(ID) {
 async function deleteStaffHire(email) {
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(
-      `DELETE FROM Staff_Hire WHERE email = :email`,
+      `DELETE FROM Staff_Hire WHERE TRIM(email) = :email`,
       [email],
       { autoCommit: true }
     );
