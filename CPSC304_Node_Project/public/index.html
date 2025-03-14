@@ -319,11 +319,26 @@
 
     <br><hr><br> <!-- ========================================================================= -->
 
-    <h2>Update Name in DemoTable</h2>
-    <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+    <h2>Update Value in Table</h2>
+    <label for="UpdateSelect">Select a table:</label>
+    <select id="UpdateSelect" onchange="showFormUpdate()">
+        <option value="">-- Select a table --</option>
+        <option value="delete-adopter">Adopter</option>
+        <option value="delete-station">Station</option>
+        <option value="delete-donator">Donator</option>
+        <option value="delete-animals_adopt_shelter">Animals Adopt Shelter</option>
+        <option value="delete-donation_account_hold">Donation Account Hold</option>
+        <option value="delete-medicalrecord_has">Medical Record</option>
+        <option value="delete-lifecare_volunteer">Lifecare Volunteer</option>
+        <option value="delete-volunteer_recruit">Volunteer Recruit</option>
+        <option value="delete-staff_hire">Staff Hire</option>
+        <option value="delete-takecare">Take Care</option>
+    </select>
+    </br></br>
     <form id="updataNameDemotable">
-        Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Name" required> <br><br>
-        New Name: <input type="text" id="updateNewName" placeholder="Enter New Name" maxlength="20"> <br><br>
+        Attribute: <input type="text" id="selectAttribute" placeholder="Attribute" required> <br><br>
+        Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Value" required> <br><br>
+        New Name: <input type="text" id="updateNewValue" placeholder="Enter New Value" maxlength="20"> <br><br>
 
         <button type="submit"> update </button> <br>
     </form>
