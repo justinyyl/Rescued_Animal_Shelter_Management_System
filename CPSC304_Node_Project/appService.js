@@ -346,18 +346,24 @@ async function insertTakeCare(aid, ID) {
 //implement Update Table value
 async function updateValue(table, attribute, oldName, newName) {
   console.log(table, attribute, oldName, newName);
+
   return await withOracleDB(async (conn) => {
     const sql = `
       UPDATE ${table}
       SET ${attribute} = :newName
-      WHERE ${attribute} = :oldName
+      WHERE TRIM(${attribute}) = :oldName
     `;
-    //console.log(sql)
+    console.log(sql);
+
     const result = await conn.execute(
       sql,
-      { newName, oldName },
+      {
+        oldName: oldName,
+        newName: newName,
+      },
       { autoCommit: true }
     );
+
     console.log("Execute result:", result);
     return result.rowsAffected && result.rowsAffected > 0;
   }).catch((err) => {
@@ -365,6 +371,7 @@ async function updateValue(table, attribute, oldName, newName) {
     return false;
   });
 }
+
 
 
 //implementation of Delete Operations
