@@ -512,6 +512,35 @@ async function deleteTakeCare(aid, ID) {
     return result.rowsAffected && result.rowsAffected > 0;
   }).catch(() => false);
 }
+// Selection query with AND/OR clauses
+async function selectTuples(table, conditions) {
+  return await withOracleDB(async (conn) => {
+      let sql = `SELECT * FROM ${table}`;
+      const values = {};
+      if (conditions.length > 0) {
+          const whereClauses = [];
+          conditions.forEach((cond, index) => {
+            const placeholder = `val${index}`;
+            whereClauses.push(`TRIM(${cond.attribute}) ${cond.operator} :${placeholder}`);
+            values[placeholder] = cond.value;
+        });
+        //or and
+          let fullWhere = whereClauses[0];
+          for (let i = 1; i < whereClauses.length; i++) {
+              fullWhere += ` ${conditions[i].connector || 'AND'} ${whereClauses[i]}`;
+          }
+
+          sql += ` WHERE ${fullWhere}`;
+      }
+
+      const result = await conn.execute(sql, values);
+      return result.rows;
+  }).catch((err) => {
+      console.error("Selection Error:", err);
+      return [];
+  });
+}
+
 
 // --------------------------------------------------
 // Export all
@@ -542,5 +571,7 @@ module.exports = {
   deleteDonationAccountHold,
   deleteLifecareVolunteer,
   deleteStaffHire,
-  deleteTakeCare
+  deleteTakeCare,
+
+  selectTuples
 };

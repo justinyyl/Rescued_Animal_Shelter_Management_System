@@ -518,6 +518,158 @@ async function countDemotable() {
         alert("Error in count demotable!");
     }
 }
+function addCondition() {
+    const container = document.getElementById("condition-container");
+    const index = container.children.length;
+    const selectedTable = document.getElementById("selectTable").value;
+
+    if (!selectedTable) {
+        alert("Please select a table first!");
+        return;
+    }
+
+    const attributesByTable = {
+    Adopter: ["email", "name", "phone_number"],
+    Station: ["address", "max_capacity", "environment"],
+    Donator: ["DID", "name"],
+    Animals_Adopt_Shelter: ["aid", "species", "found_location", "found_date", "email", "address"],
+    Donation_Account_Hold: ["accountID", "balance", "donation_date", "address"],
+    MedicalRecord_Has: ["recordDate", "aid", "vaccination"],
+    Lifecare_Volunteer: ["ID", "domain_of_responsibility"],
+    Volunteer_Recruit: ["ID", "total_working_hours", "name", "schedule", "address"],
+    Staff_Hire: ["email", "salary", "phone_number", "name", "address"],
+    TakeCare: ["aid", "ID"]
+    //add othere if need
+    };
+
+    const attributeOptions = attributesByTable[selectedTable] || [];
+
+    const div = document.createElement("div");
+    div.innerHTML = `
+        ${index > 0 ? `<select class="connector">
+            <option value="AND">AND</option>
+            <option value="OR">OR</option>
+        </select>` : ''}
+
+        <select class="attribute">
+            ${attributeOptions.map(attr => `<option value="${attr}">${attr}</option>`).join("")}
+        </select>
+
+        <select class="operator">
+            <option value="=">=</option>
+            <option value="!=">!=</option>
+            <option value="<"><</option>
+            <option value="<="><=</option>
+            <option value=">">></option>
+            <option value=">=">>=</option>
+        </select>
+
+        <input placeholder="Value" class="value" required>
+    `;
+    container.appendChild(div);
+}
+function displaySelectionResult(columns, data, tableName) {
+    const containerId = "selectionResultTable";
+
+    const parent = document.getElementById("selectionTableContainer");
+    parent.innerHTML = "";  // remote the old
+
+    const container = document.createElement("div");
+    container.id = containerId;
+
+    if (data.length === 0 || columns.length === 0) {
+        container.innerHTML = "<p>No matching results.</p>";
+        parent.appendChild(container);
+        return;
+    }
+//show tubles
+    const table = document.createElement("table");
+    table.border = "1";
+    table.style.marginTop = "10px";
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+    columns.forEach(col => {
+        const th = document.createElement("th");
+        th.textContent = col;
+        headerRow.appendChild(th);
+    });
+    const tbody = document.createElement("tbody");
+    data.forEach(row => {
+        const tr = tbody.insertRow();
+        row.forEach(cell => {
+            const td = tr.insertCell();
+            td.textContent = cell;
+        });
+    });
+
+    table.appendChild(tbody);
+    container.appendChild(table);
+    parent.appendChild(container);
+}
+
+function getTableColumns(tableName) {
+    const mapping = {
+        Adopter: ["email", "name", "phone_number"],
+        Station: ["address", "max_capacity", "environment"],
+        Donator: ["DID", "name"],
+        Animals_Adopt_Shelter: ["aid", "species", "found_location", "found_date", "email", "address"],
+        Donation_Account_Hold: ["accountID", "balance", "donation_date", "address"],
+        MedicalRecord_Has: ["recordDate", "aid", "vaccination"],
+        Lifecare_Volunteer: ["ID", "domain_of_responsibility"],
+        Volunteer_Recruit: ["ID", "total_working_hours", "name", "schedule", "address"],
+        Staff_Hire: ["email", "salary", "phone_number", "name", "address"],
+        TakeCare: ["aid", "ID"]
+    };
+    return mapping[tableName] || [];
+}
+
+//selection
+async function submitSelection() {
+    const table = document.getElementById("selectTable").value;
+    const rows = document.getElementById("condition-container").children;
+
+    let conditions = Array.from(rows).map((row, index) => {
+        const value = row.querySelector(".value").value.trim();
+
+        return {
+            attribute: row.querySelector(".attribute").value,
+            operator: row.querySelector(".operator").value,
+            value: value,
+            connector: index > 0 ? row.querySelector(".connector").value : null
+        };
+    });
+
+    // ✅ 过滤掉没有填 value 的条件
+    conditions = conditions.filter(cond => cond.value !== "");
+
+    if (conditions.length === 0) {
+        alert("Please enter at least one valid condition.");
+        return;
+    }
+
+    const response = await fetch('/select-tuples', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ table, conditions })
+    });
+
+    const result = await response.json();
+    const msg = document.getElementById("selectionResultMsg");
+
+    if (!result.data || result.data.length === 0) {
+        msg.textContent = "No matching rows found.";
+        msg.style.color = "orange";
+        displaySelectionResult([], [], table);
+        return;
+    }
+
+    msg.textContent = `Found ${result.data.length} matching rows.`;
+    msg.style.color = "green";
+
+    const columns = getTableColumns(table);
+    displaySelectionResult(columns, result.data, table);
+}
+
 
 
 // ---------------------------------------------------------------

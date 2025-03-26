@@ -444,7 +444,29 @@
         <button onclick="deleteTakeCare(event)">Insert</button>
         <p class="message" id="TKDeleteResult"></p>
     </div>
-
+    <br><hr><br>
+    <h2>Search (Selection)</h2>
+    <p>Select conditions to filter a relation:</p>
+    <select id="selectTable">
+        <option value="">-- Select a table --</option>
+        <option value="Adopter">Adopter</option>
+        <option value="Station">Station</option>
+        <option value="Donator">Donator</option>
+        <option value="Animals_Adopt_Shelter">Animals Adopt Shelter</option>
+        <option value="Donation_Account_Hold">Donation Account Hold</option>
+        <option value="MedicalRecord_Has">Medical Record</option>
+        <option value="Lifecare_Volunteer">Lifecare Volunteer</option>
+        <option value="Volunteer_Recruit">Volunteer Recruit</option>
+        <option value="Staff_Hire">Staff Hire</option>
+        <option value="TakeCare">Take Care</option>
+      </select>
+    
+    <div id="condition-container"></div>
+    <button onclick="addCondition()">Add Condition</button>
+    <button onclick="submitSelection()">Search</button>
+    <p id="selectionResultMsg"></p>
+    <div id="selectionTableContainer"></div>
+    
     <br><hr><br> <!-- ========================================================================= -->
 
     <h2>Count the Tuples in DemoTable</h2>

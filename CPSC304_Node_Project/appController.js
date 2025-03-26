@@ -215,5 +215,17 @@ router.post('/delete-takecare', async (req, res) => {
     if (deleted) res.json({ success: true });
     else         res.status(500).json({ success: false });
 });
+// Route to perform selection with AND/OR clauses
+router.post('/select-tuples', async (req, res) => {
+    const { table, conditions } = req.body;
+
+    if (!allowedTables.includes(table)) {
+        return res.status(400).json({ error: "Table not allowed or not recognized." });
+    }
+
+    const result = await appService.selectTuples(table, conditions);
+    res.json({ data: result });
+});
+
 
 module.exports = router;
