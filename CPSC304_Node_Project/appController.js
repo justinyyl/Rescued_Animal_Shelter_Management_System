@@ -226,6 +226,11 @@ router.post('/select-tuples', async (req, res) => {
     const result = await appService.selectTuples(table, conditions);
     res.json({ data: result });
 });
+//aggretion group by 
+router.get('/group-by-volunteer-hours', async (req, res) => {
+    const result = await appService.getVolunteerAvgHoursByStation();
+    res.json({ data: result });
+});
 
 
 module.exports = router;

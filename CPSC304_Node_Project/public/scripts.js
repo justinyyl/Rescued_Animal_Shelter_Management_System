@@ -638,8 +638,6 @@ async function submitSelection() {
             connector: index > 0 ? row.querySelector(".connector").value : null
         };
     });
-
-    // ✅ 过滤掉没有填 value 的条件
     conditions = conditions.filter(cond => cond.value !== "");
 
     if (conditions.length === 0) {
@@ -668,6 +666,51 @@ async function submitSelection() {
 
     const columns = getTableColumns(table);
     displaySelectionResult(columns, result.data, table);
+}
+//agreetion group by 
+async function fetchVolunteerAvgHours() {
+    const response = await fetch("/group-by-volunteer-hours", {
+        method: "GET"
+    });
+
+    const result = await response.json();
+    const data = result.data;
+    const container = document.getElementById("groupByResultTable");
+    const msg = document.getElementById("groupByResultMsg");
+
+    container.innerHTML = "";
+
+    if (!data || data.length === 0) {
+        msg.textContent = "No data found.";
+        msg.style.color = "orange";
+        return;
+    }
+
+    msg.textContent = `Found ${data.length} address group(s).`;
+    msg.style.color = "green";
+
+    const table = document.createElement("table");
+    table.border = "1";
+
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+    ["Address", "Avg Hours"].forEach(text => {
+        const th = document.createElement("th");
+        th.textContent = text;
+        headerRow.appendChild(th);
+    });
+
+    const tbody = document.createElement("tbody");
+    data.forEach(row => {
+        const tr = tbody.insertRow();
+        row.forEach(cell => {
+            const td = tr.insertCell();
+            td.textContent = cell;
+        });
+    });
+
+    table.appendChild(tbody);
+    container.appendChild(table);
 }
 
 

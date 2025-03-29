@@ -540,7 +540,20 @@ async function selectTuples(table, conditions) {
       return [];
   });
 }
-
+//caculate average of work hour for volunteers group by address of station
+async function getVolunteerAvgHoursByStation() {
+  return await withOracleDB(async (conn) => {
+      const result = await conn.execute(`
+          SELECT address, ROUND(AVG(total_working_hours), 2) AS avg_hours
+          FROM Volunteer_Recruit
+          GROUP BY address
+      `);
+      return result.rows;
+  }).catch((err) => {
+      console.error("Aggregation Error:", err);
+      return [];
+  });
+}
 
 // --------------------------------------------------
 // Export all
@@ -573,5 +586,6 @@ module.exports = {
   deleteStaffHire,
   deleteTakeCare,
 
-  selectTuples
+  selectTuples,
+  getVolunteerAvgHoursByStation
 };
