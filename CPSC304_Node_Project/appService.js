@@ -540,6 +540,7 @@ async function selectTuples(table, conditions) {
       return [];
   });
 }
+
 //caculate average of work hour for volunteers group by address of station
 async function getVolunteerAvgHoursByStation() {
   return await withOracleDB(async (conn) => {

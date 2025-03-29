@@ -672,7 +672,6 @@ async function fetchVolunteerAvgHours() {
     const response = await fetch("/group-by-volunteer-hours", {
         method: "GET"
     });
-
     const result = await response.json();
     const data = result.data;
     const container = document.getElementById("groupByResultTable");
