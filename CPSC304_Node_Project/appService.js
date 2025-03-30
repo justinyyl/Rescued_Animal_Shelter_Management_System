@@ -199,7 +199,113 @@ async function initiateTables() {
       )
     `);
 
-    await conn.commit();
+    
+// INSERT DATA from Milestone 2
+await conn.executeMany(`
+  INSERT INTO Adopter (email, name, phone_number) VALUES (:1, :2, :3)
+`, [
+  ['abc@hotmail.com', 'p1', '123-456-7890'],
+  ['bcd@gmail.com', 'p2', '234-567-1283'],
+  ['cde@gmail.com', 'p3', '345-678-4761'],
+  ['def@163.com', 'p4', '456-789-4756'],
+  ['efg@gmail.com', 'p5', '125-732-5629']
+]);
+
+await conn.executeMany(`
+  INSERT INTO Station (address, max_capacity, environment) VALUES (:1, :2, :3)
+`, [
+  ['Station A', 50, 'Urban'],
+  ['Station B', 30, 'Suburban'],
+  ['Station C', 20, 'Rural'],
+  ['Station D', 100, 'Urban'],
+  ['Station E', 40, 'Coastal']
+]);
+
+await conn.executeMany(`
+  INSERT INTO Staff_Hire (email, salary, phone_number, name, address) VALUES (:1, :2, :3, :4, :5)
+`, [
+  ['micheal@rescue.com', 3000.00, '601-145-2345', 'Michael Williams', 'Station A'],
+  ['sarah@rescue.com', 3500.00, '779-311-2807', 'Sarah Jones', 'Station B'],
+  ['david@rescue.com', 3200.00, '683-190-3598', 'David Smith', 'Station A'],
+  ['emma@rescue.com', 2800.00, '106-326-1287', 'Emma Rodriguez', 'Station C'],
+  ['james@rescue.com', 4000.00, '587-446-1677', 'James Brown', 'Station E'],
+  ['lucy@rescue.com', 4500.00, '264-267-3640', 'Lucy James', 'Station D']
+]);
+
+await conn.executeMany(`
+  INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address) VALUES (:1, :2, :3, :4, :5)
+`, [
+  [1, 20, 'Tom', 1, 'Station A'],
+  [2, 30, 'Jerry', 2, 'Station A'],
+  [3, 15, 'Maggie', 3, 'Station B'],
+  [4, 25, 'Finn', 4, 'Station B'],
+  [5, 10, 'Sophie', 5, 'Station C']
+]);
+
+await conn.executeMany(`
+  INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility) VALUES (:1, :2)
+`, [
+  [1, 'Medical Care'],
+  [2, 'Nutrition'],
+  [3, 'Behavior Training'],
+  [4, 'Behavior Training'],
+  [5, 'Behavior Training']
+]);
+
+await conn.executeMany(`
+  INSERT INTO Donator (DID, name) VALUES (:1, :2)
+`, [
+  [101, 'Charity Org'],
+  [102, 'John Donor'],
+  [103, 'Jane Donor'],
+  [104, 'ABC Foundation'],
+  [105, 'XYZ Philanthropy']
+]);
+
+await conn.executeMany(`
+  INSERT INTO Animals_Adopt_Shelter (aid, species, found_location, found_date, email, address)
+  VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'), :5, :6)
+`, [
+  [100, 'Dog', 'City Park', '2023-01-10', 'abc@hotmail.com', 'Station A'],
+  [101, 'Cat', 'Downtown', '2023-01-20', 'bcd@gmail.com', 'Station B'],
+  [102, 'Rabbit', 'Suburbs', '2022-12-01', 'cde@gmail.com', 'Station C'],
+  [103, 'Parrot', 'TropicalGarden', '2022-11-15', 'def@163.com', 'Station D'],
+  [104, 'Dog', 'School Yard', '2023-02-10', 'efg@gmail.com', 'Station E']
+]);
+
+await conn.executeMany(`
+  INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
+  VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4)
+`, [
+  [101, 5000, '2024-01-10', 'Station A'],
+  [102, 3000, '2024-02-05', 'Station B'],
+  [103, 7000, '2024-02-20', 'Station C'],
+  [104, 2000, '2024-03-01', 'Station D'],
+  [105, 4500, '2024-03-15', 'Station E']
+]);
+
+await conn.executeMany(`
+  INSERT INTO TakeCare (aid, ID) VALUES (:1, :2)
+`, [
+  [101, 1],
+  [102, 2],
+  [103, 3],
+  [104, 1],
+  [100, 4]
+]);
+
+await conn.executeMany(`
+  INSERT INTO MedicalRecord_Has (recordDate, aid, vaccination)
+  VALUES (TO_DATE(:1, 'YYYY-MM-DD'), :2, :3)
+`, [
+  ['2024-02-01', 101, 'Y'],
+  ['2024-02-15', 102, 'N'],
+  ['2024-03-05', 103, 'Y'],
+  ['2024-03-10', 104, 'Y'],
+  ['2024-03-20', 100, 'N']
+]);
+
+await conn.commit();
     console.log("[initiateTables] All tables created successfully!");
     return true;
   }).catch((err) => {
@@ -207,6 +313,7 @@ async function initiateTables() {
     return false;
   });
 }
+
 
 // --------------------------------------------------
 // D) Insert Operations
