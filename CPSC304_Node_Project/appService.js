@@ -648,6 +648,22 @@ async function selectTuples(table, conditions) {
   });
 }
 
+// Projection query for specific attributes
+async function projectColumns(table, attributes) {
+  return await withOracleDB(async (conn) => {
+    if (!Array.isArray(attributes) || attributes.length === 0) {
+      throw new Error("No attributes provided for projection.");
+    }
+
+    const sql = `SELECT ${attributes.join(", ")} FROM ${table}`;
+    const result = await conn.execute(sql);
+    return result.rows;
+  }).catch((err) => {
+    console.error("Projection Error:", err);
+    return [];
+  });
+}
+
 //caculate average of work hour for volunteers group by address of station
 async function getVolunteerAvgHoursByStation() {
   return await withOracleDB(async (conn) => {
@@ -695,5 +711,6 @@ module.exports = {
   deleteTakeCare,
 
   selectTuples,
+  projectColumns,
   getVolunteerAvgHoursByStation
 };

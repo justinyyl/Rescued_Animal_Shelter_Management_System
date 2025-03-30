@@ -667,6 +667,110 @@ async function submitSelection() {
     const columns = getTableColumns(table);
     displaySelectionResult(columns, result.data, table);
 }
+
+const attributesByTable = {
+    Adopter: ["email", "name", "phone_number"],
+    Station: ["address", "max_capacity", "environment"],
+    Donator: ["DID", "name"],
+    Animals_Adopt_Shelter: ["aid", "species", "found_location", "found_date", "email", "address"],
+    Donation_Account_Hold: ["accountID", "balance", "donation_date", "address"],
+    MedicalRecord_Has: ["recordDate", "aid", "vaccination"],
+    Lifecare_Volunteer: ["ID", "domain_of_responsibility"],
+    Volunteer_Recruit: ["ID", "total_working_hours", "name", "schedule", "address"],
+    Staff_Hire: ["email", "salary", "phone_number", "name", "address"],
+    TakeCare: ["aid", "ID"]
+};
+
+function addAttribute() {
+    const container = document.getElementById("attribute-container");
+    const selectedTable = document.getElementById("selectProjectionTable").value;
+
+    if (!selectedTable || !attributesByTable[selectedTable]) {
+        alert("Please select a valid table first!");
+        return;
+    }
+
+    const attributeOptions = attributesByTable[selectedTable];
+
+    const div = document.createElement("div");
+    div.className = "attribute-row";
+
+    div.innerHTML = `
+        <select class="attribute">
+            ${attributeOptions.map(attr => `<option value="${attr}">${attr}</option>`).join("")}
+        </select>
+        <button type="button" class="remove-btn">Remove</button>
+    `;
+
+    div.querySelector(".remove-btn").onclick = () => container.removeChild(div);
+
+    container.appendChild(div);
+}
+
+// Handle projection submission
+async function submitProjection() {
+    const table = document.getElementById("selectProjectionTable").value;
+    const msg = document.getElementById("projectionResultMsg");
+    const container = document.getElementById("projectionTableContainer");
+
+    const inputs = document.querySelectorAll(".attribute");
+    const attributes = Array.from(inputs)
+        .map(input => input.value.trim())
+        .filter(attr => attr !== "");
+
+    if (!table) {
+        alert("Please select a table.");
+        return;
+    }
+
+    if (attributes.length === 0) {
+        alert("Please enter at least one attribute.");
+        return;
+    }
+
+    const response = await fetch('/project-columns', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ table, attributes })
+    });
+
+    const result = await response.json();
+
+    if (!result.data || result.data.length === 0) {
+        msg.textContent = "No data available for selected columns.";
+        msg.style.color = "orange";
+        displayProjectionResult([], [], table);
+        return;
+    }
+
+    msg.textContent = `Displaying ${result.data.length} rows with selected columns.`;
+    msg.style.color = "green";
+    displayProjectionResult(attributes, result.data, table);
+}
+
+// Render Projection result table
+function displayProjectionResult(columns, data, tableName) {
+    const container = document.getElementById("projectionTableContainer");
+    container.innerHTML = "";
+
+    if (columns.length === 0 || data.length === 0) return;
+
+    let html = `<h3>${tableName} (Projection)</h3>`;
+    html += "<table border='1'><thead><tr>";
+    columns.forEach(col => html += `<th>${col}</th>`);
+    html += "</tr></thead><tbody>";
+
+    data.forEach(row => {
+        html += "<tr>";
+        columns.forEach(col => {
+            html += `<td>${row[col] ?? ""}</td>`;
+        });
+        html += "</tr>";
+    });
+
+    html += "</tbody></table>";
+    container.innerHTML = html;
+}
 //agreetion group by 
 async function fetchVolunteerAvgHours() {
     const response = await fetch("/group-by-volunteer-hours", {

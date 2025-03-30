@@ -467,6 +467,28 @@
     <p id="selectionResultMsg"></p>
     <div id="selectionTableContainer"></div>
 
+    <br><hr><br>
+    <h2>Projection</h2>
+    <p>Select attributes (columns) to display from a relation:</p>
+    <select id="selectProjectionTable">
+        <option value="">-- Select a table --</option>
+        <option value="Adopter">Adopter</option>
+        <option value="Station">Station</option>
+        <option value="Donator">Donator</option>
+        <option value="Animals_Adopt_Shelter">Animals Adopt Shelter</option>
+        <option value="Donation_Account_Hold">Donation Account Hold</option>
+        <option value="MedicalRecord_Has">Medical Record</option>
+        <option value="Lifecare_Volunteer">Lifecare Volunteer</option>
+        <option value="Volunteer_Recruit">Volunteer Recruit</option>
+        <option value="Staff_Hire">Staff Hire</option>
+        <option value="TakeCare">Take Care</option>
+    </select>
+
+    <div id="attribute-container"></div>
+    <button onclick="addAttribute()">Add Attribute</button>
+    <button onclick="submitProjection()">Show Projection</button>
+    <p id="projectionResultMsg"></p>
+    <div id="projectionTableContainer"></div>
     
     <br><hr><br>
     <h2>Group By Aggregation: Avg Volunteer Hours by Address</h2>

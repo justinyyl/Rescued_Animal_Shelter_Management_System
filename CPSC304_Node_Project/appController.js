@@ -227,6 +227,26 @@ router.post('/select-tuples', async (req, res) => {
     const result = await appService.selectTuples(table, conditions);
     res.json({ data: result });
 });
+// projection
+router.post('/project-columns', async (req, res) => {
+    const { table, attributes } = req.body;
+
+    if (!allowedTables.includes(table)) {
+        return res.status(400).json({ error: "Table not allowed or not recognized." });
+    }
+
+    if (!attributes || !Array.isArray(attributes) || attributes.length === 0) {
+        return res.status(400).json({ error: "A non-empty list of attributes is required." });
+    }
+
+    try {
+        const result = await appService.projectColumns(table, attributes);
+        res.json({ data: result });
+    } catch (error) {
+        console.error("Projection error:", error);
+        res.status(500).json({ error: "Internal server error while projecting columns." });
+    }
+});
 //aggretion group by 
 router.get('/group-by-volunteer-hours', async (req, res) => {
     const result = await appService.getVolunteerAvgHoursByStation();
