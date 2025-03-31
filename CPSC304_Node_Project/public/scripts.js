@@ -750,26 +750,41 @@ async function submitProjection() {
 
 // Render Projection result table
 function displayProjectionResult(columns, data, tableName) {
-    const container = document.getElementById("projectionTableContainer");
-    container.innerHTML = "";
+    const containerId = "projectionResultTable";
 
-    if (columns.length === 0 || data.length === 0) return;
+    const parent = document.getElementById("projectionTableContainer");
+    parent.innerHTML = "";  // remote the old
 
-    let html = `<h3>${tableName} (Projection)</h3>`;
-    html += "<table border='1'><thead><tr>";
-    columns.forEach(col => html += `<th>${col}</th>`);
-    html += "</tr></thead><tbody>";
-
+    const container = document.createElement("div");
+    container.id = containerId;
+    if (data.length === 0 || columns.length === 0) {
+        container.innerHTML = "<p>No matching results.</p>";
+        parent.appendChild(container);
+        return;
+    }
+//show tubles
+    const table = document.createElement("table");
+    table.border = "1";
+    table.style.marginTop = "10px";
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+    columns.forEach(col => {
+        const th = document.createElement("th");
+        th.textContent = col;
+        headerRow.appendChild(th);
+    });
+    const tbody = document.createElement("tbody");
     data.forEach(row => {
-        html += "<tr>";
-        columns.forEach(col => {
-            html += `<td>${row[col] ?? ""}</td>`;
+        const tr = tbody.insertRow();
+        row.forEach(cell => {
+            const td = tr.insertCell();
+            td.textContent = cell;
         });
-        html += "</tr>";
     });
 
-    html += "</tbody></table>";
-    container.innerHTML = html;
+    table.appendChild(tbody);
+    container.appendChild(table);
+    parent.appendChild(container);
 }
 //agreetion group by 
 async function fetchVolunteerAvgHours() {
