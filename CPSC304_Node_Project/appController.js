@@ -247,6 +247,17 @@ router.post('/project-columns', async (req, res) => {
         res.status(500).json({ error: "Internal server error while projecting columns." });
     }
 });
+// join
+router.post('/join-search', async (req, res) => {
+    const { input } = req.body;
+
+    if (!input || typeof input !== 'string') {
+        return res.status(400).json({ error: 'Invalid input' });
+    }
+
+     const result = await appService.findVolunteersByAnimalType(input);
+     res.json({ data: result });
+});
 //aggretion group by 
 router.get('/group-by-volunteer-hours', async (req, res) => {
     const result = await appService.getVolunteerAvgHoursByStation();

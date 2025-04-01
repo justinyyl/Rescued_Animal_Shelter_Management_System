@@ -489,7 +489,15 @@
     <button onclick="submitProjection()">Show Projection</button>
     <p id="projectionResultMsg"></p>
     <div id="projectionTableContainer"></div>
-    
+
+    <br><hr><br>
+    <h2>Find names and ID of all volunteers who take care a specific species of animals</h2>
+    <label>Animal Species:</label>
+    <input type="text" id="animalType">
+    <button onclick="fetchVolunteerTakeCareAnimals()">find</button>
+    <div id="joinResultMsg"></div>
+    <div id="joinTableContainer"></div>
+
     <br><hr><br>
     <h2>Group By Aggregation: Avg Volunteer Hours by Address</h2>
     <button onclick="fetchVolunteerAvgHours()">Run Query</button>

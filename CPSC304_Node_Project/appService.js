@@ -664,6 +664,27 @@ async function projectColumns(table, attributes) {
   });
 }
 
+// Join Animal_Adopt_Shelter, Volunteer_Recruit and TakeCare to find all names and IDs
+// for volunteer which take care specific animal species
+async function findVolunteersByAnimalType(input) {
+  return await withOracleDB(async (conn) => {
+
+    const result = await conn.execute(
+        `SELECT DISTINCT v.ID, v.name
+         FROM Volunteer_Recruit v
+         JOIN TakeCare av ON v.ID = av.ID
+         JOIN Animals_Adopt_Shelter a ON av.aid = a.aid
+         WHERE TRIM(LOWER(a.species)) = TRIM(LOWER(:species))`,
+          [input],
+          { autoCommit: true }
+     );
+    return result.rows;
+  }).catch((err) => {
+    console.error("Join Error:", err);
+    return [];
+  });
+}
+
 //caculate average of work hour for volunteers group by address of station
 async function getVolunteerAvgHoursByStation() {
   return await withOracleDB(async (conn) => {
@@ -712,5 +733,6 @@ module.exports = {
 
   selectTuples,
   projectColumns,
+  findVolunteersByAnimalType,
   getVolunteerAvgHoursByStation
 };

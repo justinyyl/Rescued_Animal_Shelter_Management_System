@@ -786,6 +786,75 @@ function displayProjectionResult(columns, data, tableName) {
     container.appendChild(table);
     parent.appendChild(container);
 }
+
+// Handle join submission
+async function fetchVolunteerTakeCareAnimals() {
+    const input = document.getElementById("animalType").value;
+    const msg = document.getElementById("joinResultMsg");
+    const container = document.getElementById("joinTableContainer");
+
+    const response = await fetch('/join-search', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ input })
+    });
+
+    const result = await response.json();
+
+    if (!result.data || result.data.length === 0) {
+        msg.textContent = "No data available for selected species.";
+        msg.style.color = "orange";
+        displayProjectionResult([], [], container);
+        return;
+    }
+
+    msg.textContent = `Displaying ${result.data.length} volunteers for "${input}".`;
+    msg.style.color = "green";
+    const columns = ["ID", "name"];
+    displayJoinResult(columns, result.data, container);
+}
+
+// Render join result table
+function displayJoinResult(columns, data, tableName) {
+    const containerId = "projectionResultTable";
+
+    const parent = document.getElementById("joinTableContainer");
+    parent.innerHTML = ""; // clear previous
+
+    const container = document.createElement("div");
+    container.id = containerId;
+
+    if (data.length === 0 || columns.length === 0) {
+        container.innerHTML = "<p>No matching results.</p>";
+        parent.appendChild(container);
+        return;
+    }
+
+//show tubles
+    const table = document.createElement("table");
+    table.border = "1";
+    table.style.marginTop = "10px";
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+    columns.forEach(col => {
+        const th = document.createElement("th");
+        th.textContent = col;
+        headerRow.appendChild(th);
+    });
+    const tbody = document.createElement("tbody");
+    data.forEach(row => {
+        const tr = tbody.insertRow();
+        row.forEach(cell => {
+            const td = tr.insertCell();
+            td.textContent = cell;
+        });
+    });
+
+    table.appendChild(tbody);
+    container.appendChild(table);
+    parent.appendChild(container);
+}
+
 //agreetion group by 
 async function fetchVolunteerAvgHours() {
     const response = await fetch("/group-by-volunteer-hours", {
