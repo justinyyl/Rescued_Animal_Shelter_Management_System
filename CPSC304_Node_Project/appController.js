@@ -268,5 +268,10 @@ router.get('/group-by-volunteer-hours', async (req, res) => {
     res.json({ data: result });
 });
 
+router.get('/division-adopters-all-species', async (req, res) => {
+    const result = await appService.getAdoptersWhoAdoptedAllSpecies();
+    res.json({ data: result });
+  });
+  
 
 module.exports = router;

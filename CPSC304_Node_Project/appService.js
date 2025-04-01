@@ -270,7 +270,10 @@ await conn.executeMany(`
   [101, 'Cat', 'Downtown', '2023-01-20', 'bcd@gmail.com', 'Station B'],
   [102, 'Rabbit', 'Suburbs', '2022-12-01', 'cde@gmail.com', 'Station C'],
   [103, 'Parrot', 'TropicalGarden', '2022-11-15', 'def@163.com', 'Station D'],
-  [104, 'Dog', 'School Yard', '2023-02-10', 'efg@gmail.com', 'Station E']
+  [104, 'Dog', 'School Yard', '2023-02-10', 'efg@gmail.com', 'Station E'],
+  [201, 'Cat', 'Suburbs', '2023-05-01', 'abc@hotmail.com', 'Station A'],
+  [202, 'Rabbit', 'Downtown', '2023-05-02', 'abc@hotmail.com', 'Station A'],
+  [203, 'Parrot', 'City', '2023-05-03', 'abc@hotmail.com', 'Station A']
 ]);
 
 await conn.executeMany(`
@@ -711,6 +714,29 @@ async function getVolunteerAvgHoursByStation(cond) {
       return [];
   });
 }
+async function getAdoptersWhoAdoptedAllSpecies() {
+  return await withOracleDB(async (conn) => {
+    const result = await conn.execute(`
+      SELECT DISTINCT A.email
+      FROM Adopter A
+      WHERE NOT EXISTS (
+          SELECT DISTINCT species
+          FROM Animals_Adopt_Shelter
+          MINUS
+          SELECT DISTINCT S.species
+          FROM Animals_Adopt_Shelter S
+          WHERE S.email = A.email
+      )
+    `);
+    return result.rows;
+  }).catch((err) => {
+    console.error("Division Query Error:", err);
+    return [];
+  });
+}
+
+
+
 
 // --------------------------------------------------
 // Export all
@@ -746,5 +772,7 @@ module.exports = {
   selectTuples,
   projectColumns,
   findVolunteersByAnimalType,
-  getVolunteerAvgHoursByStation
+  getVolunteerAvgHoursByStation,
+  getAdoptersWhoAdoptedAllSpecies
+
 };
