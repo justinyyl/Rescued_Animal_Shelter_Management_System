@@ -260,7 +260,11 @@ router.post('/join-search', async (req, res) => {
 });
 //aggretion group by 
 router.get('/group-by-volunteer-hours', async (req, res) => {
-    const result = await appService.getVolunteerAvgHoursByStation();
+    //receive param and change type 
+    const condParam = req.query.cond;
+    const cond = (condParam === 'true');
+
+    const result = await appService.getVolunteerAvgHoursByStation(cond);
     res.json({ data: result });
 });
 

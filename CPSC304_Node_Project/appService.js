@@ -686,13 +686,25 @@ async function findVolunteersByAnimalType(input) {
 }
 
 //caculate average of work hour for volunteers group by address of station
-async function getVolunteerAvgHoursByStation() {
+async function getVolunteerAvgHoursByStation(cond) {
+  if (!cond){
+    sql = `
+      SELECT address, ROUND(AVG(total_working_hours), 2) AS avg_hours
+      FROM Volunteer_Recruit
+      GROUP BY address
+    `;
+  } else {
+    sql = `
+      SELECT address, ROUND(AVG(total_working_hours), 2) AS avg_hours
+      FROM Volunteer_Recruit
+      GROUP BY address
+      HAVING COUNT(*) > 1
+    `;
+  }
+  console.log(sql);
+  
   return await withOracleDB(async (conn) => {
-      const result = await conn.execute(`
-          SELECT address, ROUND(AVG(total_working_hours), 2) AS avg_hours
-          FROM Volunteer_Recruit
-          GROUP BY address
-      `);
+      const result = await conn.execute(sql);
       return result.rows;
   }).catch((err) => {
       console.error("Aggregation Error:", err);

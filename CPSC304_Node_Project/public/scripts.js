@@ -855,9 +855,9 @@ function displayJoinResult(columns, data, tableName) {
     parent.appendChild(container);
 }
 
-//agreetion group by 
-async function fetchVolunteerAvgHours() {
-    const response = await fetch("/group-by-volunteer-hours", {
+//aggregation with group by, added alternative choices for using having
+async function fetchVolunteerAvgHours(cond) {
+    const response = await fetch(`/group-by-volunteer-hours?cond=${cond}`, {
         method: "GET"
     });
     const result = await response.json();
