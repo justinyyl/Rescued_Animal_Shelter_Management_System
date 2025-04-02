@@ -721,11 +721,14 @@ async function findAdoptersWithAllSpecies() {
       SELECT a.email, a.name, a.phone_number
       FROM Adopter a
       WHERE NOT EXISTS (
-        SELECT species FROM Animals_Adopt_Shelter
-        MINUS
-        SELECT species
-        FROM Animals_Adopt_Shelter ads
-        WHERE ads.email = a.email
+        SELECT s.species
+        FROM Animals_Adopt_Shelter s
+        WHERE NOT EXISTS (
+          SELECT 1
+          FROM Animals_Adopt_Shelter s2
+          WHERE s2.species = s.species
+            AND s2.email = a.email
+        )
       )
     `);
     return result.rows;
