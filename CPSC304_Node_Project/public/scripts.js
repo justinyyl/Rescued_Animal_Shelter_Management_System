@@ -281,7 +281,7 @@ async function handleInsertResponse(response, resultElementId) {
         messageElement.textContent = "Data inserted successfully!";
         messageElement.style.color = "green";
     } else {
-        messageElement.textContent = "Error inserting data!";
+        messageElement.textContent = "Duplicate value!";
         messageElement.style.color = "red";
     }
 }
@@ -345,7 +345,7 @@ async function handleDeleteResponse(response, resultElementId) {
         messageElement.textContent = "Data deleting successfully!";
         messageElement.style.color = "green";
     } else {
-        messageElement.textContent = "Error deleting data!";
+        messageElement.textContent = "Could not find the data, please check the input";
         messageElement.style.color = "red";
     }
 }
@@ -959,3 +959,35 @@ function fetchTableData() {
             table.style.display = "none"; // Hide all tables
     });
 }
+async function fetchAdoptersAllSpecies() {
+    const res = await fetch("/division-adopters-all-species");
+    const result = await res.json();
+  
+    const data = result.data;
+    const msg = document.getElementById("divisionSpeciesMsg");
+    const out = document.getElementById("divisionSpeciesResult");
+    out.innerHTML = "";
+  
+    if (!data || data.length === 0) {
+      msg.textContent = "No adopters found.";
+      return;
+    }
+  
+    msg.textContent = `Found ${data.length} adopter(s).`;
+  
+    const table = document.createElement("table");
+    table.border = "1";
+    const header = table.insertRow();
+    const th = document.createElement("th");
+    th.textContent = "Adopter Email";
+    header.appendChild(th);
+  
+    data.forEach(row => {
+      const tr = table.insertRow();
+      const td = tr.insertCell();
+      td.textContent = row[0];
+    });
+  //
+    out.appendChild(table);
+  }
+  

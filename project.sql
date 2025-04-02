@@ -167,12 +167,15 @@ VALUES (5, 10, 'Sophie', 5, 'Station C');
 -- 3.5 Lifecare_Volunteer
 INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
 VALUES (1, 'Medical Care');
-
+INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
+VALUES (2, 'Behavior Training');
 INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
 VALUES (3, 'Nutrition');
-
+INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
+VALUES (4, 'Behavior Training');
 INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
 VALUES (5, 'Behavior Training');
+
 
 -- 3.6 Donator
 INSERT INTO Donator (DID, name)

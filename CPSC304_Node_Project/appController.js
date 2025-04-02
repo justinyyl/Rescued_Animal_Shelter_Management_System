@@ -199,7 +199,7 @@ router.post('/delete-lifecare-volunteer', async (req, res) => {
     if (deleted) res.json({ success: true });
     else         res.status(500).json({ success: false });
 });
-
+//
 // Delete Staff_Hire
 router.post('/delete-staff-hire', async (req, res) => {
     const { email } = req.body;
@@ -268,5 +268,10 @@ router.get('/group-by-volunteer-hours', async (req, res) => {
     res.json({ data: result });
 });
 
+router.get('/division-adopters-all-species', async (req, res) => {
+    const result = await appService.getAdoptersWhoAdoptedAllSpecies();
+    res.json({ data: result });
+  });
+  
 
 module.exports = router;
