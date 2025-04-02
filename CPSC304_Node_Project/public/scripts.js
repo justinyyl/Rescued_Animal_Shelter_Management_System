@@ -86,16 +86,20 @@ async function resetTables() {
 }
 
 function showFormInsert() {
-    selectedTable = document.getElementById("tableSelect").value;
-    allForms = document.querySelectorAll(".container");
-
-    allForms.forEach(form => form.style.display = "none");
-
+    //The value from the dropdown
+    const selectedTable = document.getElementById("tableSelect").value;
+  
+    //Hide all insert forms only (IDs starting with "insert-")
+    const insertForms = document.querySelectorAll('[id^="insert-"]');
+    insertForms.forEach(form => {
+      form.style.display = "none";
+    });
+  
+    //Show the selected form
     if (selectedTable) {
-        document.getElementById(selectedTable).style.display = "block";
+      document.getElementById(selectedTable).style.display = "block";
     }
-}
-
+  }
 // Inserts a record into the Adopter table
 async function insertAdopter(event) {
     event.preventDefault();
@@ -324,15 +328,20 @@ async function updateValue(event) {
 
 // Delete Data
 function showFormDelete() {
-    selectedTable = document.getElementById("DeleteSelect").value;
-    allForms = document.querySelectorAll(".container");
-
-    allForms.forEach(form => form.style.display = "none");
-
+    //The value from the dropdown
+    const selectedTable = document.getElementById("DeleteSelect").value;
+  
+    //Hide all delete forms only
+    const deleteForms = document.querySelectorAll('[id^="delete-"]');
+    deleteForms.forEach(form => {
+      form.style.display = "none";
+    });
+  
+    //Show the selected form
     if (selectedTable) {
-        document.getElementById(selectedTable).style.display = "block";
+      document.getElementById(selectedTable).style.display = "block";
     }
-}
+  }
 
 
 

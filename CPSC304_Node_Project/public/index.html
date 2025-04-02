@@ -2,34 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Ensures the website renders correctly across different device sizes -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Group 63 Project</title>
 
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap CSS (CDN) -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
   />
+
   <style>
+    /* Basic styling for DB status spinner, etc. */
     #loadingGif {
       width: 30px;
       vertical-align: middle;
-      display: none; /* Shown by JS when checking connection */
+      display: none;
     }
-    /* Optional: give the status text a bit more horizontal padding if you like */
     .db-status {
       padding-right: 1rem;
+    }
+
+    /* Some margin/padding for your cards and headings */
+    .section-title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+    .custom-card {
+      margin-bottom: 1.5rem;
+      border: 1px solid #ddd;
+    }
+    .custom-card > .card-header {
+      background-color: #e9ecef;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Navbar with DB status on the right -->
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">
-      <!-- Left side brand name -->
       <span class="navbar-brand mb-0 h1">Group 63 Project</span>
-
-      <!-- Right side database connection status -->
       <div class="ms-auto text-white db-status">
         <strong>DB Status:</strong>
         <span id="dbStatus"></span>
@@ -39,8 +55,6 @@
   </nav>
 
   <div class="container mt-4">
-    <!-- Database Connection Status -->
-
     <!-- Show Tables -->
     <h2 class="section-title">Show Tables</h2>
     <div class="row g-3 mb-3" id="table-buttons">
@@ -88,6 +102,11 @@
           Show TakeCare
         </button>
       </div>
+    </div>
+
+    <!-- 1) Heading container for the selected table name -->
+    <div id="currentTableNameContainer" style="display: none; margin-bottom: 0.5rem;">
+      <h5 id="currentTableName" class="text-primary"></h5>
     </div>
 
     <div id="table-container" class="mb-4">
@@ -276,12 +295,12 @@
           <option value="insert-adopter">Adopter</option>
           <option value="insert-station">Station</option>
           <option value="insert-donator">Donator</option>
-          <option value="insert-animals_adopt_shelter"
-            >Animals Adopt Shelter</option
-          >
-          <option value="insert-donation_account_hold"
-            >Donation Account Hold</option
-          >
+          <option value="insert-animals_adopt_shelter">
+            Animals Adopt Shelter
+          </option>
+          <option value="insert-donation_account_hold">
+            Donation Account Hold
+          </option>
           <option value="insert-medicalrecord_has">Medical Record</option>
           <option value="insert-lifecare_volunteer">Lifecare Volunteer</option>
           <option value="insert-volunteer_recruit">Volunteer Recruit</option>
@@ -631,12 +650,12 @@
           <option value="delete-adopter">Adopter</option>
           <option value="delete-station">Station</option>
           <option value="delete-donator">Donator</option>
-          <option value="delete-animals_adopt_shelter"
-            >Animals Adopt Shelter</option
-          >
-          <option value="delete-donation_account_hold"
-            >Donation Account Hold</option
-          >
+          <option value="delete-animals_adopt_shelter">
+            Animals Adopt Shelter
+          </option>
+          <option value="delete-donation_account_hold">
+            Donation Account Hold
+          </option>
           <option value="delete-medicalrecord_has">Medical Record</option>
           <option value="delete-lifecare_volunteer">Lifecare Volunteer</option>
           <option value="delete-volunteer_recruit">Volunteer Recruit</option>
@@ -648,7 +667,7 @@
           <h5>Delete from Adopter</h5>
           <label>Delete by Email:</label>
           <input type="text" id="deleteAdopterEmail" />
-          <button class="btn btn-danger mt-2" onclick="deleteAdopter(event)">
+          <button class="btn btn-danger mt-2" type="button" onclick="deleteAdopter(event)">
             Delete
           </button>
           <p class="message" id="adopterDeleteResult"></p>
@@ -658,7 +677,7 @@
           <h5>Delete from Station</h5>
           <label>Delete by Address:</label>
           <input type="text" id="deleteStationAddress" />
-          <button class="btn btn-danger mt-2" onclick="deleteStation(event)">
+          <button class="btn btn-danger mt-2" type="button" onclick="deleteStation(event)">
             Delete
           </button>
           <p class="message" id="stationDeleteResult"></p>
@@ -668,7 +687,7 @@
           <h5>Delete from Donator</h5>
           <label>Delete by Donator ID:</label>
           <input type="number" id="deleteDID" />
-          <button class="btn btn-danger mt-2" onclick="deleteDonator(event)">
+          <button class="btn btn-danger mt-2" type="button" onclick="deleteDonator(event)">
             Delete
           </button>
           <p class="message" id="donatorDeleteResult"></p>
@@ -684,6 +703,7 @@
           <input type="number" id="deleteAID" />
           <button
             class="btn btn-danger mt-2"
+            type="button"
             onclick="deleteAnimalsAdoptShelter(event)"
           >
             Delete
@@ -701,6 +721,7 @@
           <input type="number" id="deleteAccountID" />
           <button
             class="btn btn-danger mt-2"
+            type="button"
             onclick="deleteDonationAccountHold(event)"
           >
             Delete
@@ -718,6 +739,7 @@
           <input type="number" id="deleteMDanimalID" />
           <button
             class="btn btn-danger mt-2"
+            type="button"
             onclick="deleteMedicalRecordHas(event)"
           >
             Delete
@@ -735,6 +757,7 @@
           <input type="number" id="deleteLifecareVID" />
           <button
             class="btn btn-danger mt-2"
+            type="button"
             onclick="deleteLifecareVolunteer(event)"
           >
             Delete
@@ -752,6 +775,7 @@
           <input type="number" id="deleteVID" />
           <button
             class="btn btn-danger mt-2"
+            type="button"
             onclick="deleteVolunteerRecruit(event)"
           >
             Delete
@@ -763,7 +787,7 @@
           <h5>Delete from Staff Hire</h5>
           <label>Delete by Email:</label>
           <input type="text" id="deleteStaffEmail" />
-          <button class="btn btn-danger mt-2" onclick="deleteStaffHire(event)">
+          <button class="btn btn-danger mt-2" type="button" onclick="deleteStaffHire(event)">
             Delete
           </button>
           <p class="message" id="staffDeleteResult"></p>
@@ -775,7 +799,7 @@
           <input type="text" id="deleteTKAID" />
           <label>Delete by Volunteer ID:</label>
           <input type="text" id="deleteTKVID" />
-          <button class="btn btn-danger mt-2" onclick="deleteTakeCare(event)">
+          <button class="btn btn-danger mt-2" type="button" onclick="deleteTakeCare(event)">
             Delete
           </button>
           <p class="message" id="TKDeleteResult"></p>
@@ -907,18 +931,32 @@
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
+  <!-- Bootstrap JS + Popper -->
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
   ></script>
-  <!-- Your existing scripts.js (which handles dbStatus, etc.) -->
+
+  <!-- existing scripts.js -->
   <script src="scripts.js"></script>
   <script>
-    // Example: on page load, trigger the DB check and show/hide the loadingGif
     window.addEventListener("load", () => {
       const loadingGifElem = document.getElementById("loadingGif");
-      loadingGifElem.style.display = "inline"; // show until we get a response
-      checkDbConnection(); // your existing function that sets #dbStatus text
+      loadingGifElem.style.display = "inline"; 
+      checkDbConnection();
+    });
+
+    const tableBtns = document.querySelectorAll("#table-buttons button");
+    tableBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // Show the table
+        fetchAndDisplayUsers(btn.id);
+
+        // Update the heading above the table
+        const headingContainer = document.getElementById("currentTableNameContainer");
+        const headingText = document.getElementById("currentTableName");
+        headingText.innerText = btn.id ;
+        headingContainer.style.display = "block";
+      });
     });
   </script>
 </body>
