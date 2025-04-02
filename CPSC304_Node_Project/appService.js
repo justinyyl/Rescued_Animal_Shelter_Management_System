@@ -273,7 +273,7 @@ await conn.executeMany(`
   [104, 'Dog', 'School Yard', '2023-02-10', 'efg@gmail.com', 'Station E'],
   [201, 'Cat', 'Suburbs', '2023-05-01', 'abc@hotmail.com', 'Station A'],
   [202, 'Rabbit', 'Downtown', '2023-05-02', 'abc@hotmail.com', 'Station A'],
-  [203, 'Parrot', 'City', '2023-05-03', 'abc@hotmail.com', 'Station A']
+  [203, 'Parrot', 'City', '2023-05-03', 'abc@hotmail.com', 'Station A']//
 ]);
 
 await conn.executeMany(`

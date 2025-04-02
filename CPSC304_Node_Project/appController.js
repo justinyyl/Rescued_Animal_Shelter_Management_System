@@ -199,7 +199,7 @@ router.post('/delete-lifecare-volunteer', async (req, res) => {
     if (deleted) res.json({ success: true });
     else         res.status(500).json({ success: false });
 });
-
+//
 // Delete Staff_Hire
 router.post('/delete-staff-hire', async (req, res) => {
     const { email } = req.body;

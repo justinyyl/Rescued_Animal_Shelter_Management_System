@@ -986,7 +986,7 @@ async function fetchAdoptersAllSpecies() {
       const td = tr.insertCell();
       td.textContent = row[0];
     });
-  
+  //
     out.appendChild(table);
   }
   
