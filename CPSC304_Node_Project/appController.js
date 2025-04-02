@@ -258,15 +258,19 @@ router.post('/join-search', async (req, res) => {
      const result = await appService.findVolunteersByAnimalType(input);
      res.json({ data: result });
 });
-//aggretion group by 
+//aggretion
 router.get('/group-by-volunteer-hours', async (req, res) => {
-    //receive param and change type 
-    const condParam = req.query.cond;
-    const cond = (condParam === 'true');
-
-    const result = await appService.getVolunteerAvgHoursByStation(cond);
-    res.json({ data: result });
-});
+    const mode = req.query.mode || "all"; 
+  
+    try {
+      const result = await appService.getVolunteerAvgHoursByStation(mode);
+      res.json({ data: result });
+    } catch (err) {
+      console.error("Error in /group-by-volunteer-hours:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+  
 
 router.get('/division-adopters', async (req, res) => {
     try {

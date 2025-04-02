@@ -688,32 +688,52 @@ async function findVolunteersByAnimalType(input) {
   });
 }
 
-//caculate average of work hour for volunteers group by address of station
-async function getVolunteerAvgHoursByStation(cond) {
-  if (!cond){
+// Calculate average of working hours for volunteers grouped by station address
+async function getVolunteerAvgHoursByStation(mode) {
+  let sql;
+
+  if (mode === "all") {
     sql = `
       SELECT address, ROUND(AVG(total_working_hours), 2) AS avg_hours
       FROM Volunteer_Recruit
       GROUP BY address
     `;
-  } else {
+  } else if (mode === "filtered") {
     sql = `
       SELECT address, ROUND(AVG(total_working_hours), 2) AS avg_hours
       FROM Volunteer_Recruit
       GROUP BY address
       HAVING COUNT(*) > 1
     `;
+  } else if (mode === "min") {
+    sql = `
+      SELECT address, avg_hours FROM (
+        SELECT address, ROUND(AVG(total_working_hours), 2) AS avg_hours
+        FROM Volunteer_Recruit
+        GROUP BY address
+      )
+      WHERE avg_hours = (
+        SELECT MIN(AVG_HOURS)
+        FROM (
+          SELECT ROUND(AVG(total_working_hours), 2) AS avg_hours
+          FROM Volunteer_Recruit
+          GROUP BY address
+        )
+      )
+    `;
+  } else {
+    throw new Error("Invalid mode passed to getVolunteerAvgHoursByStation");
   }
-  //console.log(sql);
-  
+
   return await withOracleDB(async (conn) => {
-      const result = await conn.execute(sql);
-      return result.rows;
+    const result = await conn.execute(sql);
+    return result.rows;
   }).catch((err) => {
-      console.error("Aggregation Error:", err);
-      return [];
+    console.error("Aggregation Error:", err);
+    return [];
   });
 }
+
 // Division: Find adopters who have adopted all species
 async function findAdoptersWithAllSpecies() {
   return await withOracleDB(async (conn) => {

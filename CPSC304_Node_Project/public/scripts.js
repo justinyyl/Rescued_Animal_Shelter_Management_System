@@ -927,10 +927,8 @@ function displayJoinResult(columns, data, tableName) {
     parent.appendChild(container);
 }
 
-//aggregation with group by, added alternative choices for using having
-//if cond is true, filter all stations that have volunteers less or equal than one
-async function fetchVolunteerAvgHours(cond) {
-    const response = await fetch(`/group-by-volunteer-hours?cond=${cond}`, {
+async function fetchVolunteerAvgHours(mode) {
+    const response = await fetch(`/group-by-volunteer-hours?mode=${mode}`, {
         method: "GET"
     });
     const result = await response.json();
@@ -950,6 +948,7 @@ async function fetchVolunteerAvgHours(cond) {
     msg.style.color = "green";
 
     const table = document.createElement("table");
+    table.className = "table table-bordered";
 
     const thead = table.createTHead();
     const headerRow = thead.insertRow();
@@ -959,7 +958,7 @@ async function fetchVolunteerAvgHours(cond) {
         headerRow.appendChild(th);
     });
 
-    const tbody = document.createElement("tbody");
+    const tbody = table.createTBody();
     data.forEach(row => {
         const tr = tbody.insertRow();
         row.forEach(cell => {
@@ -970,8 +969,8 @@ async function fetchVolunteerAvgHours(cond) {
 
     table.appendChild(tbody);
     container.appendChild(table);
-    
 }
+
 
 //Nested Aggregation that selects
 async function fetchGetAvgBalanceByYear(year){

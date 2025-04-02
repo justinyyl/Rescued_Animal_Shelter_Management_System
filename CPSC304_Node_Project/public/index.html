@@ -930,12 +930,15 @@
         Count Avg for Volunteers at each Station
       </div>
       <div class="card-body">
-        <button class="btn btn-info" onclick="fetchVolunteerAvgHours(false)">
+        <button class="btn btn-info" onclick="fetchVolunteerAvgHours('all')">
           Show all Results
         </button>
-        <button class="btn btn-info" onclick="fetchVolunteerAvgHours(true)">
+        <button class="btn btn-info" onclick="fetchVolunteerAvgHours('filtered')">
           Remove Rare
         </button>
+        <button class="btn btn-info" onclick="fetchVolunteerAvgHours('min')">
+          Show Station with Min Avg Hours
+        </button>    
         <div id="groupByResultMsg" class="message mt-2"></div>
         <div id="groupByResultTable" class="mt-3"></div>
       </div>
