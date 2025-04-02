@@ -701,7 +701,7 @@ async function getVolunteerAvgHoursByStation(cond) {
       HAVING COUNT(*) > 1
     `;
   }
-  console.log(sql);
+  //console.log(sql);
   
   return await withOracleDB(async (conn) => {
       const result = await conn.execute(sql);

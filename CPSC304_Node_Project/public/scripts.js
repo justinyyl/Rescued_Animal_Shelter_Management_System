@@ -856,6 +856,7 @@ function displayJoinResult(columns, data, tableName) {
 }
 
 //aggregation with group by, added alternative choices for using having
+//if cond is true, filter all stations that have volunteers less or equal than one
 async function fetchVolunteerAvgHours(cond) {
     const response = await fetch(`/group-by-volunteer-hours?cond=${cond}`, {
         method: "GET"
