@@ -861,7 +861,7 @@ function displayProjectionResult(columns, data, tableName) {
 
 // Handle join submission
 async function fetchVolunteerTakeCareAnimals() {
-    const input = document.getElementById("animalType").value;
+    const input = document.getElementById("joinInput").value;
     const msg = document.getElementById("joinResultMsg");
     const container = document.getElementById("joinTableContainer");
 
@@ -888,21 +888,21 @@ async function fetchVolunteerTakeCareAnimals() {
 
 // Render join result table
 function displayJoinResult(columns, data, tableName) {
-    const containerId = "projectionResultTable";
+    const containerId = "joinResultTable";
 
-    const parent = document.getElementById("joinTableContainer");
+    const parent = document.getElementById("joinResultTable");
     parent.innerHTML = ""; // clear previous
 
     const container = document.createElement("div");
     container.id = containerId;
 
     if (data.length === 0 || columns.length === 0) {
-        container.innerHTML = "<p>No matching results.</p>";
+        container.innerHTML = "<p>No matching results.</p >";
         parent.appendChild(container);
         return;
     }
 
-//show tubles
+//show tuples
     const table = document.createElement("table");
     table.border = "1";
     table.style.marginTop = "10px";
