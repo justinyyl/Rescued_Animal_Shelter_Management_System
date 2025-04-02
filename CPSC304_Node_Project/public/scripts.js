@@ -551,11 +551,41 @@ function addCondition() {
             <option value="OR">OR</option>
         </select>` : ''}
 
-        <select class="attribute">
+        <select class="attribute" style="
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px 40px 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 0L5 4L9 0" stroke="%23222"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            cursor: pointer;
+            margin-right: 10px;">
             ${attributeOptions.map(attr => `<option value="${attr}">${attr}</option>`).join("")}
         </select>
 
-        <select class="operator">
+        <select class="operator" style="
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px 40px 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 0L5 4L9 0" stroke="%23222"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            cursor: pointer;
+            margin-right: 10px;">
             <option value="=">=</option>
             <option value="!=">!=</option>
             <option value="<"><</option>
@@ -564,7 +594,15 @@ function addCondition() {
             <option value=">=">>=</option>
         </select>
 
-        <input placeholder="Value" class="value" required>
+        <input placeholder="Value" class="value" required style="
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            margin-right: 10px;
+            width: 200px;
+            box-sizing: border-box;">
     `;
     container.appendChild(div);
 }
@@ -696,10 +734,35 @@ function addAttribute() {
     div.className = "attribute-row";
 
     div.innerHTML = `
-        <select class="attribute">
+        <select class="attribute" style="
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px 40px 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 0L5 4L9 0" stroke="%23222"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+            cursor: pointer;
+            margin-right: 10px;">
             ${attributeOptions.map(attr => `<option value="${attr}">${attr}</option>`).join("")}
         </select>
-        <button type="button" class="remove-btn">Remove</button>
+        <button type="button" class="remove-btn" style="
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: #6c757d;
+            color: white;
+            margin-right: 10px;
+            width: 200px;
+            box-sizing: border-box;">Remove</button>
     `;
 
     div.querySelector(".remove-btn").onclick = () => container.removeChild(div);
