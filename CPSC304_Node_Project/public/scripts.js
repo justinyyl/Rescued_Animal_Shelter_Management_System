@@ -349,12 +349,12 @@ function showFormDelete() {
 async function handleDeleteResponse(response, resultElementId) {
     const responseData = await response.json();
     const messageElement = document.getElementById(resultElementId);
-
+    console.log(responseData);
     if (responseData.success) {
         messageElement.textContent = "Data deleting successfully!";
         messageElement.style.color = "green";
     } else {
-        messageElement.textContent = "Could not find the data, please check the input";
+        messageElement.textContent = "Could not find the data or foreign key violation";
         messageElement.style.color = "red";
     }
 }

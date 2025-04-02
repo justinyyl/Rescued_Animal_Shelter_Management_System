@@ -115,54 +115,54 @@ VALUES ('efg@gmail.com', 'p5', '125-732-5629');
 
 -- 3.2 Station
 INSERT INTO Station (address, max_capacity, environment)
-VALUES ('Station A', 50, 'Urban');
+VALUES ('A', 50, 'Urban');
 
 INSERT INTO Station (address, max_capacity, environment)
-VALUES ('Station B', 30, 'Suburban');
+VALUES ('B', 30, 'Suburban');
 
 INSERT INTO Station (address, max_capacity, environment)
-VALUES ('Station C', 20, 'Rural');
+VALUES ('C', 20, 'Rural');
 
 INSERT INTO Station (address, max_capacity, environment)
-VALUES ('Station D', 100, 'Urban');
+VALUES ('D', 100, 'Urban');
 
 INSERT INTO Station (address, max_capacity, environment)
-VALUES ('Station E', 40, 'Coastal');
+VALUES ('E', 40, 'Coastal');
 
 -- 3.3 Staff_Hire
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
-VALUES ('micheal@rescue.com', 3000.00, '601-145-2345', 'Michael Williams', 'Station A');
+VALUES ('micheal@rescue.com', 3000.00, '601-145-2345', 'Michael Williams', 'A');
 
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
-VALUES ('sarah@rescue.com', 3500.00, '779-311-2807', 'Sarah Jones', 'Station B');
+VALUES ('sarah@rescue.com', 3500.00, '779-311-2807', 'Sarah Jones', 'B');
 
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
-VALUES ('david@rescue.com', 3200.00, '683-190-3598', 'David Smith', 'Station A');
+VALUES ('david@rescue.com', 3200.00, '683-190-3598', 'David Smith', 'A');
 
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
-VALUES ('emma@rescue.com', 2800.00, '106-326-1287', 'Emma Rodriguez', 'Station C');
+VALUES ('emma@rescue.com', 2800.00, '106-326-1287', 'Emma Rodriguez', 'C');
 
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
-VALUES ('james@rescue.com', 4000.00, '587-446-1677', 'James Brown', 'Station E');
+VALUES ('james@rescue.com', 4000.00, '587-446-1677', 'James Brown', 'E');
 
 INSERT INTO Staff_Hire (email, salary, phone_number, name, address)
-VALUES ('lucy@rescue.com', 4500.00, '264-267-3640', 'Lucy James', 'Station D');
+VALUES ('lucy@rescue.com', 4500.00, '264-267-3640', 'Lucy James', 'D');
 
 -- 3.4 Volunteer_Recruit
 INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
-VALUES (1, 20, 'Tom', 1, 'Station A');
+VALUES (1, 20, 'Tom', 1, 'A');
 
 INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
-VALUES (2, 30, 'Jerry', 2, 'Station A');
+VALUES (2, 30, 'Jerry', 2, 'A');
 
 INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
-VALUES (3, 15, 'Maggie', 3, 'Station B');
+VALUES (3, 15, 'Maggie', 3, 'B');
 
 INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
-VALUES (4, 25, 'Finn', 4, 'Station B');
+VALUES (4, 25, 'Finn', 4, 'B');
 
 INSERT INTO Volunteer_Recruit (ID, total_working_hours, name, schedule, address)
-VALUES (5, 10, 'Sophie', 5, 'Station C');
+VALUES (5, 10, 'Sophie', 5, 'C');
 
 -- 3.5 Lifecare_Volunteer
 INSERT INTO Lifecare_Volunteer (ID, domain_of_responsibility)
@@ -196,40 +196,40 @@ VALUES (105, 'XYZ Philanthropy');
 -- 3.7 Animals Adopt Shelter
 INSERT INTO Animals_Adopt_Shelter
 (aid, species, found_location, found_date, email, address)
-VALUES (100, 'Dog', 'City Park', DATE '2023-01-10', 'abc@hotmail.com', 'Station A');
+VALUES (100, 'Dog', 'City Park', DATE '2023-01-10', 'abc@hotmail.com', 'A');
 
 INSERT INTO Animals_Adopt_Shelter
 (aid, species, found_location, found_date, email, address)
-VALUES (101, 'Cat', 'Downtown', DATE '2023-01-20', 'bcd@gmail.com', 'Station B');
+VALUES (101, 'Cat', 'Downtown', DATE '2023-01-20', 'bcd@gmail.com', 'B');
 
 INSERT INTO Animals_Adopt_Shelter
 (aid, species, found_location, found_date, email, address)
-VALUES (102, 'Rabbit', 'Suburbs', DATE '2022-12-01', 'cde@gmail.com', 'Station C');
+VALUES (102, 'Rabbit', 'Suburbs', DATE '2022-12-01', 'cde@gmail.com', 'C');
 
 INSERT INTO Animals_Adopt_Shelter
 (aid, species, found_location, found_date, email, address)
-VALUES (103, 'Parrot', 'TropicalGarden', DATE '2022-11-15', 'def@163.com', 'Station D');
+VALUES (103, 'Parrot', 'TropicalGarden', DATE '2022-11-15', 'def@163.com', 'D');
 
 INSERT INTO Animals_Adopt_Shelter
 (aid, species, found_location, found_date, email, address)
-VALUES (104, 'Dog', 'School Yard', DATE '2023-02-10', 'efg@gmail.com', 'Station E');
+VALUES (104, 'Dog', 'School Yard', DATE '2023-02-10', 'efg@gmail.com', 'E');
 
 -- 3.8 Donation_Account_Hold
 --    如果 address 外键要引用Station(address)，就用已有 'Station A' ~ 'Station E'
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
-VALUES (101, 5000, DATE '2024-01-10', 'Station A');
+VALUES (101, 5000, DATE '2024-01-10', 'A');
 
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
-VALUES (102, 3000, DATE '2024-02-05', 'Station B');
+VALUES (102, 3000, DATE '2024-02-05', 'B');
 
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
-VALUES (103, 7000, DATE '2024-02-20', 'Station C');
+VALUES (103, 7000, DATE '2024-02-20', 'C');
 
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
-VALUES (104, 2000, DATE '2024-03-01', 'Station D');
+VALUES (104, 2000, DATE '2024-03-01', 'D');
 
 INSERT INTO Donation_Account_Hold (accountID, balance, donation_date, address)
-VALUES (105, 4500, DATE '2024-03-15', 'Station E');
+VALUES (105, 4500, DATE '2024-03-15', 'E');
 
 -- 3.9 TakeCare
 --    aid=101,102,103,104,105 都必须已经在Animals_Adopt_Shelter里插入
