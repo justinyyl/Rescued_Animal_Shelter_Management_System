@@ -469,11 +469,12 @@ async function deleteVolunteerRecruit(event) {
     event.preventDefault();
 
     const ID = document.getElementById('deleteVID').value;
+    const addr = document.getElementById('deleteVAddr').value;
 
     const response = await fetch('/delete-volunteer-recruit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ID: ID })
+        body: JSON.stringify({ ID: ID , address : addr})
     });
 
     handleDeleteResponse(response, 'volunteerDeleteResult');

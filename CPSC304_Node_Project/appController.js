@@ -186,8 +186,8 @@ router.post('/delete-medicalrecord-has', async (req, res) => {
 
 // Delete Volunteer_Recruit
 router.post('/delete-volunteer-recruit', async (req, res) => {
-    const { ID } = req.body;
-    const deleted = await appService.deleteVolunteerRecruit(ID);
+    const { ID, address } = req.body;
+    const deleted = await appService.deleteVolunteerRecruit(address, ID);
     if (deleted) res.json({ success: true });
     else         res.status(500).json({ success: false });
 });
