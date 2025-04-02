@@ -1,4 +1,47 @@
-# Project Description
-# Our project focuses on the database for management for rescued animals.It tracks animal details (species, rescue history), volunteer activities (schedules, specialized roles), adaptors, and medical care (vaccinations), while coordinating shelter resources (station capacity, donation funds).
-The system enables users to effectively manage and maintain data related to rescued animals, adopters, donations, staff, medical records, and volunteer operations.Users can insert new entries, update existing values, and delete specific records based on their primary keys through a user-friendly HTML interface. Users can also apply filters to find specific rows based on values or choose any number of attributes to view without search. These are implemented dynamically so that users can input values to operate. We implemented a join query that allows users to find the ID and name of all volunteers who take care of a specific species by joining the Volunteer_Recruit, TakeCare, and Animals_Adopt_Shelter tables.We implemented aggregation queries on the Volunteer_Recruit table to calculate average working hours by station, filter out outliers using a HAVING clause, and identify the station with the minimum average working hours. This allows the shelter to assess workload distribution across different locations.And we use division to find adopters whose adopted animals cover every species present in the shelter.
-https://www.students.cs.ubc.ca/~cs-304/resources/javascript-oracle-resources/node-setup.html
+# 🐾 Rescued Animal Shelter Management System
+
+## 🐶 Overview
+Our project focuses on building a comprehensive **database management system for rescued animals**. It is designed to support a wide range of shelter operations, including tracking animal details, volunteer contributions, adopter records, medical care, and resource coordination.
+
+---
+
+## 🐕 Key Features
+
+### 🐱 Data Management
+- **Animal Records**: Store details like species, rescue history, and shelter location.
+- **Volunteer Operations**: Track schedules and specialized roles for all volunteers.
+- **Adopters**: Maintain adopter profiles and their adoption history.
+- **Medical Care**: Record vaccinations and medical treatments.
+- **Shelter Resources**: Monitor station capacity and donation fund usage.
+
+### 🐾 User Interface
+- A user-friendly **HTML interface** enables:
+  - Inserting new entries
+  - Updating existing values
+  - Deleting records using primary keys
+  - Filtering rows based on user-input values
+  - Selecting attributes to display without searching
+- All operations are implemented **dynamically** based on user inputs.
+
+---
+
+## 🦴 Database Queries
+
+### 🐕‍🦺 Join Query
+- We implemented a **join** to find the ID and name of all volunteers who care for a specific species.
+- This query joins the `Volunteer_Recruit`, `TakeCare`, and `Animals_Adopt_Shelter` tables.
+
+### 🦁 Aggregation Query
+- Calculate **average working hours by station** in the `Volunteer_Recruit` table.
+- Use a **HAVING clause** to filter out outliers.
+- Identify the **station with the minimum average working hours**.
+- This helps assess workload distribution across shelter locations.
+
+### 🐢 Division Query
+- Find **adopters who have adopted animals of *every* species** currently present in the shelter.
+
+---
+
+## 🐾 Reference
+For setup and integration resources, we referred to the following:  
+[Node.js & Oracle Setup Guide](https://www.students.cs.ubc.ca/~cs-304/resources/javascript-oracle-resources/node-setup.html)
