@@ -268,10 +268,16 @@ router.get('/group-by-volunteer-hours', async (req, res) => {
     res.json({ data: result });
 });
 
-router.get('/division-adopters-all-species', async (req, res) => {
-    const result = await appService.getAdoptersWhoAdoptedAllSpecies();
-    res.json({ data: result });
+router.get('/division-adopters', async (req, res) => {
+    try {
+      const data = await appService.findAdoptersWithAllSpecies();
+      res.json({ success: true, data });
+    } catch (err) {
+      console.error("Error in /division-adopters:", err);
+      res.json({ success: false, message: "Error performing division query" });
+    }
   });
+  
   
 
 module.exports = router;

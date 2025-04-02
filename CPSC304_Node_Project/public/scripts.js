@@ -1033,35 +1033,47 @@ function fetchTableData() {
             table.style.display = "none"; // Hide all tables
     });
 }
-async function fetchAdoptersAllSpecies() {
-    const res = await fetch("/division-adopters-all-species");
-    const result = await res.json();
+// Division: Fetch adopters who adopted all species
+async function fetchAdoptersWithAllSpecies() {
+    const response = await fetch('/division-adopters');
+    const responseData = await response.json();
   
-    const data = result.data;
-    const msg = document.getElementById("divisionSpeciesMsg");
-    const out = document.getElementById("divisionSpeciesResult");
-    out.innerHTML = "";
+    const container = document.getElementById('divisionResultTable');
+    const msg = document.getElementById('divisionResultMsg');
+    container.innerHTML = '';
+    msg.textContent = '';
   
-    if (!data || data.length === 0) {
-      msg.textContent = "No adopters found.";
+    if (!responseData.success || responseData.data.length === 0) {
+      msg.textContent = 'No adopters found.';
       return;
     }
   
-    msg.textContent = `Found ${data.length} adopter(s).`;
+    const table = document.createElement('table');
+    table.className = 'table table-bordered';
   
-    const table = document.createElement("table");
-    table.border = "1";
-    const header = table.insertRow();
-    const th = document.createElement("th");
-    th.textContent = "Adopter Email";
-    header.appendChild(th);
-  
-    data.forEach(row => {
-      const tr = table.insertRow();
-      const td = tr.insertCell();
-      td.textContent = row[0];
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    ['Email', 'Name', 'Phone Number'].forEach(headerText => {
+      const th = document.createElement('th');
+      th.textContent = headerText;
+      headerRow.appendChild(th);
     });
-  //
-    out.appendChild(table);
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+  
+    const tbody = document.createElement('tbody');
+    responseData.data.forEach(row => {
+      const tr = document.createElement('tr');
+      row.forEach(cell => {
+        const td = document.createElement('td');
+        td.textContent = cell;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    container.appendChild(table);
   }
+  document.getElementById("btnDivision").addEventListener("click", fetchAdoptersWithAllSpecies);
+  
   

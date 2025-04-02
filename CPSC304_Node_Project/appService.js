@@ -714,18 +714,18 @@ async function getVolunteerAvgHoursByStation(cond) {
       return [];
   });
 }
-async function getAdoptersWhoAdoptedAllSpecies() {
+// Division: Find adopters who have adopted all species
+async function findAdoptersWithAllSpecies() {
   return await withOracleDB(async (conn) => {
     const result = await conn.execute(`
-      SELECT DISTINCT A.email
-      FROM Adopter A
+      SELECT a.email, a.name, a.phone_number
+      FROM Adopter a
       WHERE NOT EXISTS (
-          SELECT DISTINCT species
-          FROM Animals_Adopt_Shelter
-          MINUS
-          SELECT DISTINCT S.species
-          FROM Animals_Adopt_Shelter S
-          WHERE S.email = A.email
+        SELECT species FROM Animals_Adopt_Shelter
+        MINUS
+        SELECT species
+        FROM Animals_Adopt_Shelter ads
+        WHERE ads.email = a.email
       )
     `);
     return result.rows;
@@ -734,6 +734,7 @@ async function getAdoptersWhoAdoptedAllSpecies() {
     return [];
   });
 }
+
 
 
 
@@ -773,6 +774,6 @@ module.exports = {
   projectColumns,
   findVolunteersByAnimalType,
   getVolunteerAvgHoursByStation,
-  getAdoptersWhoAdoptedAllSpecies
+  findAdoptersWithAllSpecies
 
 };
