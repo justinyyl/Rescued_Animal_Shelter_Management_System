@@ -950,7 +950,6 @@ async function fetchVolunteerAvgHours(cond) {
     msg.style.color = "green";
 
     const table = document.createElement("table");
-    table.border = "1";
 
     const thead = table.createTHead();
     const headerRow = thead.insertRow();
@@ -971,9 +970,19 @@ async function fetchVolunteerAvgHours(cond) {
 
     table.appendChild(tbody);
     container.appendChild(table);
+    
 }
 
-
+//Nested Aggregation that selects
+async function fetchGetAvgBalanceByYear(year){
+    const response = await fetch(`/group-by-volunteer-hours?year=${year}`, {
+        method: "GET"
+    });
+    const result = await response.json();
+    const data = result.data;
+    const container = document.getElementById("getAvgBalanceResultTable");
+    const msg = document.getElementById("getAvgBalanceResultMsg");
+}
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -982,14 +991,7 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     document.getElementById("resetTables").addEventListener("click", resetTables);
-    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
-//    document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
-//    document.getElementById("countDemotable").addEventListener("click", countDemotable);
-
 };
-document.getElementById("resetTables").addEventListener("click", function () {
-    resetTables();
-});
 document.getElementById("Adopter").addEventListener("click", function () {
     fetchAndDisplayUsers('Adopter');
 });
