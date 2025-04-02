@@ -1,453 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <!-- Ensures the website renders correctly across different device sizes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
-    <!-- <link rel="stylesheet" href="styles.css">   -->
+  <title>Group 63 Project</title>
 
-    <title>Group 63 Project</title>
+  <!-- Bootstrap CSS (CDN) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .section-title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+    #loadingGif {
+      width: 30px;
+      vertical-align: middle;
+      display: none; /* Will be shown via JS */
+    }
+    .message {
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    table {
+      margin-top: 1rem;
+    }
+    /* Minimal spacing adjustments */
+    .container > .row,
+    .container > .card {
+      margin-bottom: 1.5rem;
+    }
+    .small-title {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <!-- ===================================================================================== -->
-    <!-- Display the current status of the database connection. 
-         !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
-         -->
-    <h1>Database Connection Status: 
-        <!-- An in-line placeholder to display connection status. -->
-        <span id="dbStatus"> </span>
-        <!-- A loading GIF, will be hided once get the status. -->
-        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
-    </h1>
-
-    <br><hr><br> <!-- ========================================================================= -->
-
-    <!-- Show 'Demotable'. 
-        Data will be fetched and inserted here dynamically using JavaScript. -->
-    <h2>Show Tables</h2>
-    <!-- Buttons for each table -->
-    <div id="table-buttons">
-        <button id="Adopter">Show Adopter</button>
-        <button id="Station">Show Station</button>
-        <button id="Donator">Show Donator</button>
-        <button id="Animals_Adopt_Shelter">Show Animals Adopt Shelter</button>
-        <button id="Donation_Account_Hold">Show Donation Account Hold</button>
-        <button id="MedicalRecord_Has">Show MedicalRecord Has</button>
-        <button id="Lifecare_Volunteer">Show Lifecare Volunteer</button>
-        <button id="Volunteer_Recruit">Show Volunteer Recruit</button>
-        <button id="Staff_Hire">Show Staff Hire</button>
-        <button id="TakeCare">Show TakeCare</button>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Group 63 Project</span>
     </div>
-    <!-- Tables (Initially Hidden) -->
+  </nav>
+
+  <div class="container mt-4">
+    <!-- Database Connection Status -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Database Connection Status</h5>
+        <p class="card-text">
+          <span id="dbStatus"></span>
+          <img id="loadingGif" src="loading_100px.gif" alt="Loading..." />
+        </p>
+      </div>
+    </div>
+
+    <!-- Show Tables -->
+    <h2 class="section-title">Show Tables</h2>
+    <div class="row g-3 mb-3" id="table-buttons">
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="Adopter">Show Adopter</button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="Station">Show Station</button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="Donator">Show Donator</button>
+      </div>
+      <div class="col-auto">
+        <button
+          class="btn btn-outline-primary"
+          id="Animals_Adopt_Shelter"
+        >
+          Show Animals Adopt Shelter
+        </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="Donation_Account_Hold">
+          Show Donation Account Hold
+        </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="MedicalRecord_Has">
+          Show MedicalRecord Has
+        </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="Lifecare_Volunteer">
+          Show Lifecare Volunteer
+        </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="Volunteer_Recruit">
+          Show Volunteer Recruit
+        </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="Staff_Hire">
+          Show Staff Hire
+        </button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-primary" id="TakeCare">
+          Show TakeCare
+        </button>
+      </div>
+    </div>
+
     <div id="table-container">
-        <table id="adopter" border="1" style="display: none;">
-            <thead>
+      <div class="table-responsive">
+        <table
+          id="adopter"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>email</th>
-                <th>name</th>
-                <th>phone_number</th>
+              <th>email</th>
+              <th>name</th>
+              <th>phone_number</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="station" border="1" style="display: none;">
-            <thead>
+        <table
+          id="station"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>address</th>
-                <th>max_capacity</th>
-                <th>environment</th>
+              <th>address</th>
+              <th>max_capacity</th>
+              <th>environment</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="donator" border="1" style="display: none;">
-            <thead>
+        <table
+          id="donator"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>DID</th>
-                <th>name</th>
+              <th>DID</th>
+              <th>name</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="animals_adopt_shelter" border="1" style="display: none;">
-            <thead>
+        <table
+          id="animals_adopt_shelter"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>aid</th>
-                <th>species</th>
-                <th>found_location</th>
-                <th>found_date</th>
-                <th>email</th>
-                <th>address</th>
+              <th>aid</th>
+              <th>species</th>
+              <th>found_location</th>
+              <th>found_date</th>
+              <th>email</th>
+              <th>address</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="donation_account_hold" border="1" style="display: none;">
-            <thead>
+        <table
+          id="donation_account_hold"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>accountID</th>
-                <th>balance</th>
-                <th>donation_date</th>
-                <th>address</th>
+              <th>accountID</th>
+              <th>balance</th>
+              <th>donation_date</th>
+              <th>address</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="medicalrecord_has" border="1" style="display: none;">
-            <thead>
+        <table
+          id="medicalrecord_has"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>recordDate</th>
-                <th>aid</th>
-                <th>vaccination</th>
+              <th>recordDate</th>
+              <th>aid</th>
+              <th>vaccination</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="lifecare_volunteer" border="1" style="display: none;">
-            <thead>
+        <table
+          id="lifecare_volunteer"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>ID</th>
-                <th>domain_of_responsibility</th>
+              <th>ID</th>
+              <th>domain_of_responsibility</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="volunteer_recruit" border="1" style="display: none;">
-            <thead>
+        <table
+          id="volunteer_recruit"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>ID</th>
-                <th>total_working_hours</th>
-                <th>name</th>
-                <th>schedule</th>
-                <th>address</th>
+              <th>ID</th>
+              <th>total_working_hours</th>
+              <th>name</th>
+              <th>schedule</th>
+              <th>address</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="staff_hire" border="1" style="display: none;">
-            <thead>
+        <table
+          id="staff_hire"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>email</th>
-                <th>salary</th>
-                <th>phone_number</th>
-                <th>name</th>
-                <th>address</th>
+              <th>email</th>
+              <th>salary</th>
+              <th>phone_number</th>
+              <th>name</th>
+              <th>address</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
 
-        <table id="takecare" border="1" style="display: none;">
-            <thead>
+        <table
+          id="takecare"
+          class="table table-bordered table-striped"
+          style="display: none;"
+        >
+          <thead>
             <tr>
-                <th>aid</th>
-                <th>ID</th>
+              <th>aid</th>
+              <th>ID</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
+      </div>
     </div>
 
+    <!-- Reset -->
+    <h2 class="section-title">Reset Tables</h2>
+    <p>
+      If this is the first time you're running this page, you MUST use reset.
+      Otherwise, you can reset the table data if needed.
+    </p>
+    <button class="btn btn-warning mb-2" id="resetTables">Reset</button>
+    <div id="resetResultMsg" class="message"></div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <hr />
 
-    <h2>Reset Tables</h2>
-    <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
-    <button id="resetTables"> reset </button> <br>
-    <!-- A placeholder to display messages related to the reset operation. -->
-    <div id="resetResultMsg"></div>
-
-    <br><hr><br> <!-- ========================================================================= -->
-
-    <h2> Insert Values into Tables </h2>
+    <!-- Insert -->
+    <h2 class="section-title">Insert Values into Tables</h2>
     <label for="tableSelect">Choose a table to insert data:</label>
-    <select id="tableSelect" onchange="showFormInsert()">
-        <option value="">-- Select a table --</option>
-        <option value="insert-adopter">Adopter</option>
-        <option value="insert-station">Station</option>
-        <option value="insert-donator">Donator</option>
-        <option value="insert-animals_adopt_shelter">Animals Adopt Shelter</option>
-        <option value="insert-donation_account_hold">Donation Account Hold</option>
-        <option value="insert-medicalrecord_has">Medical Record</option>
-        <option value="insert-lifecare_volunteer">Lifecare Volunteer</option>
-        <option value="insert-volunteer_recruit">Volunteer Recruit</option>
-        <option value="insert-staff_hire">Staff Hire</option>
-        <option value="insert-takecare">Take Care</option>
+    <select
+      class="form-select w-auto d-inline-block mb-3"
+      id="tableSelect"
+      onchange="showFormInsert()"
+    >
+      <option value="">-- Select a table --</option>
+      <option value="insert-adopter">Adopter</option>
+      <option value="insert-station">Station</option>
+      <option value="insert-donator">Donator</option>
+      <option value="insert-animals_adopt_shelter">Animals Adopt Shelter</option>
+      <option value="insert-donation_account_hold">Donation Account Hold</option>
+      <option value="insert-medicalrecord_has">Medical Record</option>
+      <option value="insert-lifecare_volunteer">Lifecare Volunteer</option>
+      <option value="insert-volunteer_recruit">Volunteer Recruit</option>
+      <option value="insert-staff_hire">Staff Hire</option>
+      <option value="insert-takecare">Take Care</option>
     </select>
 
-    <!-- Insert Forms for Each Table -->
-    <div id="insert-adopter" class="container" style="display: none;">
-        <h2>Insert into Adopter</h2>
+    <div id="insert-adopter" class="card p-3 mb-3" style="display: none;">
+      <h5>Insert into Adopter</h5>
+      <div class="mb-2">
         <label>Email:</label>
-        <input type="text" id="adopterEmail">
+        <input type="text" id="adopterEmail" />
+      </div>
+      <div class="mb-2">
         <label>Name:</label>
-        <input type="text" id="adopterName">
+        <input type="text" id="adopterName" />
+      </div>
+      <div class="mb-2">
         <label>Phone Number:</label>
-        <input type="text" id="adopterPhone">
-        <button onclick="insertAdopter(event)">Insert</button>
-        <p class="message" id="adopterInsertResult"></p>
+        <input type="text" id="adopterPhone" />
+      </div>
+      <button class="btn btn-success" onclick="insertAdopter(event)">
+        Insert
+      </button>
+      <p class="message" id="adopterInsertResult"></p>
     </div>
 
-    <div id="insert-station" class="container" style="display: none;">
-        <h2>Insert into Station</h2>
+    <div id="insert-station" class="card p-3 mb-3" style="display: none;">
+      <h5>Insert into Station</h5>
+      <div class="mb-2">
         <label>Address:</label>
-        <input type="text" id="stationAddress">
+        <input type="text" id="stationAddress" />
+      </div>
+      <div class="mb-2">
         <label>Max Capacity:</label>
-        <input type="number" id="stationCapacity">
+        <input type="number" id="stationCapacity" />
+      </div>
+      <div class="mb-2">
         <label>Environment:</label>
-        <input type="text" id="stationEnvironment">
-        <button onclick="insertStation(event)">Insert</button>
-        <p class="message" id="stationInsertResult"></p>
+        <input type="text" id="stationEnvironment" />
+      </div>
+      <button class="btn btn-success" onclick="insertStation(event)">
+        Insert
+      </button>
+      <p class="message" id="stationInsertResult"></p>
     </div>
 
-    <div id="insert-donator" class="container" style="display: none;">
-        <h2>Insert into Donator</h2>
+    <div id="insert-donator" class="card p-3 mb-3" style="display: none;">
+      <h5>Insert into Donator</h5>
+      <div class="mb-2">
         <label>Donator ID:</label>
-        <input type="number" id="donatorId">
+        <input type="number" id="donatorId" />
+      </div>
+      <div class="mb-2">
         <label>Name:</label>
-        <input type="text" id="donatorName">
-        <button onclick="insertDonator(event)">Insert</button>
-        <p class="message" id="donatorInsertResult"></p>
+        <input type="text" id="donatorName" />
+      </div>
+      <button class="btn btn-success" onclick="insertDonator(event)">
+        Insert
+      </button>
+      <p class="message" id="donatorInsertResult"></p>
     </div>
 
-    <div id="insert-animals_adopt_shelter" class="container" style="display: none;">
-        <h2>Insert into Animals Adopt Shelter</h2>
+    <div
+      id="insert-animals_adopt_shelter"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Insert into Animals Adopt Shelter</h5>
+      <div class="mb-2">
         <label>Animal ID:</label>
-        <input type="number" id="animalId">
+        <input type="number" id="animalId" />
+      </div>
+      <div class="mb-2">
         <label>Species:</label>
-        <input type="text" id="animalSpecies">
+        <input type="text" id="animalSpecies" />
+      </div>
+      <div class="mb-2">
         <label>Found Location:</label>
-        <input type="text" id="foundLocation">
+        <input type="text" id="foundLocation" />
+      </div>
+      <div class="mb-2">
         <label>Found Date:</label>
-        <input type="date" id="foundDate">
+        <input type="date" id="foundDate" />
+      </div>
+      <div class="mb-2">
         <label>Email:</label>
-        <input type="text" id="ADemail">
+        <input type="text" id="ADemail" />
+      </div>
+      <div class="mb-2">
         <label>Address:</label>
-        <input type="text" id="STaddress">
-        <button onclick="insertAnimalsAdoptShelter(event)">Insert</button>
-        <p class="message" id="animalsAdoptShelterInsertResult"></p>
+        <input type="text" id="STaddress" />
+      </div>
+      <button
+        class="btn btn-success"
+        onclick="insertAnimalsAdoptShelter(event)"
+      >
+        Insert
+      </button>
+      <p class="message" id="animalsAdoptShelterInsertResult"></p>
     </div>
 
-    <div id="insert-donation_account_hold" class="container" style="display: none;">
-        <h2>Insert into Donation Account Hold</h2>
+    <div
+      id="insert-donation_account_hold"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Insert into Donation Account Hold</h5>
+      <div class="mb-2">
         <label>Account ID:</label>
-        <input type="number" id="accountId">
+        <input type="number" id="accountId" />
+      </div>
+      <div class="mb-2">
         <label>Balance:</label>
-        <input type="number" id="accountBalance">
+        <input type="number" id="accountBalance" />
+      </div>
+      <div class="mb-2">
         <label>Donation Date:</label>
-        <input type="date" id="donationDate">
+        <input type="date" id="donationDate" />
+      </div>
+      <div class="mb-2">
         <label>Station Address:</label>
-        <input type="text" id="STAddress">
-        <button onclick="insertDonationAccountHold(event)">Insert</button>
-        <p class="message" id="donationAccountHoldInsertResult"></p>
+        <input type="text" id="STAddress" />
+      </div>
+      <button
+        class="btn btn-success"
+        onclick="insertDonationAccountHold(event)"
+      >
+        Insert
+      </button>
+      <p class="message" id="donationAccountHoldInsertResult"></p>
     </div>
 
-    <div id="insert-medicalrecord_has" class="container" style="display: none;">
-        <h2>Insert into Medical Record</h2>
+    <div
+      id="insert-medicalrecord_has"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Insert into Medical Record</h5>
+      <div class="mb-2">
         <label>Record Date:</label>
-        <input type="date" id="recordDate">
+        <input type="date" id="recordDate" />
+      </div>
+      <div class="mb-2">
         <label>Animal ID:</label>
-        <input type="number" id="recordAnimalId">
+        <input type="number" id="recordAnimalId" />
+      </div>
+      <div class="mb-2">
         <label>Vaccination(Y/N):</label>
-        <input type="text" id="vaccination">
-        <button onclick="insertMedicalRecordHas(event)">Insert</button>
-        <p class="message" id="medicalRecordInsertResult"></p>
+        <input type="text" id="vaccination" />
+      </div>
+      <button class="btn btn-success" onclick="insertMedicalRecordHas(event)">
+        Insert
+      </button>
+      <p class="message" id="medicalRecordInsertResult"></p>
     </div>
 
-    <div id="insert-lifecare_volunteer" class="container" style="display: none;">
-        <h2>Insert into Lifecare Volunteer</h2>
+    <div
+      id="insert-lifecare_volunteer"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Insert into Lifecare Volunteer</h5>
+      <div class="mb-2">
         <label>Volunteer ID:</label>
-        <input type="number" id="VolunteerID">
+        <input type="number" id="VolunteerID" />
+      </div>
+      <div class="mb-2">
         <label>Responsibility:</label>
-        <input type="text" id="responsibility">
-        <button onclick="insertLifecareVolunteer(event)">Insert</button>
-        <p class="message" id="lifecareVolunteerInsertResult"></p>
+        <input type="text" id="responsibility" />
+      </div>
+      <button class="btn btn-success" onclick="insertLifecareVolunteer(event)">
+        Insert
+      </button>
+      <p class="message" id="lifecareVolunteerInsertResult"></p>
     </div>
 
-    <div id="insert-volunteer_recruit" class="container" style="display: none;">
-        <h2>Insert into Volunteer Recruit</h2>
+    <div
+      id="insert-volunteer_recruit"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Insert into Volunteer Recruit</h5>
+      <div class="mb-2">
         <label>Volunteer ID:</label>
-        <input type="number" id="volunteerID">
+        <input type="number" id="volunteerID" />
+      </div>
+      <div class="mb-2">
         <label>Working Hours:</label>
-        <input type="number" id="workingHours">
+        <input type="number" id="workingHours" />
+      </div>
+      <div class="mb-2">
         <label>Volunteer Name:</label>
-        <input type="text" id="VolunteerName">
+        <input type="text" id="VolunteerName" />
+      </div>
+      <div class="mb-2">
         <label>Schedule:</label>
-        <input type="number" id="schedule">
+        <input type="number" id="schedule" />
+      </div>
+      <div class="mb-2">
         <label>Station Address:</label>
-        <input type="text" id="staAD">
-        <button onclick="insertVolunteerRecruit(event)">Insert</button>
-        <p class="message" id="volunteerRecruitInsertResult"></p>
+        <input type="text" id="staAD" />
+      </div>
+      <button class="btn btn-success" onclick="insertVolunteerRecruit(event)">
+        Insert
+      </button>
+      <p class="message" id="volunteerRecruitInsertResult"></p>
     </div>
 
-    <div id="insert-staff_hire" class="container" style="display: none;">
-        <h2>Insert into Staff Hire</h2>
+    <div
+      id="insert-staff_hire"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Insert into Staff Hire</h5>
+      <div class="mb-2">
         <label>Email:</label>
-        <input type="text" id="staffEmail">
+        <input type="text" id="staffEmail" />
+      </div>
+      <div class="mb-2">
         <label>Salary:</label>
-        <input type="number" id="staffSalary" step="0.01">
+        <input type="number" id="staffSalary" step="0.01" />
+      </div>
+      <div class="mb-2">
         <label>Phone:</label>
-        <input type="number" id="phoneNUmber">
+        <input type="number" id="phoneNUmber" />
+      </div>
+      <div class="mb-2">
         <label>Name:</label>
-        <input type="text" id="staffName">
+        <input type="text" id="staffName" />
+      </div>
+      <div class="mb-2">
         <label>Address:</label>
-        <input type="text" id="stationADDRESS">
-        <button onclick="insertStaffHire(event)">Insert</button>
-        <p class="message" id="staffHireInsertResult"></p>
+        <input type="text" id="stationADDRESS" />
+      </div>
+      <button class="btn btn-success" onclick="insertStaffHire(event)">
+        Insert
+      </button>
+      <p class="message" id="staffHireInsertResult"></p>
     </div>
 
-    <div id="insert-takecare" class="container" style="display: none;">
-        <h2>Insert into Take Care</h2>
+    <div
+      id="insert-takecare"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Insert into Take Care</h5>
+      <div class="mb-2">
         <label>Animal ID:</label>
-        <input type="text" id="careAnimalId">
+        <input type="text" id="careAnimalId" />
+      </div>
+      <div class="mb-2">
         <label>Volunteer ID:</label>
-        <input type="text" id="careVolunteerId">
-        <button onclick="insertTakeCare(event)">Insert</button>
-        <p class="message" id="takeCareInsertResult"></p>
+        <input type="text" id="careVolunteerId" />
+      </div>
+      <button class="btn btn-success" onclick="insertTakeCare(event)">
+        Insert
+      </button>
+      <p class="message" id="takeCareInsertResult"></p>
     </div>
     <div id="insertResultMsg"></div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <hr />
 
-    <h2>Update Value in Table</h2>
-    <label for="UpdateSelect">Select a table:</label>
-    <select id="UpdateSelect">
-        <option value="">-- Select a table --</option>
-        <option value="Adopter">Adopter</option>
-        <option value="Station">Station</option>
-        <option value="Donator">Donator</option>
-        <option value="Animals_Adopt_Shelter">Animals Adopt Shelter</option>
-        <option value="Donation_Account_Hold">Donation Account Hold</option>
-        <option value="MedicalRecord_Has">Medical Record</option>
-        <option value="Lifecare_Volunteer">Lifecare Volunteer</option>
-        <option value="Volunteer_Recruit">Volunteer Recruit</option>
-        <option value="Staff_Hire">Staff Hire</option>
-        <option value="TakeCare">Take Care</option>
-    </select>
-    </br></br>
-    <form id="updateTableValue">
-        Attribute: <input type="text" id="selectAttribute" placeholder="Attribute" required> <br><br>
-        Old Value: <input type="text" id="updateOldValue" placeholder="Enter Old Value" required> <br><br>
-        New Value: <input type="text" id="updateNewValue" placeholder="Enter New Value" maxlength="20"> <br><br>
-
-        <button onclick="updateValue(event)"> update </button> <br>
-    </form>
-    <!-- A placeholder to display messages related to the update operation. -->
-    <div id="updateNameResultMsg"></div>
-
-    <br><hr><br> <!-- ========================================================================= -->
-    <h2>Delete Row of Tables</h2>
-    <label for="DeleteSelect">Delete a row from data:</label>
-    <select id="DeleteSelect" onchange="showFormDelete()">
-        <option value="">-- Select a table --</option>
-        <option value="delete-adopter">Adopter</option>
-        <option value="delete-station">Station</option>
-        <option value="delete-donator">Donator</option>
-        <option value="delete-animals_adopt_shelter">Animals Adopt Shelter</option>
-        <option value="delete-donation_account_hold">Donation Account Hold</option>
-        <option value="delete-medicalrecord_has">Medical Record</option>
-        <option value="delete-lifecare_volunteer">Lifecare Volunteer</option>
-        <option value="delete-volunteer_recruit">Volunteer Recruit</option>
-        <option value="delete-staff_hire">Staff Hire</option>
-        <option value="delete-takecare">Take Care</option>
-    </select>
-
-    <!-- Delete Forms for Each Table -->
-    <div id="delete-adopter" class="container" style="display: none;">
-        <h2>Delete from Adopter</h2>
-        <label>Delete by Email:</label>
-        <input type="text" id="deleteAdopterEmail">
-        <button onclick="deleteAdopter(event)">Insert</button>
-        <p class="message" id="adopterDeleteResult"></p>
-    </div>
-
-    <div id="delete-station" class="container" style="display: none;">
-        <h2>Delete from Station</h2>
-        <label>Delete by Address:</label>
-        <input type="text" id="deleteStationAddress">
-        <button onclick="deleteStation(event)">Insert</button>
-        <p class="message" id="stationDeleteResult"></p>
-    </div>
-
-    <div id="delete-donator" class="container" style="display: none;">
-        <h2>Delete from Donator</h2>
-        <label>Delete by Donator ID:</label>
-        <input type="number" id="deleteDID">
-        <button onclick="deleteDonator(event)">Insert</button>
-        <p class="message" id="donatorDeleteResult"></p>
-    </div>
-
-    <div id="delete-animals_adopt_shelter" class="container" style="display: none;">
-        <h2>Delete from Animals Adopt Shelter</h2>
-        <label>Delete by Animal ID:</label>
-        <input type="number" id="deleteAID">
-        <button onclick="deleteAnimalsAdoptShelter(event)">Insert</button>
-        <p class="message" id="adsDeleteResult"></p>
-    </div>
-
-    <div id="delete-donation_account_hold" class="container" style="display: none;">
-        <h2>Delete from Donation Account Hold</h2>
-        <label>Delete by Account ID:</label>
-        <input type="number" id="deleteAccountID">
-        <button onclick="deleteDonationAccountHold(event)">Insert</button>
-        <p class="message" id="donationAccountDeleteResult"></p>
-    </div>
-
-    <div id="delete-medicalrecord_has" class="container" style="display: none;">
-        <h2>Delete from Medical record Has</h2>
-        <label>Delete by Animal ID:</label>
-        <input type="number" id="deleteMDanimalID">
-        <button onclick="deleteMedicalRecordHas(event)">Insert</button>
-        <p class="message" id="MDrecordDeleteResult"></p>
-    </div>
-
-    <div id="delete-lifecare_volunteer" class="container" style="display: none;">
-        <h2>Delete from Lifecare Volunteer</h2>
-        <label>Delete by Volunteer ID:</label>
-        <input type="number" id="deleteLifecareVID">
-        <button onclick="deleteLifecareVolunteer(event)">Insert</button>
-        <p class="message" id="LCvolunteerDeleteResult"></p>
-    </div>
-
-    <div id="delete-volunteer_recruit" class="container" style="display: none;">
-        <h2>Delete from Volunteer Recruit</h2>
-        <label>Delete by Volunteer ID:</label>
-        <input type="number" id="deleteVID">
-        <button onclick="deleteVolunteerRecruit(event)">Insert</button>
-        <p class="message" id="volunteerDeleteResult"></p>
-    </div>
-
-    <div id="delete-staff_hire" class="container" style="display: none;">
-        <h2>Delete from Staff Hire</h2>
-        <label>Delete by Staff Email:</label>
-        <input type="text" id="deleteStaffEmail">
-        <button onclick="deleteStaffHire(event)">Insert</button>
-        <p class="message" id="staffDeleteResult"></p>
-    </div>
-
-    <div id="delete-takecare" class="container" style="display: none;">
-        <h2>Delete from Take Care</h2>
-        <label>Delete by Animal ID:</label>
-        <input type="number" id="deleteTKAID">
-        <label>Delete by Volunteer ID:</label>
-        <input type="number" id="deleteTKVID">
-        <button onclick="deleteTakeCare(event)">Insert</button>
-        <p class="message" id="TKDeleteResult"></p>
-    </div>
-    <br><hr><br>
-    <h2>Search (Selection)</h2>
-    <p>Select conditions to filter a relation:</p>
-    <select id="selectTable">
+    <!-- Update -->
+    <h2 class="section-title">Update Value in Table</h2>
+    <div class="card p-3 mb-3">
+      <label for="UpdateSelect" class="form-label">Select a table:</label>
+      <select class="form-select w-auto mb-3" id="UpdateSelect">
         <option value="">-- Select a table --</option>
         <option value="Adopter">Adopter</option>
         <option value="Station">Station</option>
@@ -460,61 +583,343 @@
         <option value="Staff_Hire">Staff Hire</option>
         <option value="TakeCare">Take Care</option>
       </select>
-    
-    <div id="condition-container"></div>
-    <button onclick="addCondition()">Add Condition</button>
-    <button onclick="submitSelection()">Search</button>
-    <p id="selectionResultMsg"></p>
-    <div id="selectionTableContainer"></div>
 
-    <br><hr><br>
-    <h2>Projection</h2>
-    <p>Select attributes (columns) to display from a relation:</p>
-    <select id="selectProjectionTable">
-        <option value="">-- Select a table --</option>
-        <option value="Adopter">Adopter</option>
-        <option value="Station">Station</option>
-        <option value="Donator">Donator</option>
-        <option value="Animals_Adopt_Shelter">Animals Adopt Shelter</option>
-        <option value="Donation_Account_Hold">Donation Account Hold</option>
-        <option value="MedicalRecord_Has">Medical Record</option>
-        <option value="Lifecare_Volunteer">Lifecare Volunteer</option>
-        <option value="Volunteer_Recruit">Volunteer Recruit</option>
-        <option value="Staff_Hire">Staff Hire</option>
-        <option value="TakeCare">Take Care</option>
+      <form id="updateTableValue" class="row g-2 align-items-end">
+        <div class="col-auto">
+          <label>Attribute:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="selectAttribute"
+            placeholder="Attribute"
+            required
+          />
+        </div>
+        <div class="col-auto">
+          <label>Old Value:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="updateOldValue"
+            placeholder="Enter Old Value"
+            required
+          />
+        </div>
+        <div class="col-auto">
+          <label>New Value:</label>
+          <input
+            class="form-control"
+            type="text"
+            id="updateNewValue"
+            placeholder="Enter New Value"
+            maxlength="20"
+          />
+        </div>
+        <div class="col-auto">
+          <button
+            class="btn btn-primary"
+            onclick="updateValue(event)"
+            type="button"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+      <div id="updateNameResultMsg" class="message"></div>
+    </div>
+
+    <hr />
+
+    <!-- Delete -->
+    <h2 class="section-title">Delete Row of Tables</h2>
+    <label for="DeleteSelect">Delete a row from data:</label>
+    <select
+      class="form-select w-auto mb-3"
+      id="DeleteSelect"
+      onchange="showFormDelete()"
+    >
+      <option value="">-- Select a table --</option>
+      <option value="delete-adopter">Adopter</option>
+      <option value="delete-station">Station</option>
+      <option value="delete-donator">Donator</option>
+      <option value="delete-animals_adopt_shelter">Animals Adopt Shelter</option>
+      <option value="delete-donation_account_hold">Donation Account Hold</option>
+      <option value="delete-medicalrecord_has">Medical Record</option>
+      <option value="delete-lifecare_volunteer">Lifecare Volunteer</option>
+      <option value="delete-volunteer_recruit">Volunteer Recruit</option>
+      <option value="delete-staff_hire">Staff Hire</option>
+      <option value="delete-takecare">Take Care</option>
     </select>
 
-    <div id="attribute-container"></div>
-    <button onclick="addAttribute()">Add Attribute</button>
-    <button onclick="submitProjection()">Show Projection</button>
-    <p id="projectionResultMsg"></p>
+    <div id="delete-adopter" class="card p-3 mb-3" style="display: none;">
+      <h5>Delete from Adopter</h5>
+      <label>Delete by Email:</label>
+      <input type="text" id="deleteAdopterEmail" />
+      <button class="btn btn-danger mt-2" onclick="deleteAdopter(event)">
+        Delete
+      </button>
+      <p class="message" id="adopterDeleteResult"></p>
+    </div>
+
+    <div id="delete-station" class="card p-3 mb-3" style="display: none;">
+      <h5>Delete from Station</h5>
+      <label>Delete by Address:</label>
+      <input type="text" id="deleteStationAddress" />
+      <button class="btn btn-danger mt-2" onclick="deleteStation(event)">
+        Delete
+      </button>
+      <p class="message" id="stationDeleteResult"></p>
+    </div>
+
+    <div id="delete-donator" class="card p-3 mb-3" style="display: none;">
+      <h5>Delete from Donator</h5>
+      <label>Delete by Donator ID:</label>
+      <input type="number" id="deleteDID" />
+      <button class="btn btn-danger mt-2" onclick="deleteDonator(event)">
+        Delete
+      </button>
+      <p class="message" id="donatorDeleteResult"></p>
+    </div>
+
+    <div
+      id="delete-animals_adopt_shelter"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Delete from Animals Adopt Shelter</h5>
+      <label>Delete by Animal ID:</label>
+      <input type="number" id="deleteAID" />
+      <button
+        class="btn btn-danger mt-2"
+        onclick="deleteAnimalsAdoptShelter(event)"
+      >
+        Delete
+      </button>
+      <p class="message" id="adsDeleteResult"></p>
+    </div>
+
+    <div
+      id="delete-donation_account_hold"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Delete from Donation Account Hold</h5>
+      <label>Delete by Account ID:</label>
+      <input type="number" id="deleteAccountID" />
+      <button
+        class="btn btn-danger mt-2"
+        onclick="deleteDonationAccountHold(event)"
+      >
+        Delete
+      </button>
+      <p class="message" id="donationAccountDeleteResult"></p>
+    </div>
+
+    <div
+      id="delete-medicalrecord_has"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Delete from Medical record Has</h5>
+      <label>Delete by Animal ID:</label>
+      <input type="number" id="deleteMDanimalID" />
+      <button class="btn btn-danger mt-2" onclick="deleteMedicalRecordHas(event)">
+        Delete
+      </button>
+      <p class="message" id="MDrecordDeleteResult"></p>
+    </div>
+
+    <div
+      id="delete-lifecare_volunteer"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Delete from Lifecare Volunteer</h5>
+      <label>Delete by Volunteer ID:</label>
+      <input type="number" id="deleteLifecareVID" />
+      <button
+        class="btn btn-danger mt-2"
+        onclick="deleteLifecareVolunteer(event)"
+      >
+        Delete
+      </button>
+      <p class="message" id="LCvolunteerDeleteResult"></p>
+    </div>
+
+    <div
+      id="delete-volunteer_recruit"
+      class="card p-3 mb-3"
+      style="display: none;"
+    >
+      <h5>Delete from Volunteer Recruit</h5>
+      <label>Delete by Volunteer ID:</label>
+      <input type="number" id="deleteVID" />
+      <button
+        class="btn btn-danger mt-2"
+        onclick="deleteVolunteerRecruit(event)"
+      >
+        Delete
+      </button>
+      <p class="message" id="volunteerDeleteResult"></p>
+    </div>
+
+    <div id="delete-staff_hire" class="card p-3 mb-3" style="display: none;">
+      <h5>Delete from Staff Hire</h5>
+      <label>Delete by Email:</label>
+      <input type="text" id="deleteStaffEmail" />
+      <button class="btn btn-danger mt-2" onclick="deleteStaffHire(event)">
+        Delete
+      </button>
+      <p class="message" id="staffDeleteResult"></p>
+    </div>
+
+    <div id="delete-takecare" class="card p-3 mb-3" style="display: none;">
+      <h5>Delete from Take Care</h5>
+      <label>Delete by Animal ID:</label>
+      <input type="text" id="deleteTKAID" />
+      <label>Delete by Volunteer ID:</label>
+      <input type="text" id="deleteTKVID" />
+      <button class="btn btn-danger mt-2" onclick="deleteTakeCare(event)">
+        Delete
+      </button>
+      <p class="message" id="TKDeleteResult"></p>
+    </div>
+
+    <hr />
+
+    <!-- Select Tuples with Conditions -->
+    <h2 class="section-title">Select Tuples with Conditions</h2>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-auto">
+        <label for="selectTable" class="form-label">Select a table:</label>
+      </div>
+      <div class="col-auto">
+        <select class="form-select" id="selectTable">
+          <option value="">--Select--</option>
+          <option value="Adopter">Adopter</option>
+          <option value="Station">Station</option>
+          <option value="Donator">Donator</option>
+          <option value="Animals_Adopt_Shelter">Animals Adopt Shelter</option>
+          <option value="Donation_Account_Hold">Donation Account Hold</option>
+          <option value="MedicalRecord_Has">MedicalRecord Has</option>
+          <option value="Lifecare_Volunteer">Lifecare Volunteer</option>
+          <option value="Volunteer_Recruit">Volunteer Recruit</option>
+          <option value="Staff_Hire">Staff Hire</option>
+          <option value="TakeCare">Take Care</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-secondary" onclick="addCondition()">Add Condition</button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" onclick="submitSelection()">Submit</button>
+      </div>
+    </div>
+    <div id="condition-container" class="mb-3"></div>
+    <div id="selectionResultMsg" class="message"></div>
+    <div id="selectionTableContainer"></div>
+
+    <hr />
+
+    <!-- Projection -->
+    <h2 class="section-title">Project Columns</h2>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-auto">
+        <label for="selectProjectionTable" class="form-label"
+          >Select a table:</label
+        >
+      </div>
+      <div class="col-auto">
+        <select class="form-select" id="selectProjectionTable">
+          <option value="">--Select--</option>
+          <option value="Adopter">Adopter</option>
+          <option value="Station">Station</option>
+          <option value="Donator">Donator</option>
+          <option value="Animals_Adopt_Shelter">Animals Adopt Shelter</option>
+          <option value="Donation_Account_Hold">Donation Account Hold</option>
+          <option value="MedicalRecord_Has">MedicalRecord Has</option>
+          <option value="Lifecare_Volunteer">Lifecare Volunteer</option>
+          <option value="Volunteer_Recruit">Volunteer Recruit</option>
+          <option value="Staff_Hire">Staff Hire</option>
+          <option value="TakeCare">Take Care</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-secondary" onclick="addAttribute()">Add Attribute</button>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" onclick="submitProjection()">Project</button>
+      </div>
+    </div>
+    <div id="attribute-container" class="mb-3"></div>
+    <div id="projectionResultMsg" class="message"></div>
     <div id="projectionTableContainer"></div>
 
-    <br><hr><br>
-    <h2>Find names and ID of all volunteers who take care a specific species of animals</h2>
-    <label>Animal Species:</label>
-    <input type="text" id="animalType">
-    <button onclick="fetchVolunteerTakeCareAnimals()">find</button>
-    <div id="joinResultMsg"></div>
-    <div id="joinTableContainer"></div>
+    <hr />
 
-    <br><hr><br>
-    <h2>Group By Aggregation: Avg Volunteer Hours by Address</h2>
-    <button onclick="fetchVolunteerAvgHours(false)">Show Results</button>
-    <button onclick="fetchVolunteerAvgHours(true)">Remove Rare Variables</button>
-    <div id="groupByResultMsg"></div>
-    <div id="groupByResultTable"></div>
+    <!-- Join -->
+    <h2 class="section-title">Join Search</h2>
+    <div class="row g-2 align-items-center mb-3">
+      <div class="col-auto">
+        <label for="joinInput" class="form-label"
+          >Enter your join condition or keywords:</label
+        >
+      </div>
+      <div class="col-auto">
+        <input type="text" class="form-control" id="joinInput" />
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" onclick="submitJoin()">Search Join</button>
+      </div>
+    </div>
+    <div id="joinResultMsg" class="message"></div>
+    <div id="joinResultTable"></div>
 
-    
-    <br><hr><br> <!-- ========================================================================= -->
+    <hr />
 
-    <h2>Count the Tuples in DemoTable</h2>
-    <button id="countDemotable"> count </button> <br><br>
-    <!-- A placeholder to display the count result. -->
-    <div id="countResultMsg"></div> <br>
+    <!-- Group By / Aggregation -->
+    <h2 class="section-title">Aggregation / Group By</h2>
+    <p>
+      Below are two example buttons passing cond=true or cond=false to the server
+      for demonstration:
+    </p>
+    <button class="btn btn-info" onclick="fetchVolunteerAvgHours(true)">
+      Get Group By Info (cond=true)
+    </button>
+    <button class="btn btn-info" onclick="fetchVolunteerAvgHours(false)">
+      Get Group By Info (cond=false)
+    </button>
+    <div id="groupByResultMsg" class="message mt-2"></div>
+    <div id="groupByResultTable" class="mt-3"></div>
 
-    <!-- ===================================================================================== -->
-    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
-    <script src="scripts.js"></script>
+    <hr />
+
+    <!-- Count DemoTable -->
+    <h2 class="section-title">Count from DemoTable</h2>
+    <button class="btn btn-dark mb-2" onclick="countDemotable()">Count DemoTable</button>
+    <div id="countResultMsg"></div>
+  </div>
+
+  <!-- Bootstrap JS + Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <!-- Your existing scripts.js -->
+  <script src="scripts.js"></script>
+  <script>
+    window.addEventListener("load", () => {
+      checkDbConnection();
+      const loadingGifElem = document.getElementById("loadingGif");
+      loadingGifElem.style.display = "inline"; // show GIF until status is known
+    });
+
+    // Buttons to fetch and display tables
+    const tableBtns = document.querySelectorAll("#table-buttons button");
+    tableBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        fetchAndDisplayUsers(btn.id);
+      });
+    });
+  </script>
 </body>
 </html>
